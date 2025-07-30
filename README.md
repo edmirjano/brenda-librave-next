@@ -80,11 +80,11 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - **API**: Next.js API Routes
 
 ### Database & Storage
-- **Production Database**: Neon PostgreSQL (serverless)
-- **Development Database**: SQLite (local development)
+- **Database**: PostgreSQL (Neon serverless for production, local for development)
+- **ORM**: Prisma for type-safe database operations
 - **Caching**: Redis (production) / In-memory (development)
-- **File Storage**: Netlify Large Media or S3-compatible solution
-- **Media**: WebP images, WebM videos
+- **File Storage**: S3-compatible solution for eBooks and media
+- **Media**: WebP images, optimized with Next.js Image component
 
 ### Internationalization
 - **Languages**: Albanian, English
@@ -292,9 +292,18 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 
 ---
 
-**Project Status**: Ready for implementation with comprehensive planning
-**License**: Proprietary
-**Team**: Full-stack development team with analytics specialization
-**Timeline**: Phased implementation approach with scaling roadmap (see IMPLEMENTATION.md)
-**Strategic Vision**: Albanian market leadership with European expansion potential through exceptional web experience
-**Development Focus**: Next.js-only approach for maximum web performance and user experience across all devices 
+## 📋 Implementation Resources
+
+- **[MVP Implementation](./MVP_IMPLEMENTATION.md)**: 6-8 week focused launch plan
+- **[Database Schema](./DATABASE_SCHEMA.md)**: Complete PostgreSQL schema with Prisma
+- **[Phase 2 & 3 Plans](./PHASE2_3_IMPLEMENTATION.md)**: Enhanced features and AI integration
+- **[Full Implementation](./IMPLEMENTATION.md)**: Complete technical strategy
+
+---
+
+**Project Status**: Ready for implementation with comprehensive planning  
+**License**: Proprietary  
+**Team**: Full-stack development team specializing in Next.js and PostgreSQL  
+**Timeline**: MVP in 6-8 weeks, full features in 6 months  
+**Strategic Vision**: Albanian market leadership with European expansion potential  
+**Development Focus**: Next.js full-stack approach with PostgreSQL for maximum performance 
