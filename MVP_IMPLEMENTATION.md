@@ -156,12 +156,15 @@ PAYPAL_CLIENT_SECRET="your-paypal-secret"
 - ✅ Blog listing and detail pages
 - ✅ Basic SEO optimization
 - ✅ Simple rich text editing
+- ✅ Newsletter subscription (basic signup)
 
 #### Deferred to Phase 2
 - ❌ Comment system
 - ❌ Advanced SEO tools
 - ❌ Social sharing
 - ❌ Content scheduling
+- ❌ Newsletter campaign management
+- ❌ Advanced newsletter analytics
 
 ### Week 7-8: Polish & Launch Preparation
 
@@ -191,6 +194,7 @@ PAYPAL_CLIENT_SECRET="your-paypal-secret"
 - [ ] PayPal payments work correctly
 - [ ] Admin can manage books and orders
 - [ ] Basic blog functionality works
+- [ ] Newsletter subscription works
 - [ ] Site works in Albanian and English
 - [ ] GDPR cookie consent implemented
 
