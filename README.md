@@ -30,8 +30,10 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - User library management
 - Reading progress tracking
 
-### ✍️ Blog
-- Articles and book reviews
+### ✍️ Blog & Community
+- Admin articles and book reviews
+- **User-generated blog posts** with moderation workflow
+- **Book discussion forum** with threaded conversations
 - Comment system with moderation
 - Rich text editor for content creation
 - SEO-optimized blog posts
@@ -53,8 +55,11 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - Reading history and wishlist
 - Two-factor authentication (passkeys/WebAuthn)
 
-### 📧 Newsletter & Notifications
-- Email newsletter subscription system
+### 📧 Newsletter & Community Features
+- **Newsletter management system** with campaigns and analytics
+- **Book gifting platform** for sharing used books in the community
+- **Coupon system** with flexible discounts and promotional campaigns
+- **Wishlist and collections** for personal book organization
 - Push notifications for new books and blog posts
 - Personalized content recommendations
 - GDPR-compliant communication preferences
@@ -80,11 +85,12 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - **API**: Next.js API Routes
 
 ### Database & Storage
-- **Production Database**: Neon PostgreSQL (serverless)
-- **Development Database**: SQLite (local development)
+- **Development Database**: SQLite for fast local development
+- **Production Database**: Neon PostgreSQL (serverless, auto-scaling)
+- **ORM**: Prisma for type-safe database operations and seamless SQLite → PostgreSQL migration
 - **Caching**: Redis (production) / In-memory (development)
-- **File Storage**: Netlify Large Media or S3-compatible solution
-- **Media**: WebP images, WebM videos
+- **File Storage**: S3-compatible solution for eBooks and media
+- **Media**: WebP images, optimized with Next.js Image component
 
 ### Internationalization
 - **Languages**: Albanian, English
@@ -92,12 +98,15 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - **Localized content**: Full UI and content localization
 
 ### Deployment & Infrastructure
-- **Platform**: Netlify (with Next.js support)
-- **Database**: Neon PostgreSQL (serverless, auto-scaling)
-- **Development**: SQLite for local development
-- **Security**: Netlify Edge Functions + Cloudflare (DDoS protection, SSL)
-- **CI/CD**: Netlify auto-deployment from Git
-- **Monitoring**: Internal analytics (GDPR compliant)
+- **Platform**: Netlify with Next.js optimization and Edge Functions
+- **Production Database**: Neon PostgreSQL (serverless, auto-scaling, optimized for Netlify)
+- **Development Database**: SQLite for fast local development and testing
+- **Migration Strategy**: Seamless SQLite → PostgreSQL transition via Prisma
+- **CDN**: Netlify's global CDN with edge optimization for Albanian diaspora
+- **Storage**: Netlify Large Media + S3 for eBooks and large assets
+- **Security**: Netlify Edge Functions, automatic HTTPS, security headers
+- **CI/CD**: Netlify auto-deployment with performance optimization
+- **Monitoring**: Netlify Analytics + GA4 integration
 
 ### AI & Machine Learning
 - **Brain.js**: JavaScript neural networks for book recommendations
@@ -292,9 +301,20 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 
 ---
 
-**Project Status**: Ready for implementation with comprehensive planning
-**License**: Proprietary
-**Team**: Full-stack development team with analytics specialization
-**Timeline**: Phased implementation approach with scaling roadmap (see IMPLEMENTATION.md)
-**Strategic Vision**: Albanian market leadership with European expansion potential through exceptional web experience
-**Development Focus**: Next.js-only approach for maximum web performance and user experience across all devices 
+## 📋 Implementation Resources
+
+- **[MVP Implementation](./MVP_IMPLEMENTATION.md)**: 6-8 week focused launch plan
+- **[Database Schema](./DATABASE_SCHEMA.md)**: Complete PostgreSQL schema with Prisma
+- **[Phase 2 & 3 Plans](./PHASE2_3_IMPLEMENTATION.md)**: Enhanced features and AI integration
+- **[ESLint Configuration](./ESLINT_CONFIG.md)**: Performance, SEO, and security-focused code quality
+- **[Netlify Deployment](./NETLIFY_DEPLOYMENT.md)**: Complete Netlify deployment guide with optimizations
+- **[Full Implementation](./IMPLEMENTATION.md)**: Complete technical strategy
+
+---
+
+**Project Status**: Ready for implementation with comprehensive planning  
+**License**: Proprietary  
+**Team**: Full-stack development team specializing in Next.js and PostgreSQL  
+**Timeline**: MVP in 6-8 weeks, full features in 6 months  
+**Strategic Vision**: Albanian market leadership with European expansion potential  
+**Development Focus**: Next.js full-stack approach with PostgreSQL for maximum performance 

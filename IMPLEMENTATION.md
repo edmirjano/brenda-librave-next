@@ -24,7 +24,7 @@ npx create-next-app@latest brenda-librave --typescript --tailwind --eslint --app
 cd brenda-librave
 
 # Essential dependencies for Next.js full-stack app
-npm install mongodb redis next-auth @next-auth/mongodb-adapter
+npm install @prisma/client prisma redis next-auth @auth/prisma-adapter
 npm install @types/bcryptjs bcryptjs jsonwebtoken
 npm install next-intl @formatjs/intl-localematcher
 npm install @headlessui/react @heroicons/react
@@ -37,9 +37,9 @@ npm install gtag react-gtm-module @types/gtag
 npm install react-cookie-consent # GDPR-compliant consent management
 npm install @google-analytics/data # GA4 Reporting API for admin dashboard
 
-# AI/ML dependencies for book recommendations
-npm install brain.js # Neural networks for recommendation engine
-npm install @types/brain.js # TypeScript definitions
+# Development dependencies
+npm install --save-dev @types/node typescript
+npm install --save-dev prisma # Prisma CLI for database management
 ```
 
 #### Project Structure
@@ -81,76 +81,131 @@ src/
 ```
 
 #### Configuration Files
-- **Database**: MongoDB connection helper in `/lib/db/` 
-- **Authentication**: NextAuth.js configuration in `/app/api/auth/[...nextauth]/`
+- **Database**: Prisma ORM configuration with PostgreSQL in `/lib/db/` 
+- **Authentication**: NextAuth.js configuration with Prisma adapter in `/app/api/auth/[...nextauth]/`
 - **Analytics**: Google Analytics 4 and GTM setup in `/lib/analytics/`
 - **Internationalization**: next-intl setup for Albanian/English in `/messages/`
-- **Environment**: Comprehensive .env.local with GA4 tracking IDs and API keys
+- **Environment**: Comprehensive .env.local with database URL, GA4 tracking IDs and API keys
 - **Consent Management**: GDPR-compliant cookie consent configuration
+- **Database Schema**: Prisma schema file with all models and relationships
 
 ### 1.2 Authentication & User Management (Week 2-3)
 
-#### User Schema & Models
-```typescript
-// User model with essential fields
-interface User {
-  id: string;
-  email: string;
-  password: string; // hashed
-  name: string;
-  role: 'user' | 'admin';
-  preferences: {
-    language: 'sq' | 'en';
-    newsletter: boolean;
-  };
-  readingHistory: BookId[];
-  createdAt: Date;
-  updatedAt: Date;
+#### Database Schema Setup
+```prisma
+// prisma/schema.prisma - User model with essential fields
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  password        String?   // nullable for social auth
+  name            String
+  role            Role      @default(USER)
+  language        Language  @default(SQ)
+  newsletter      Boolean   @default(false)
+  emailVerified   DateTime?
+  image           String?
+  
+  // Relations
+  accounts        Account[]
+  sessions        Session[]
+  orders          Order[]
+  cartItems       CartItem[]
+  readingHistory  ReadingHistory[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Language {
+  SQ
+  EN
 }
 ```
 
-#### Authentication Features
+#### Authentication Features (Simplified for MVP)
 - **Email Registration/Login**: Custom forms with validation
-- **Password Security**: bcryptjs hashing with salt rounds
-- **JWT Implementation**: Access + refresh token strategy
-- **Session Management**: Secure cookie handling
+- **Password Security**: bcryptjs hashing with salt rounds  
+- **NextAuth.js Sessions**: Built-in session management
 - **Route Protection**: Middleware for protected pages
 - **Role-Based Access**: Admin vs user permissions
+- **Database Sessions**: Prisma adapter for persistent sessions
 
-#### API Endpoints
+#### API Endpoints (Simplified for MVP)
 - `POST /api/auth/register` - User registration (with GA4 sign_up event)
-- `POST /api/auth/login` - User authentication (with GA4 login event)
-- `POST /api/auth/refresh` - Token refresh
-- `POST /api/auth/logout` - Session termination
-- `GET /api/auth/me` - Current user profile
+- `POST /api/auth/signin` - User authentication (NextAuth.js handled)
+- `POST /api/auth/signout` - Session termination (NextAuth.js handled)
+- `GET /api/user/profile` - Current user profile
+- `PUT /api/user/preferences` - Update user preferences
 - `POST /api/analytics/consent` - User consent preferences for tracking
 
 ### 1.3 Book Catalog System (Week 3-4)
 
 #### Book Schema & Models
-```typescript
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  description: string;
-  isbn: string;
-  category: string;
-  tags: string[];
-  price: {
-    physical?: number;
-    digital?: number;
-  };
-  inventory: {
-    physical: number;
-    digital: boolean;
-  };
-  images: string[]; // WebP format
-  publishedDate: Date;
-  language: 'sq' | 'en' | 'both';
-  featured: boolean;
-  active: boolean;
-  createdAt: Date;
+```prisma
+model Book {
+  id              String    @id @default(cuid())
+  title           String
+  author          String
+  description     String    @db.Text
+  isbn            String?   @unique
+  categoryId      String
+  price           Decimal?  // Physical book price
+  digitalPrice    Decimal?  // Digital book price
+  inventory       Int       @default(0)
+  hasDigital      Boolean   @default(false)
+  coverImage      String?   // WebP format
+  images          String[]  // Additional images
+  publishedDate   DateTime?
+  language        Language  @default(SQ)
+  featured        Boolean   @default(false)
+  active          Boolean   @default(true)
+  
+  // Relations
+  category        Category  @relation(fields: [categoryId], references: [id])
+  tags            BookTag[]
+  cartItems       CartItem[]
+  orderItems      OrderItem[]
+  readingHistory  ReadingHistory[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String
+  nameEn      String?
+  slug        String  @unique
+  description String?
+  active      Boolean @default(true)
+  
+  books       Book[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tag {
+  id      String    @id @default(cuid())
+  name    String    @unique
+  nameEn  String?
+  
+  books   BookTag[]
+}
+
+model BookTag {
+  bookId  String
+  tagId   String
+  
+  book    Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  tag     Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  
+  @@id([bookId, tagId])
 }
 ```
 
@@ -285,571 +340,57 @@ interface BlogPost {
 - **Performance Tests**: Lighthouse CI integration
 
 #### Deployment Setup (Single Next.js App)
-- **Platform**: Vercel (recommended) or VPS deployment
-- **Production Build**: Optimized Next.js build with static optimization
-- **Database**: MongoDB Atlas (cloud) or self-hosted MongoDB
-- **Storage**: AWS S3 or compatible for eBooks and media
-- **CDN**: Cloudflare for security and performance
-- **SSL**: Automatic HTTPS with deployment platform
+- **Platform**: Netlify with Next.js plugin and Edge Functions
+- **Production Build**: Optimized Next.js build with Netlify optimizations
+- **Database**: Neon PostgreSQL (serverless, optimized for Netlify Functions)
+- **Storage**: Netlify Large Media + S3 for large files (eBooks)
+- **CDN**: Netlify's global CDN with edge optimization
+- **SSL**: Automatic HTTPS with Netlify
+- **See**: [NETLIFY_DEPLOYMENT.md](./NETLIFY_DEPLOYMENT.md) for complete setup
 
-## 📋 Phase 2: Enhanced Features
+## 📋 Phase 2 & 3: Enhanced Features & AI Integration
 
-**Timeline**: 6-8 weeks
-**Goal**: Add engagement features and improve user experience
+**See detailed implementation plans in:**
+- **Phase 2**: [PHASE2_3_IMPLEMENTATION.md](./PHASE2_3_IMPLEMENTATION.md#phase-2-enhanced-features-4-6-weeks) - Enhanced features after MVP launch
+- **Phase 3**: [PHASE2_3_IMPLEMENTATION.md](./PHASE2_3_IMPLEMENTATION.md#phase-3-ai-integration--advanced-features-6-8-weeks) - AI integration and advanced features
 
-### 2.1 eBook Management (Week 1-2)
-- **File Storage**: S3 integration for digital books
-- **Download Security**: Signed URLs with expiration
-- **Format Support**: PDF, EPUB handling
-- **Reader Integration**: In-browser reading experience
-
-### 2.2 Social Authentication (Week 2-3)
-- **Google OAuth**: Sign in with Google
-- **Apple ID**: Sign in with Apple
-- **Account Linking**: Merge social accounts with email accounts
-
-### 2.3 Enhanced Blog Features (Week 3-4)
-- **Comment System**: Threaded comments with moderation
-- **Social Sharing**: Integration with social platforms
-- **Newsletter Integration**: Email capture and management
-- **Related Content**: Advanced recommendation algorithm
-
-### 2.4 Advanced Web User Experience (Week 4-5)
-- **Wishlist**: Save books for later with sync across devices
-- **Reading Lists**: Curated book collections with sharing capabilities
-- **Review System**: User ratings and reviews with moderation
-- **Recommendation Engine**: Basic collaborative filtering
-- **Enhanced Mobile Web**: Touch-optimized interactions and gestures
-- **Desktop Features**: Keyboard shortcuts and enhanced layouts for large screens
-
-### 2.5 Advanced Web Performance (Week 5-6)
-- **Redis Caching**: API response caching with intelligent cache invalidation
-- **Image Optimization**: Advanced Next.js Image usage with WebP conversion
-- **Code Splitting**: Route-based lazy loading and component-level optimization
-- **Database Optimization**: Query optimization and indexing
-- **Web Vitals**: Core Web Vitals optimization for mobile and desktop
-- **Service Workers**: Advanced caching strategies for web performance
-
-### 2.6 Advanced Analytics & Business Intelligence (Week 6-8)
-- **GA4 Dashboard Integration**: Admin dashboard with Google Analytics API and embedded reports
-- **GA4 Iframe Integration**: Real-time analytics preview directly in admin interface
-- **Advanced Segmentation**: User cohorts and behavior analysis
-- **Conversion Attribution**: Multi-channel attribution modeling
-- **Predictive Analytics**: Customer lifetime value and churn prediction
-- **Content Performance**: Blog engagement and book discovery analytics
-- **A/B Testing Framework**: Feature flag system with GA4 experiment tracking
-- **Custom Analytics Views**: Tailored dashboards for different business metrics
-
-## 📋 Phase 3: Advanced Features
-
-**Timeline**: 8-10 weeks
-**Goal**: AI integration and advanced personalization
-
-### 3.1 AI Book Recommender (Week 1-4)
-- **Brain.js Neural Networks**: JavaScript-based recommendation engine running in Next.js
-- **Collaborative Filtering**: User behavior pattern recognition for book suggestions
-- **Content-Based Filtering**: Book metadata analysis for similar item recommendations
-- **Hybrid Approach**: Combine user preferences with content similarity
-- **Training Pipeline**: Automated model training from user interaction data
-- **Real-time Inference**: Fast recommendations via trained neural networks
-- **AI Analytics**: Track recommendation effectiveness, click-through rates, and conversion impact via GA4 custom events
-
-### 3.2 Advanced Security (Week 4-6)
-- **Two-Factor Authentication**: WebAuthn/passkeys
-- **Advanced Encryption**: Additional data protection
-- **Security Auditing**: Comprehensive security review
-- **Penetration Testing**: Third-party security assessment
-
-### 3.3 Enhanced Web Experience (Week 6-8)
-- **Progressive Web App**: Enhanced mobile web experience with app-like features
-- **Push Notifications**: Web-based engagement notifications with GA4 tracking
-- **Offline Support**: Service worker for basic offline browsing
-- **Performance Optimization**: Advanced Next.js optimization techniques
-- **Web Analytics**: Track engagement patterns and user experience metrics via GA4
-
-### 3.4 Cross-Device Web Optimization (Week 7-8)
-- **Mobile Web Excellence**: Touch gestures, optimized layouts, fast loading
-- **Desktop Enhancements**: Keyboard navigation, multi-column layouts, hover states
-- **Tablet Experience**: Optimized for tablet browsing and reading
-- **Cross-Browser Compatibility**: Consistent experience across all modern browsers
-- **Performance Monitoring**: Real-time web performance tracking and optimization
-
-### 3.5 Advanced Admin Features (Week 9-10)
-- **Advanced Analytics**: Business intelligence dashboard with GA4 API integration
-- **Content AI**: AI-assisted content creation with performance tracking
-- **Automated Marketing**: Email campaign automation with attribution tracking
-- **Advanced Reporting**: Custom report generation combining internal data with GA4 insights
-- **Real-time Analytics**: Live user activity monitoring and business KPI dashboards
-- **Web Performance Dashboard**: Core Web Vitals monitoring and optimization tools
+### Key Changes from Original Plan
+- **Simplified Phase 2**: Focus on proven e-commerce enhancements first
+- **Deferred AI to Phase 3**: AI recommendations only after sufficient user data
+- **PostgreSQL Throughout**: Consistent database technology
+- **Realistic Timelines**: Based on simplified feature scope
 
 ## 📋 Phase 4: Scaling & Optimization
 
-**Timeline**: 6-8 weeks
+**Timeline**: 6-8 weeks (after Phase 3)
 **Goal**: Prepare for high traffic and future growth
 
-### 4.1 Performance Scaling
-- **Database Optimization**: Sharding and replication
-- **CDN Enhancement**: Global content delivery
-- **Caching Strategy**: Multi-layer caching
-- **Load Balancing**: Traffic distribution
+### Performance Scaling
+- **Database Optimization**: Connection pooling and query optimization
+- **CDN Enhancement**: Global content delivery optimization
+- **Caching Strategy**: Multi-layer caching with Redis
+- **Load Balancing**: Traffic distribution preparation
 
-### 4.2 Architecture Evolution (Future)
-- **Service Extraction**: Identify domains suitable for separation (if needed)
-- **API Optimization**: Optimize Next.js API routes for performance
-- **Database Scaling**: Read replicas and connection pooling
-- **Load Balancing**: Multiple Next.js instances for high availability
+### Architecture Evolution
+- **Microservices Evaluation**: Identify domains for potential separation
+- **API Optimization**: Optimize Next.js API routes for scale
+- **Database Scaling**: Read replicas and horizontal scaling
+- **Monitoring**: Comprehensive application monitoring
 
-### 4.3 Advanced Monitoring
-- **Application Monitoring**: Real-time performance tracking
-- **Error Tracking**: Comprehensive error reporting
-- **User Experience Monitoring**: Real user metrics
-- **Business Metrics**: KPI tracking and alerting
 
-## 🛠️ Google Analytics 4 Implementation Strategy
 
-### Technical Integration Approach
+## 🛠️ Analytics & AI Implementation
 
-#### Core GA4 Setup
-```typescript
-// lib/analytics/gtag.ts
-export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
+### Detailed Implementation Guides
+- **Database Schema**: [DATABASE_SCHEMA.md](./DATABASE_SCHEMA.md) - Complete PostgreSQL schema with Prisma
+- **MVP Implementation**: [MVP_IMPLEMENTATION.md](./MVP_IMPLEMENTATION.md) - Focused 6-8 week MVP plan
+- **Phase 2 & 3**: [PHASE2_3_IMPLEMENTATION.md](./PHASE2_3_IMPLEMENTATION.md) - Enhanced features and AI integration
 
-// Initialize GA4 with enhanced e-commerce
-export const gtag = (...args: any[]) => {
-  (window as any).gtag(...args);
-};
-
-// Enhanced e-commerce event helpers
-export const trackPurchase = (transactionData: {
-  transaction_id: string;
-  value: number;
-  currency: string;
-  items: Array<{
-    item_id: string;
-    item_name: string;
-    category: string;
-    quantity: number;
-    price: number;
-  }>;
-}) => {
-  gtag('event', 'purchase', transactionData);
-};
-```
-
-#### GDPR Compliance Implementation
-```typescript
-// lib/analytics/consent.ts
-export interface ConsentState {
-  analytics: boolean;
-  marketing: boolean;
-  necessary: boolean; // Always true
-}
-
-export const initializeAnalytics = (consent: ConsentState) => {
-  gtag('consent', 'update', {
-    analytics_storage: consent.analytics ? 'granted' : 'denied',
-    ad_storage: consent.marketing ? 'granted' : 'denied',
-  });
-};
-```
-
-#### Custom Events & Dimensions
-```typescript
-// Track book-specific interactions
-export const trackBookView = (book: {
-  id: string;
-  title: string;
-  author: string;
-  category: string;
-  price: number;
-  format: 'physical' | 'digital';
-  language: 'sq' | 'en';
-}) => {
-  gtag('event', 'view_item', {
-    currency: 'EUR',
-    value: book.price,
-    items: [{
-      item_id: book.id,
-      item_name: book.title,
-      item_category: book.category,
-      price: book.price,
-      custom_format: book.format,
-      custom_language: book.language,
-    }]
-  });
-};
-
-// Track AI recommendation interactions
-export const trackAIRecommendation = (action: 'display' | 'click' | 'purchase', data: {
-  recommendation_id: string;
-  book_id: string;
-  algorithm_type: string;
-  position: number;
-}) => {
-  gtag('event', 'ai_recommendation', {
-    custom_action: action,
-    custom_recommendation_id: data.recommendation_id,
-    custom_algorithm: data.algorithm_type,
-    custom_position: data.position,
-  });
-};
-```
-
-### Phase-by-Phase Analytics Implementation
-
-#### Phase 1: Core E-commerce Tracking
-- **Essential Events**: page_view, view_item, add_to_cart, purchase, sign_up, login
-- **Custom Dimensions**: user_language, customer_type, book_format, content_language
-- **E-commerce Integration**: Complete purchase funnel with revenue attribution
-- **GDPR Setup**: Cookie consent management with granular controls
-
-#### Phase 2: Advanced Engagement Analytics
-- **Content Tracking**: Blog engagement, reading time, social shares
-- **User Journey Mapping**: Multi-session behavior analysis
-- **A/B Testing Integration**: Feature flag performance measurement
-- **Advanced Segmentation**: User cohorts based on behavior patterns
-
-#### Phase 3: AI & Personalization Analytics
-- **Recommendation Tracking**: AI suggestion performance and conversion impact
-- **PWA Analytics**: Installation rates and app-like usage patterns
-- **Predictive Modeling**: Customer lifetime value and churn prediction
-- **Advanced Attribution**: Multi-channel conversion path analysis
-
-### Privacy & Data Management
-
-#### Data Collection Strategy
-- **Minimal Data Principle**: Only collect data essential for business insights
-- **User Control**: Granular consent management with easy opt-out
-- **Data Retention**: Configurable retention periods (default 14 months)
-- **Anonymization**: IP anonymization and user ID hashing
-
-#### Custom Reporting & API Integration
-```typescript
-// Google Analytics Reporting API integration for admin dashboard
-import { BetaAnalyticsDataClient } from '@google-analytics/data';
-
-export const getBusinessMetrics = async () => {
-  const analyticsDataClient = new BetaAnalyticsDataClient({
-    keyFilename: process.env.GA_SERVICE_ACCOUNT_KEY,
-  });
-
-  const [response] = await analyticsDataClient.runReport({
-    property: `properties/${process.env.GA_PROPERTY_ID}`,
-    dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
-    metrics: [
-      { name: 'activeUsers' },
-      { name: 'totalRevenue' },
-      { name: 'conversions' },
-      { name: 'engagementRate' }
-    ],
-    dimensions: [
-      { name: 'country' },
-      { name: 'language' },
-      { name: 'deviceCategory' }
-    ]
-  });
-
-  return response;
-};
-
-// GA4 Embed Integration for Admin Dashboard
-export const generateGA4EmbedURL = (reportType: 'overview' | 'ecommerce' | 'content' | 'realtime') => {
-  const baseURL = 'https://analytics.google.com/analytics/web/';
-  const propertyId = process.env.GA_PROPERTY_ID;
-  
-  const reportUrls = {
-    overview: `${baseURL}#/p${propertyId}/reports/intelligenthome`,
-    ecommerce: `${baseURL}#/p${propertyId}/reports/enhanced-ecommerce-overview`,
-    content: `${baseURL}#/p${propertyId}/reports/pages-and-screens`,
-    realtime: `${baseURL}#/p${propertyId}/realtime/overview`
-  };
-  
-  return reportUrls[reportType];
-};
-
-// Brain.js Recommendation Engine Implementation
-export const BookRecommendationEngine = {
-  // Neural network for collaborative filtering
-  collaborativeNet: new brain.NeuralNetwork({
-    hiddenLayers: [10, 5],
-    learningRate: 0.3
-  }),
-  
-  // Neural network for content-based filtering
-  contentNet: new brain.NeuralNetwork({
-    hiddenLayers: [15, 8, 3],
-    learningRate: 0.2
-  }),
-  
-  // Train collaborative filtering model
-  trainCollaborative: async (userInteractions: UserInteraction[]) => {
-    const trainingData = userInteractions.map(interaction => ({
-      input: {
-        userId: interaction.userId,
-        bookId: interaction.bookId,
-        category: interaction.category,
-        timeSpent: interaction.timeSpent / 1000, // normalize
-        rating: interaction.rating / 5 // normalize
-      },
-      output: { recommendation: interaction.purchased ? 1 : 0 }
-    }));
-    
-    await BookRecommendationEngine.collaborativeNet.trainAsync(trainingData);
-    
-    // Save trained model
-    const modelData = BookRecommendationEngine.collaborativeNet.toJSON();
-    await saveModelToDatabase('collaborative', modelData);
-  },
-  
-  // Train content-based model
-  trainContentBased: async (books: Book[], interactions: UserInteraction[]) => {
-    const trainingData = books.map(book => {
-      const userInteractions = interactions.filter(i => i.bookId === book.id);
-      const avgRating = userInteractions.reduce((sum, i) => sum + i.rating, 0) / userInteractions.length || 0;
-      
-      return {
-        input: {
-          category: book.category,
-          price: book.price / 100, // normalize
-          pageCount: book.pageCount / 1000, // normalize
-          authorPopularity: book.authorPopularity / 10, // normalize
-          language: book.language === 'sq' ? 1 : 0
-        },
-        output: { popularity: avgRating / 5 } // normalize
-      };
-    });
-    
-    await BookRecommendationEngine.contentNet.trainAsync(trainingData);
-    
-    const modelData = BookRecommendationEngine.contentNet.toJSON();
-    await saveModelToDatabase('content', modelData);
-  },
-  
-  // Generate recommendations for a user
-  getRecommendations: async (userId: string, userPreferences: UserPreferences) => {
-    // Load trained models
-    const collaborativeModel = await loadModelFromDatabase('collaborative');
-    const contentModel = await loadModelFromDatabase('content');
-    
-    BookRecommendationEngine.collaborativeNet.fromJSON(collaborativeModel);
-    BookRecommendationEngine.contentNet.fromJSON(contentModel);
-    
-    // Get all available books
-    const books = await getAllBooks();
-    
-    // Generate scores for each book
-    const recommendations = books.map(book => {
-      // Collaborative filtering score
-      const collaborativeScore = BookRecommendationEngine.collaborativeNet.run({
-        userId: userId,
-        bookId: book.id,
-        category: book.category,
-        timeSpent: 0.5, // average
-        rating: 0.8 // neutral
-      }).recommendation;
-      
-      // Content-based score
-      const contentScore = BookRecommendationEngine.contentNet.run({
-        category: book.category,
-        price: book.price / 100,
-        pageCount: book.pageCount / 1000,
-        authorPopularity: book.authorPopularity / 10,
-        language: book.language === userPreferences.language ? 1 : 0
-      }).popularity;
-      
-      // Hybrid score (weighted combination)
-      const hybridScore = (collaborativeScore * 0.7) + (contentScore * 0.3);
-      
-      return {
-        book,
-        score: hybridScore,
-        reason: collaborativeScore > contentScore ? 'users_like_you' : 'similar_content'
-      };
-    });
-    
-    // Sort by score and return top recommendations
-    return recommendations
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 10);
-  }
-};
-
-// API Endpoints for AI Recommendations
-// GET /api/ai/recommendations/[userId] - Get personalized recommendations
-// POST /api/ai/train - Trigger model training (admin only)
-// GET /api/ai/model-stats - Get model performance metrics
-```
-
-### Brain.js Implementation Strategy
-
-#### Phase 1: Basic Recommendation Engine
-```typescript
-// lib/ai/training.ts
-export const trainModels = async () => {
-  console.log('Starting AI model training...');
-  
-  // Fetch user interaction data
-  const interactions = await getUserInteractions();
-  const books = await getAllBooks();
-  
-  // Train collaborative filtering model
-  await BookRecommendationEngine.trainCollaborative(interactions);
-  
-  // Train content-based model
-  await BookRecommendationEngine.trainContentBased(books, interactions);
-  
-  console.log('AI models trained successfully');
-  
-  // Track training completion in GA4
-  gtag('event', 'ai_model_training', {
-    custom_model_type: 'hybrid',
-    custom_training_size: interactions.length
-  });
-};
-
-// Scheduled training (run weekly)
-export const scheduleModelTraining = () => {
-  setInterval(async () => {
-    await trainModels();
-  }, 7 * 24 * 60 * 60 * 1000); // Weekly
-};
-```
-
-#### Phase 2: Enhanced Features
-```typescript
-// Real-time recommendation updates
-export const updateUserPreferences = async (userId: string, interaction: UserInteraction) => {
-  // Store interaction
-  await saveUserInteraction(interaction);
-  
-  // Update user's recommendation cache
-  const recommendations = await BookRecommendationEngine.getRecommendations(userId, await getUserPreferences(userId));
-  await cacheUserRecommendations(userId, recommendations);
-  
-  // Track interaction for model improvement
-  gtag('event', 'ai_interaction', {
-    custom_interaction_type: interaction.type,
-    custom_book_category: interaction.category
-  });
-};
-```
-
-#### Phase 3: Advanced AI Integration
-```typescript
-// Future migration to TensorFlow.js or external APIs
-export const migrateToAdvancedAI = async () => {
-  // Export Brain.js training data
-  const trainingData = await exportBrainJsData();
-  
-  // Options for Phase 4:
-  // 1. TensorFlow.js for complex models
-  // 2. External APIs (OpenAI, Anthropic) for NLP
-  // 3. Hybrid approach: Brain.js for speed, external for quality
-  
-  console.log('Ready for AI model migration');
-};
-```
-
-#### Advantages of Brain.js for Brënda Librave
-
-**✅ Perfect Fit for Your Stack:**
-- **Pure JavaScript**: Seamless integration with Next.js
-- **No External Dependencies**: Runs entirely within your infrastructure
-- **Privacy Compliant**: No data leaves your servers
-- **Fast Inference**: Neural networks run in milliseconds
-
-**✅ Ideal for Book Recommendations:**
-- **Collaborative Filtering**: "Users who bought X also bought Y"
-- **Content-Based**: "Books similar to your reading history"
-- **Hybrid Approach**: Best of both worlds
-- **Real-time Learning**: Models improve with each user interaction
-
-**✅ Business Benefits:**
-- **Cost Effective**: No external API costs
-- **GDPR Compliant**: Complete data control
-- **Performance**: Sub-100ms recommendation generation
-- **Scalable**: Can handle thousands of users efficiently
-
-#### Migration Path to Advanced AI
-
-**Phase 1-2 (Brain.js Foundation):**
-- Collaborative and content-based filtering
-- User behavior pattern recognition
-- Basic natural language processing for book descriptions
-
-**Phase 3 (Enhanced Brain.js):**
-- Multi-layer neural networks
-- Advanced feature engineering
-- A/B testing different model architectures
-
-**Phase 4 (Web AI Evolution Options):**
-1. **TensorFlow.js**: Complex deep learning models for web browsers
-2. **External AI APIs**: GPT/Claude for content generation
-3. **Hybrid Approach**: Brain.js for speed + external APIs for quality
-4. **Edge AI**: Deploy models to edge locations for global web performance
-5. **WebAssembly**: High-performance AI inference in the browser
-
-#### Admin Dashboard GA4 Integration
-```typescript
-// components/admin/AnalyticsDashboard.tsx
-import { useState, useEffect } from 'react';
-import { getBusinessMetrics, generateGA4EmbedURL } from '@/lib/analytics/reporting';
-
-export const AnalyticsDashboard = () => {
-  const [metrics, setMetrics] = useState(null);
-  const [activeView, setActiveView] = useState<'overview' | 'ecommerce' | 'content' | 'realtime'>('overview');
-
-  useEffect(() => {
-    getBusinessMetrics().then(setMetrics);
-  }, []);
-
-  return (
-    <div className="analytics-dashboard">
-      {/* Quick Stats Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <StatCard title="Active Users" value={metrics?.activeUsers} />
-        <StatCard title="Total Revenue" value={metrics?.totalRevenue} />
-        <StatCard title="Conversions" value={metrics?.conversions} />
-        <StatCard title="Engagement Rate" value={metrics?.engagementRate} />
-      </div>
-      
-      {/* GA4 Report Tabs */}
-      <div className="analytics-tabs mb-4">
-        {['overview', 'ecommerce', 'content', 'realtime'].map(view => (
-          <button
-            key={view}
-            onClick={() => setActiveView(view)}
-            className={`tab ${activeView === view ? 'active' : ''}`}
-          >
-            {view.charAt(0).toUpperCase() + view.slice(1)}
-          </button>
-        ))}
-      </div>
-      
-      {/* Embedded GA4 Dashboard */}
-      <div className="ga4-embed-container">
-        <iframe
-          src={generateGA4EmbedURL(activeView)}
-          className="w-full h-96 border rounded-lg"
-          title={`Google Analytics ${activeView} Dashboard`}
-          sandbox="allow-same-origin allow-scripts allow-forms"
-        />
-      </div>
-      
-      {/* Custom Business Intelligence */}
-      <div className="custom-analytics mt-6">
-        <h3>Business Intelligence</h3>
-        <div className="grid grid-cols-2 gap-6">
-          <BookSalesChart />
-          <UserEngagementHeatmap />
-          <ContentPerformanceTable />
-          <RevenueAttributionChart />
-        </div>
-      </div>
-    </div>
-  );
-};
-```
+### Key Technical Decisions Made
+- **PostgreSQL Only**: Consistent database technology throughout all phases
+- **Simplified MVP**: Defer complex features until after launch validation
+- **AI in Phase 3**: Only after sufficient user data for training
+- **Brain.js for AI**: Privacy-first, JavaScript-native neural networks
 
 ## 🛠️ Technical Implementation Guidelines
 
