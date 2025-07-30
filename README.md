@@ -302,6 +302,7 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - **[MVP Implementation](./MVP_IMPLEMENTATION.md)**: 6-8 week focused launch plan
 - **[Database Schema](./DATABASE_SCHEMA.md)**: Complete PostgreSQL schema with Prisma
 - **[Phase 2 & 3 Plans](./PHASE2_3_IMPLEMENTATION.md)**: Enhanced features and AI integration
+- **[ESLint Configuration](./ESLINT_CONFIG.md)**: Performance, SEO, and security-focused code quality
 - **[Full Implementation](./IMPLEMENTATION.md)**: Complete technical strategy
 
 ---

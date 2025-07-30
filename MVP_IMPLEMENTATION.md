@@ -34,6 +34,21 @@ npm install gtag react-cookie-consent
 
 # Development dependencies
 npm install --save-dev @types/node typescript
+
+# ESLint & Code Quality (see ESLINT_CONFIG.md)
+npm install --save-dev \
+  @typescript-eslint/eslint-plugin \
+  @typescript-eslint/parser \
+  eslint-plugin-react \
+  eslint-plugin-react-hooks \
+  eslint-plugin-jsx-a11y \
+  eslint-plugin-import \
+  eslint-plugin-security \
+  eslint-plugin-unicorn \
+  eslint-plugin-unused-imports \
+  eslint-plugin-simple-import-sort \
+  eslint-config-prettier \
+  eslint-import-resolver-typescript
 ```
 
 #### Database Setup
@@ -52,6 +67,13 @@ NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
 PAYPAL_CLIENT_ID="your-paypal-client-id"
 PAYPAL_CLIENT_SECRET="your-paypal-secret"
 ```
+
+#### Code Quality Setup
+- **ESLint Configuration**: Comprehensive rules for performance, SEO, and security
+- **TypeScript**: Strict configuration for type safety
+- **Pre-commit Hooks**: Automatic linting and type checking
+- **VSCode Settings**: Consistent development environment
+- **See**: [ESLINT_CONFIG.md](./ESLINT_CONFIG.md) for complete setup
 
 ### Week 2-3: Authentication (Simplified)
 
