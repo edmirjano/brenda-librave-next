@@ -1,0 +1,10 @@
+# Generated files
+src/generated/
+node_modules/
+.next/
+out/
+
+# Config files
+*.config.js
+*.config.mjs
+*.config.ts
