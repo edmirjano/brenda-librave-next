@@ -2,6 +2,24 @@
 
 Enhanced features and AI integration after MVP launch and validation.
 
+## 🌟 **NEW FEATURES OVERVIEW**
+
+### **Community & Content**
+- **📝 User-Generated Blogs**: Users can write and publish blog posts with moderation
+- **💬 Book Discussion Forum**: Dedicated forum for book discussions and thoughts
+- **📧 Newsletter System**: Complete newsletter management with campaigns and analytics
+- **🎁 Book Gifting Platform**: Users can gift used books to others in the community
+- **💰 Coupon System**: Flexible discount and promotional system
+- **🔖 Book Previews**: Sample chapters, audio samples, and reading estimates
+- **📚 Subscriptions**: Monthly book boxes and premium memberships
+- **💖 Wishlist & Collections**: Personal book organization and sharing
+
+### **Enhanced Discovery**
+- **🎯 Advanced Recommendations**: Simple algorithmic + AI-powered (Phase 3)
+- **🏷️ Smart Categorization**: Enhanced tagging and content organization
+- **🔍 Albanian Literature Hub**: Focused on Albanian authors and cultural content
+- **📖 Reading Progress**: Track reading journey and share achievements
+
 ## 📋 Phase 2: Enhanced Features (4-6 weeks)
 
 **Timeline**: Start after MVP launch and initial user feedback
@@ -58,6 +76,24 @@ npm install @next-auth/providers
 
 ### Week 3-4: Enhanced Blog & Community
 
+#### Enhanced User Blog Features
+```typescript
+// Enhanced user blog capabilities
+interface UserBlogFeatures {
+  drafts: boolean;           // Save drafts
+  scheduling: boolean;       // Schedule publication
+  analytics: boolean;        // View post analytics
+  monetization: boolean;     // Future: monetize popular posts
+}
+```
+
+#### Community Features
+- **Blog Post Likes**: Users can like/react to posts
+- **User Blog Analytics**: Views, likes, comments tracking
+- **Featured User Posts**: Promote quality user content
+- **Blog Post Collections**: Curated reading lists
+- **Author Profiles**: Dedicated author pages with their posts
+
 #### Comment System
 ```prisma
 // Already defined in DATABASE_SCHEMA.md
@@ -72,12 +108,40 @@ model Comment {
 - **Social Sharing**: Share blog posts on social media
 - **Newsletter Integration**: Email subscription for blog updates
 - **Related Posts**: Algorithm-based content suggestions
+- **User Blog Dashboard**: Personal blog management interface
 
 #### SEO Enhancements
 - **Advanced Meta Tags**: Open Graph, Twitter Cards
 - **Structured Data**: JSON-LD for better search results
 - **Sitemap Generation**: Dynamic XML sitemap
 - **Internal Linking**: Automated related content suggestions
+
+### Week 4: Book Discussion Forum
+
+#### Forum Implementation
+```typescript
+// Basic forum structure
+interface ForumFeatures {
+  categories: string[];      // Book genres, general discussion, etc.
+  bookLinked: boolean;       // Link discussions to specific books
+  moderation: boolean;       // Content moderation tools
+  threading: boolean;        // Threaded discussions
+}
+```
+
+#### Features
+- **Book-Specific Discussions**: Link forum topics to specific books
+- **Category Organization**: Organize discussions by genres, topics
+- **Moderation Tools**: Admin tools for managing community content
+- **User Reputation**: Basic reputation system for active contributors
+- **Search & Filter**: Find discussions about specific books or topics
+
+#### Forum Categories (Initial)
+- **📚 Albanian Literature**: Discussions about Albanian books and authors
+- **🌍 International Books**: Global literature discussions
+- **📖 Book Recommendations**: Personal recommendations and requests
+- **✍️ Writing & Authors**: Discussions about writing craft and authors
+- **📰 General Discussion**: Off-topic conversations
 
 ### Week 4-5: Enhanced Admin Dashboard
 
@@ -98,6 +162,50 @@ npm install @google-analytics/data
 - **SEO Tools**: Meta tag optimization suggestions
 - **Content Scheduling**: Publish posts at specific times
 - **Media Library**: Centralized image and document management
+
+### Week 5: Community Features - Gifting & Coupons
+
+#### Book Gifting Platform
+```typescript
+interface BookGiftingFeatures {
+  usedBookGifts: boolean;    // Gift used books to community
+  anonymousGifts: boolean;   // Gift without revealing identity
+  targetedGifts: boolean;    // Gift to specific users
+  publicGifts: boolean;      // Make gifts available to anyone
+  giftMessages: boolean;     // Personal messages with gifts
+}
+```
+
+#### Features
+- **Used Book Marketplace**: Users can list books they want to gift
+- **Gift Targeting**: Gift to specific users or make available to community
+- **Condition Tracking**: Track book condition (New, Like New, Good, etc.)
+- **Shipping Integration**: Handle shipping for physical book gifts
+- **Gift Messages**: Personal messages with book gifts
+- **Community Board**: Public board showing available book gifts
+
+#### Coupon & Discount System
+```typescript
+interface CouponSystem {
+  types: 'percentage' | 'fixed_amount' | 'free_shipping' | 'bogo';
+  restrictions: {
+    minimumAmount?: number;
+    categories?: string[];
+    books?: string[];
+    userLimit?: number;
+    totalLimit?: number;
+  };
+  scheduling: boolean;       // Schedule coupon activation
+  tracking: boolean;         // Track usage and performance
+}
+```
+
+#### Features
+- **Flexible Discounts**: Percentage, fixed amount, free shipping, BOGO
+- **Smart Restrictions**: Category-specific, minimum purchase, user limits
+- **Usage Tracking**: Monitor coupon performance and fraud prevention
+- **Automatic Application**: Smart coupon application at checkout
+- **Promotional Campaigns**: Seasonal campaigns and targeted offers
 
 ### Week 5-6: Performance & User Experience
 
@@ -322,6 +430,11 @@ const aiRecommendations = {
 - [ ] Blog engagement (comments, shares) increase by 50%
 - [ ] Cart abandonment rate reduced by 20%
 - [ ] Admin efficiency improved (measured by time to complete tasks)
+- [ ] User-generated blog posts > 20% of total blog content
+- [ ] Forum discussions active (> 10 topics per week)
+- [ ] Newsletter engagement rate > 15%
+- [ ] Book gifting feature used by > 5% of users
+- [ ] Coupon system driving > 10% of sales
 
 ### Phase 3 Success Criteria
 - [ ] AI recommendations driving > 15% of sales

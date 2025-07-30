@@ -30,8 +30,10 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - User library management
 - Reading progress tracking
 
-### ✍️ Blog
-- Articles and book reviews
+### ✍️ Blog & Community
+- Admin articles and book reviews
+- **User-generated blog posts** with moderation workflow
+- **Book discussion forum** with threaded conversations
 - Comment system with moderation
 - Rich text editor for content creation
 - SEO-optimized blog posts
@@ -53,8 +55,11 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - Reading history and wishlist
 - Two-factor authentication (passkeys/WebAuthn)
 
-### 📧 Newsletter & Notifications
-- Email newsletter subscription system
+### 📧 Newsletter & Community Features
+- **Newsletter management system** with campaigns and analytics
+- **Book gifting platform** for sharing used books in the community
+- **Coupon system** with flexible discounts and promotional campaigns
+- **Wishlist and collections** for personal book organization
 - Push notifications for new books and blog posts
 - Personalized content recommendations
 - GDPR-compliant communication preferences

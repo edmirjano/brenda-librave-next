@@ -146,17 +146,21 @@ PAYPAL_CLIENT_SECRET="your-paypal-secret"
 ### Week 6-7: Simple Blog System
 
 #### Blog Features (Minimal)
-- Create and edit blog posts
+- Admin blog post creation and editing
+- User blog post creation (with moderation)
 - Simple rich text editor
 - Blog post listing and detail pages
 - Basic SEO (meta tags)
+- Content moderation workflow
 
 #### Features Delivered
-- ✅ Blog post creation and editing
+- ✅ Admin blog post creation and editing
+- ✅ User blog post creation with moderation
 - ✅ Blog listing and detail pages
 - ✅ Basic SEO optimization
 - ✅ Simple rich text editing
 - ✅ Newsletter subscription (basic signup)
+- ✅ Content moderation system
 
 #### Deferred to Phase 2
 - ❌ Comment system
@@ -165,6 +169,8 @@ PAYPAL_CLIENT_SECRET="your-paypal-secret"
 - ❌ Content scheduling
 - ❌ Newsletter campaign management
 - ❌ Advanced newsletter analytics
+- ❌ Blog post likes/reactions
+- ❌ Advanced user blog features
 
 ### Week 7-8: Polish & Launch Preparation
 

@@ -82,6 +82,8 @@ model User {
   subscriptions   Subscription[]
   wishlist        Wishlist[]
   collections     BookCollection[]
+  moderatedPosts  BlogPost[]   @relation("ModeratedPosts")
+  blogPostLikes   BlogPostLike[]
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -266,34 +268,73 @@ enum PaymentMethod {
 
 // Blog System
 model BlogPost {
-  id              String    @id @default(cuid())
+  id              String        @id @default(cuid())
   title           String
-  slug            String    @unique
-  content         String    @db.Text
+  slug            String        @unique
+  content         String        @db.Text
   excerpt         String?
   authorId        String
   categoryId      String?
   featuredImage   String?
-  published       Boolean   @default(false)
+  published       Boolean       @default(false)
   publishedAt     DateTime?
-  language        Language  @default(SQ)
+  language        Language      @default(SQ)
+  type            BlogPostType  @default(ADMIN)
+  status          BlogPostStatus @default(DRAFT)
+  moderatedAt     DateTime?
+  moderatedById   String?
+  rejectionReason String?
+  views           Int           @default(0)
+  likes           Int           @default(0)
   
   // SEO fields
   metaTitle       String?
   metaDescription String?
   
   // Relations
-  author          User      @relation(fields: [authorId], references: [id])
+  author          User          @relation(fields: [authorId], references: [id])
   category        BlogCategory? @relation(fields: [categoryId], references: [id])
+  moderatedBy     User?         @relation("ModeratedPosts", fields: [moderatedById], references: [id])
   tags            BlogPostTag[]
   comments        Comment[]
+  likes_relation  BlogPostLike[]
   
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   
   @@index([published])
   @@index([authorId])
   @@index([categoryId])
+  @@index([type])
+  @@index([status])
+}
+
+model BlogPostLike {
+  id       String   @id @default(cuid())
+  userId   String
+  postId   String
+  
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post     BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, postId])
+  @@index([postId])
+}
+
+enum BlogPostType {
+  ADMIN     // Official blog posts by admin/staff
+  USER      // User-generated content
+  FEATURED  // Featured user posts
+}
+
+enum BlogPostStatus {
+  DRAFT
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  PUBLISHED
 }
 
 model BlogCategory {
