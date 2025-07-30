@@ -1,0 +1,210 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User Management
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  password        String?   // nullable for social auth
+  name            String
+  role            Role      @default(USER)
+  language        Language  @default(SQ)
+  newsletter      Boolean   @default(false)
+  emailVerified   DateTime?
+  image           String?
+  
+  // Relations
+  accounts        Account[]
+  sessions        Session[]
+  orders          Order[]
+  cartItems       CartItem[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Book Catalog
+model Book {
+  id              String    @id @default(cuid())
+  title           String
+  author          String
+  description     String
+  isbn            String?   @unique
+  categoryId      String
+  price           Float?    // Physical book price
+  digitalPrice    Float?    // Digital book price
+  inventory       Int       @default(0)
+  hasDigital      Boolean   @default(false)
+  coverImage      String?   // WebP format
+  images          String    @default("[]") // JSON array of additional images
+  publishedDate   DateTime?
+  language        Language  @default(SQ)
+  featured        Boolean   @default(false)
+  active          Boolean   @default(true)
+  
+  // Relations
+  category        Category  @relation(fields: [categoryId], references: [id])
+  cartItems       CartItem[]
+  orderItems      OrderItem[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String
+  nameEn      String?
+  slug        String  @unique
+  description String?
+  active      Boolean @default(true)
+  
+  books       Book[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Shopping Cart & Orders
+model CartItem {
+  id       String @id @default(cuid())
+  userId   String
+  bookId   String
+  quantity Int    @default(1)
+  isDigital Boolean @default(false)
+  
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book     Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, bookId, isDigital])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  orderNumber     String      @unique
+  status          OrderStatus @default(PENDING)
+  total           Float
+  subtotal        Float
+  tax             Float       @default(0)
+  shippingCost    Float       @default(0)
+  paymentMethod   String
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentId       String?     // PayPal payment ID
+  
+  // Shipping Info
+  shippingName    String
+  shippingEmail   String
+  shippingAddress String
+  shippingCity    String
+  shippingZip     String
+  shippingCountry String
+  
+  // Relations
+  user            User @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  bookId      String
+  quantity    Int
+  price       Float   // Price at time of order
+  isDigital   Boolean @default(false)
+  
+  order       Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  book        Book  @relation(fields: [bookId], references: [id])
+  
+  createdAt   DateTime @default(now())
+}
+
+// Newsletter
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  active    Boolean  @default(true)
+  language  Language @default(SQ)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Enums
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Language {
+  SQ
+  EN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
