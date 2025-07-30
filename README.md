@@ -97,12 +97,14 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - **Localized content**: Full UI and content localization
 
 ### Deployment & Infrastructure
-- **Platform**: Netlify (with Next.js support)
-- **Database**: Neon PostgreSQL (serverless, auto-scaling)
-- **Development**: SQLite for local development
-- **Security**: Netlify Edge Functions + Cloudflare (DDoS protection, SSL)
-- **CI/CD**: Netlify auto-deployment from Git
-- **Monitoring**: Internal analytics (GDPR compliant)
+- **Platform**: Netlify with Next.js optimization and Edge Functions
+- **Database**: Neon PostgreSQL (serverless, auto-scaling, optimized for Netlify)
+- **Development**: Local PostgreSQL for development consistency
+- **CDN**: Netlify's global CDN with edge optimization for Albanian diaspora
+- **Storage**: Netlify Large Media + S3 for eBooks and large assets
+- **Security**: Netlify Edge Functions, automatic HTTPS, security headers
+- **CI/CD**: Netlify auto-deployment with performance optimization
+- **Monitoring**: Netlify Analytics + GA4 integration
 
 ### AI & Machine Learning
 - **Brain.js**: JavaScript neural networks for book recommendations
@@ -303,6 +305,7 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - **[Database Schema](./DATABASE_SCHEMA.md)**: Complete PostgreSQL schema with Prisma
 - **[Phase 2 & 3 Plans](./PHASE2_3_IMPLEMENTATION.md)**: Enhanced features and AI integration
 - **[ESLint Configuration](./ESLINT_CONFIG.md)**: Performance, SEO, and security-focused code quality
+- **[Netlify Deployment](./NETLIFY_DEPLOYMENT.md)**: Complete Netlify deployment guide with optimizations
 - **[Full Implementation](./IMPLEMENTATION.md)**: Complete technical strategy
 
 ---

@@ -340,12 +340,13 @@ interface BlogPost {
 - **Performance Tests**: Lighthouse CI integration
 
 #### Deployment Setup (Single Next.js App)
-- **Platform**: Vercel (recommended) or VPS deployment
-- **Production Build**: Optimized Next.js build with static optimization
-- **Database**: MongoDB Atlas (cloud) or self-hosted MongoDB
-- **Storage**: AWS S3 or compatible for eBooks and media
-- **CDN**: Cloudflare for security and performance
-- **SSL**: Automatic HTTPS with deployment platform
+- **Platform**: Netlify with Next.js plugin and Edge Functions
+- **Production Build**: Optimized Next.js build with Netlify optimizations
+- **Database**: Neon PostgreSQL (serverless, optimized for Netlify Functions)
+- **Storage**: Netlify Large Media + S3 for large files (eBooks)
+- **CDN**: Netlify's global CDN with edge optimization
+- **SSL**: Automatic HTTPS with Netlify
+- **See**: [NETLIFY_DEPLOYMENT.md](./NETLIFY_DEPLOYMENT.md) for complete setup
 
 ## 📋 Phase 2 & 3: Enhanced Features & AI Integration
 

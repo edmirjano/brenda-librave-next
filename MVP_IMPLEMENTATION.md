@@ -49,6 +49,10 @@ npm install --save-dev \
   eslint-plugin-simple-import-sort \
   eslint-config-prettier \
   eslint-import-resolver-typescript
+
+# Netlify Dependencies (see NETLIFY_DEPLOYMENT.md)
+npm install --save-dev netlify-cli @netlify/plugin-nextjs
+npm install @netlify/functions
 ```
 
 #### Database Setup
@@ -245,10 +249,12 @@ PAYPAL_CLIENT_SECRET="your-paypal-secret"
 - Local file storage for images
 
 ### Production Environment
-- Vercel or Netlify deployment
-- Neon PostgreSQL database
-- Cloudflare CDN for images
-- Proper environment variables
+- Netlify deployment with automatic builds
+- Neon PostgreSQL database (serverless, perfect for Netlify)
+- Netlify CDN + Edge Functions for global performance
+- S3-compatible storage for large files (eBooks)
+- Netlify Large Media for images
+- Proper environment variables and security headers
 
 ## 📈 Phase 2 Planning (After MVP)
 
