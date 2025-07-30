@@ -85,8 +85,9 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 - **API**: Next.js API Routes
 
 ### Database & Storage
-- **Database**: PostgreSQL (Neon serverless for production, local for development)
-- **ORM**: Prisma for type-safe database operations
+- **Development Database**: SQLite for fast local development
+- **Production Database**: Neon PostgreSQL (serverless, auto-scaling)
+- **ORM**: Prisma for type-safe database operations and seamless SQLite → PostgreSQL migration
 - **Caching**: Redis (production) / In-memory (development)
 - **File Storage**: S3-compatible solution for eBooks and media
 - **Media**: WebP images, optimized with Next.js Image component
@@ -98,8 +99,9 @@ Brënda Librave creates a welcoming digital space that evokes the feeling of a c
 
 ### Deployment & Infrastructure
 - **Platform**: Netlify with Next.js optimization and Edge Functions
-- **Database**: Neon PostgreSQL (serverless, auto-scaling, optimized for Netlify)
-- **Development**: Local PostgreSQL for development consistency
+- **Production Database**: Neon PostgreSQL (serverless, auto-scaling, optimized for Netlify)
+- **Development Database**: SQLite for fast local development and testing
+- **Migration Strategy**: Seamless SQLite → PostgreSQL transition via Prisma
 - **CDN**: Netlify's global CDN with edge optimization for Albanian diaspora
 - **Storage**: Netlify Large Media + S3 for eBooks and large assets
 - **Security**: Netlify Edge Functions, automatic HTTPS, security headers

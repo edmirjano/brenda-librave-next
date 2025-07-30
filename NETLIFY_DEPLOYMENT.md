@@ -133,7 +133,46 @@ Complete deployment strategy for Netlify platform with Next.js optimization and 
 }
 ```
 
-## 🗄️ Database Configuration for Netlify
+## 🗄️ Database Strategy: SQLite → PostgreSQL
+
+### Development vs Production Database Strategy
+
+**Why SQLite for Development?**
+- ✅ **Zero Setup**: No database server installation required
+- ✅ **Fast Development**: Instant startup, no connection overhead
+- ✅ **Portable**: Database file can be easily shared and backed up
+- ✅ **Testing**: Perfect for unit tests and CI/CD pipelines
+- ✅ **Offline Development**: Work without internet connection
+
+**Why Neon PostgreSQL for Production?**
+- ✅ **Serverless**: Perfect match for Netlify Functions
+- ✅ **Auto-scaling**: Handles traffic spikes automatically
+- ✅ **Global Performance**: Edge regions for Albanian diaspora
+- ✅ **Advanced Features**: Full-text search, JSON support, complex queries
+- ✅ **Backup & Recovery**: Automated backups and point-in-time recovery
+
+### Prisma Configuration for Dual Database Support
+
+#### Dynamic Database Provider
+```typescript
+// lib/db/config.ts
+const databaseProvider = process.env.NODE_ENV === 'production' ? 'postgresql' : 'sqlite';
+
+export const prismaConfig = {
+  provider: databaseProvider,
+  url: process.env.DATABASE_URL,
+  // SQLite specific optimizations
+  ...(databaseProvider === 'sqlite' && {
+    connectionLimit: 1,
+    pool: { min: 0, max: 1 }
+  }),
+  // PostgreSQL specific optimizations
+  ...(databaseProvider === 'postgresql' && {
+    connectionLimit: 5,
+    pool: { min: 0, max: 5 }
+  })
+};
+```
 
 ### Neon PostgreSQL Setup
 ```typescript
@@ -166,7 +205,68 @@ process.on('beforeExit', async () => {
 export { prisma };
 ```
 
-### Environment Variables (.env.example)
+### Database Migration Workflow
+
+#### Development Workflow
+```bash
+# 1. Develop with SQLite
+npm run dev
+
+# 2. Create migration
+npx prisma migrate dev --name add_user_feature
+
+# 3. Test locally
+npm run test
+
+# 4. Commit and push (triggers Netlify deployment)
+git add .
+git commit -m "Add user feature"
+git push origin main
+```
+
+#### Automatic Production Migration
+```bash
+# netlify.toml handles this automatically:
+[build]
+  command = "npm run db:migrate && npm run build"
+
+# This runs:
+# 1. npx prisma migrate deploy (applies migrations to Neon PostgreSQL)
+# 2. npx prisma generate (updates Prisma client)
+# 3. npm run build (builds Next.js app)
+```
+
+#### Migration Compatibility
+```prisma
+// Examples of SQLite → PostgreSQL compatible schemas:
+
+// ✅ Compatible data types
+model User {
+  id        String   @id @default(cuid())  // Works in both
+  email     String   @unique               // Works in both
+  name      String                         // Works in both
+  createdAt DateTime @default(now())       // Works in both
+}
+
+// ✅ Compatible indexes
+@@index([email])          // Works in both
+@@unique([email, name])   // Works in both
+
+// ⚠️ Avoid SQLite-specific features:
+// - ALTER TABLE limitations
+// - Foreign key constraint names
+// - Specific JSON operators
+```
+
+### Environment Variables
+
+#### Local Development (.env.local)
+```env
+# Database (SQLite for development)
+DATABASE_URL="file:./dev.db"
+```
+
+#### Production (Netlify Environment Variables)
 ```env
 # Database (Neon PostgreSQL)
 DATABASE_URL="postgresql://username:password@ep-cool-name.us-east-1.aws.neon.tech/neondb?sslmode=require"
@@ -546,9 +646,11 @@ export const monitorNetlifyPerformance = () => {
 - **CDN Performance**: Global CDN with edge locations
 
 ### Database Optimization
-- **Connection Pooling**: Optimized for Netlify Functions
+- **Development**: SQLite for fast local development and testing
+- **Production**: Neon PostgreSQL optimized for Netlify Functions
+- **Connection Pooling**: Optimized for serverless architecture
 - **Query Caching**: Redis-like caching at the edge
-- **Migration Strategy**: Automated database migrations
+- **Migration Strategy**: Automated SQLite → PostgreSQL deployment
 
 ### SEO Benefits
 - **Fast Global Loading**: Netlify's CDN for international Albanian diaspora

@@ -11,9 +11,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+// Note: For production deployment on Netlify, this will be automatically 
+// configured to use PostgreSQL via Neon. See NETLIFY_DEPLOYMENT.md for setup.
 
 // Authentication Models (NextAuth.js compatible)
 model Account {
@@ -789,29 +792,41 @@ model Setting {
 
 ## 🔧 Database Setup Commands
 
-### Development Setup
+### Development Setup (SQLite)
 ```bash
 # Initialize Prisma
 npx prisma init
 
+# Set up local SQLite database
+echo 'DATABASE_URL="file:./dev.db"' > .env
+
 # Generate Prisma client
 npx prisma generate
 
-# Run migrations
+# Run migrations for SQLite
 npx prisma migrate dev --name init
 
 # Seed database (if seed script exists)
 npx prisma db seed
 ```
 
-### Production Setup
+### Production Setup (Neon PostgreSQL on Netlify)
 ```bash
-# Deploy migrations to production
+# Set production database URL in Netlify environment
+# DATABASE_URL="postgresql://username:password@ep-name.region.aws.neon.tech/dbname?sslmode=require"
+
+# Deploy migrations to Neon PostgreSQL
 npx prisma migrate deploy
 
 # Generate client for production
 npx prisma generate
 ```
+
+### Database Strategy
+- **Local Development**: SQLite for simplicity and speed
+- **Production (Netlify)**: Neon PostgreSQL for scalability and performance
+- **Schema Compatibility**: Prisma handles differences automatically
+- **Migration Strategy**: Develop locally with SQLite, deploy to PostgreSQL
 
 ## 📊 Database Indexing Strategy
 
@@ -853,9 +868,10 @@ npx prisma generate
 - Use database-level constraints for data integrity
 
 ### Scaling Preparation
-- Designed for vertical scaling initially
-- Ready for read replicas in Phase 4
-- Optimized for Neon PostgreSQL serverless architecture
+- **Development**: SQLite for fast local development and testing
+- **Production**: Neon PostgreSQL serverless architecture for automatic scaling
+- **Migration Path**: Seamless transition from SQLite to PostgreSQL via Prisma
+- **Future Scaling**: Ready for read replicas and connection pooling in Phase 4
 
 ### Data Retention
 - Analytics events: 2 years (configurable)

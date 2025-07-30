@@ -56,20 +56,25 @@ npm install @netlify/functions
 ```
 
 #### Database Setup
-- Set up Neon PostgreSQL (production) and local PostgreSQL (development)
+- **Development**: Set up SQLite for fast local development
+- **Production**: Configure Neon PostgreSQL for Netlify deployment
 - Implement Prisma schema (see DATABASE_SCHEMA.md)
-- Create initial migration
+- Create initial migration (SQLite → PostgreSQL compatible)
 - Set up database seeding for categories and sample books
 
 #### Environment Configuration
 ```env
-# .env.local
-DATABASE_URL="postgresql://..."
+# .env.local (Development)
+DATABASE_URL="file:./dev.db"
 NEXTAUTH_SECRET="your-secret"
 NEXTAUTH_URL="http://localhost:3000"
 NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
 PAYPAL_CLIENT_ID="your-paypal-client-id"
 PAYPAL_CLIENT_SECRET="your-paypal-secret"
+
+# Production (Netlify Environment Variables)
+# DATABASE_URL="postgresql://user:pass@ep-name.region.aws.neon.tech/db?sslmode=require"
+# NEXTAUTH_URL="https://brendalibrave.netlify.app"
 ```
 
 #### Code Quality Setup
@@ -244,16 +249,18 @@ PAYPAL_CLIENT_SECRET="your-paypal-secret"
 ## 🚀 Deployment Strategy
 
 ### Development Environment
-- Local PostgreSQL database
+- **SQLite database** for fast local development
 - Next.js development server
 - Local file storage for images
+- Netlify CLI for testing edge functions locally
 
 ### Production Environment
 - Netlify deployment with automatic builds
-- Neon PostgreSQL database (serverless, perfect for Netlify)
+- **Neon PostgreSQL database** (serverless, auto-scaling, perfect for Netlify)
 - Netlify CDN + Edge Functions for global performance
 - S3-compatible storage for large files (eBooks)
 - Netlify Large Media for images
+- Automatic migration from SQLite schema to PostgreSQL
 - Proper environment variables and security headers
 
 ## 📈 Phase 2 Planning (After MVP)
