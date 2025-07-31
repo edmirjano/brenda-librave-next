@@ -1,320 +1,361 @@
-# Brënda Librave ("Inside Books")
+# 📚 Brënda Librave - Albanian Bookshop
 
-A modern, responsive full-stack web application designed as a library-inspired bookshop and blog, built entirely with **Next.js** for both frontend and backend functionality.
+> **"Inside Books"** - Your Albanian online bookstore for physical and digital books
 
-## 🎯 Project Vision
+A modern, mobile-first web application built with Next.js 14+ specifically designed for Albanian book lovers worldwide. Features Albanian Lek pricing, bilingual support (Albanian/English), and Apple Liquid Glass design aesthetics.
 
-Brënda Librave creates a welcoming digital space that evokes the feeling of a cozy, modern library or bookstore. The platform combines commerce, community, and personalized discovery to provide a seamless experience for book lovers.
+## 🎯 Project Overview
 
-## 🏗️ Architecture
+**Brënda Librave** is a comprehensive Albanian bookshop platform that combines:
+- 📚 Physical and digital book sales
+- 💰 Albanian Lek (ALL) and Euro (EUR) currency support  
+- 🌍 Albanian/English internationalization
+- 📱 Mobile-first design with Apple Liquid Glass aesthetics
+- 🛒 Complete e-commerce functionality
+- ✍️ Blog system with user-generated content
+- 👥 Community features and book discussions
+- 🎛️ Comprehensive admin dashboard
 
-**Full-Stack Next.js Application**
-- Single Next.js application handling both frontend and backend
-- API routes (`/app/api/` or `/pages/api/`) for backend logic
-- Server-side rendering (SSR) and static generation (SSG) for optimal performance
-- Shared TypeScript types between frontend and backend components
+## 🚀 Quick Start
 
-## 🚀 Core Features
+### Prerequisites
 
-### 📚 Bookshop
-- Browse and search physical books with advanced filtering
-- Shopping cart and secure checkout process
-- PayPal payment integration
-- Order tracking and history
-- Inventory management
+- **Node.js** 18+ 
+- **npm** 9+
+- **Git**
 
-### 📱 eBooks
-- Digital book downloads with secure delivery
-- Multiple format support (PDF, EPUB)
-- S3-compatible storage for digital assets
-- User library management
-- Reading progress tracking
+### Installation
 
-### ✍️ Blog & Community
-- Admin articles and book reviews
-- **User-generated blog posts** with moderation workflow
-- **Book discussion forum** with threaded conversations
-- Comment system with moderation
-- Rich text editor for content creation
-- SEO-optimized blog posts
-- Social sharing capabilities
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd brenda-librave-next
+   ```
 
-### 🤖 AI Book Recommender
-- **Brain.js Neural Networks**: JavaScript-based recommendation engine
-- **Collaborative Filtering**: Recommendations based on user behavior patterns
-- **Content-Based Filtering**: Suggestions based on book metadata and preferences
-- **Hybrid Approach**: Combines user behavior with content similarity
-- **Real-time Training**: Models improve automatically from user interactions
-- **Privacy-First**: All AI processing happens within your infrastructure
-- Direct purchase/download links from recommendations
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-### 👤 User Management
-- Multi-platform authentication (Email, Google, Apple)
-- JWT authentication with refresh tokens
-- User profiles and reading preferences
-- Reading history and wishlist
-- Two-factor authentication (passkeys/WebAuthn)
+3. **Set up environment variables**
+   ```bash
+   # Copy the example file (when available)
+   cp .env.example .env.local
+   
+   # Or create .env.local manually with:
+   echo 'DATABASE_URL="file:./dev.db"' > .env.local
+   echo 'NEXTAUTH_SECRET="your-development-secret-key"' >> .env.local
+   echo 'NEXTAUTH_URL="http://localhost:3000"' >> .env.local
+   echo 'NODE_ENV="development"' >> .env.local
+   ```
 
-### 📧 Newsletter & Community Features
-- **Newsletter management system** with campaigns and analytics
-- **Book gifting platform** for sharing used books in the community
-- **Coupon system** with flexible discounts and promotional campaigns
-- **Wishlist and collections** for personal book organization
-- Push notifications for new books and blog posts
-- Personalized content recommendations
-- GDPR-compliant communication preferences
+4. **Set up the database**
+   ```bash
+   # Generate Prisma client
+   npm run db:generate
+   
+   # Push schema to SQLite database
+   npm run db:push
+   ```
 
-### 🎛️ Admin Dashboard
-- Content management (books, blog posts)
-- User management and analytics
-- Order processing and inventory control
-- **Embedded Google Analytics**: Real-time GA4 dashboards with iframe integration
-- **Business Intelligence**: Custom analytics views with GA4 API integration
-- **Live Metrics**: Real-time user activity and sales monitoring
-- Internal analytics and reporting
-- Moderation tools
-- Advanced admin workflows and bulk operations
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-## 🛠️ Technical Stack
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-### Frontend & Backend
-- **Framework**: Next.js 14+ (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS (exclusive - no custom CSS)
-- **Authentication**: NextAuth.js with JWT
-- **API**: Next.js API Routes
+You should see the Albanian welcome page: "Mirë se vini në Brënda Librave" 🇦🇱
 
-### Database & Storage
-- **Development Database**: SQLite for fast local development
-- **Production Database**: Neon PostgreSQL (serverless, auto-scaling)
-- **ORM**: Prisma for type-safe database operations and seamless SQLite → PostgreSQL migration
-- **Caching**: Redis (production) / In-memory (development)
-- **File Storage**: S3-compatible solution for eBooks and media
-- **Media**: WebP images, optimized with Next.js Image component
+## 🧪 Testing
 
-### Internationalization
-- **Languages**: Albanian, English
-- **Library**: next-intl
-- **Localized content**: Full UI and content localization
+This project follows strict quality standards with comprehensive testing:
 
-### Deployment & Infrastructure
-- **Platform**: Netlify with Next.js optimization and Edge Functions
-- **Production Database**: Neon PostgreSQL (serverless, auto-scaling, optimized for Netlify)
-- **Development Database**: SQLite for fast local development and testing
-- **Migration Strategy**: Seamless SQLite → PostgreSQL transition via Prisma
-- **CDN**: Netlify's global CDN with edge optimization for Albanian diaspora
-- **Storage**: Netlify Large Media + S3 for eBooks and large assets
-- **Security**: Netlify Edge Functions, automatic HTTPS, security headers
-- **CI/CD**: Netlify auto-deployment with performance optimization
-- **Monitoring**: Netlify Analytics + GA4 integration
+### Run Tests
 
-### AI & Machine Learning
-- **Brain.js**: JavaScript neural networks for book recommendations
-- **Implementation**: Server-side processing in Next.js API routes with client-side inference capability
-- **Privacy**: All AI processing happens within your infrastructure, no external API dependencies
-- **Scalability**: Models can be trained periodically and cached for fast recommendations
+```bash
+# Unit tests with Jest
+npm test
 
-## 🔒 Security Features
+# Unit tests with coverage
+npm run test:coverage
 
-### Data Protection
-- **Encryption**: TLS 1.3 for data in transit
-- **Database**: Encryption at rest for sensitive data
-- **Authentication**: JWT with refresh token rotation
-- **Authorization**: Role-based access control (RBAC)
+# End-to-end tests with Playwright
+npm run test:e2e
 
-### Best Practices
-- Input validation and sanitization
-- OWASP security guidelines compliance
-- Regular security audits
-- Secure coding practices
-- CORS and CSP configuration
+# All quality checks
+npm run quality-gate
+```
 
-### Privacy Compliance
-- **GDPR**: Full compliance with data protection regulations
-- **Analytics**: Google Analytics 4 with user consent management and data minimization
-- **Consent**: Comprehensive cookie and data processing consent with granular controls
-- **Rights**: User data export and deletion capabilities for all collected data
-- **Anonymization**: IP anonymization and configurable data retention policies
+### Test Requirements
 
-## 🌐 Domains & Environments
+- ✅ **80% test coverage** minimum
+- ✅ **All tests must pass** before deployment
+- ✅ **ESLint security rules** enforced
+- ✅ **TypeScript strict mode** enabled
 
-### Production
-- **Frontend/Backend**: [brendalibrave.al](https://brendalibrave.al)
-- **API Prefix**: `/api/` (same domain)
+### Example Test Commands
 
-### Testing
-- **Frontend/Backend**: [test.brendalibrave.al](https://test.brendalibrave.al)
-- **API Prefix**: `/api/` (same domain)
+```bash
+# Run tests in watch mode
+npm run test:watch
 
-## 📊 Analytics & Performance
+# Run specific test file
+npm test -- health.test.ts
 
-### Google Analytics 4 Integration
-- Enhanced e-commerce tracking for bookshop functionality
-- User engagement and behavior analysis
-- Content performance metrics (blog posts, book pages)
-- AI recommendation effectiveness tracking (Phase 3)
-- Multi-language user journey analysis
-- GDPR-compliant consent management with cookie controls
-- Custom dimensions for book categories, user types, and content language
-- Revenue attribution and customer lifetime value tracking
+# Generate coverage report
+npm run test:coverage
 
-### Internal Analytics
-- User behavior tracking complementing GA4 data
-- Sales and conversion metrics with detailed attribution
-- Content performance analysis and reading pattern insights
-- Business intelligence dashboard with GA4 API integration
-- Real-time performance monitoring and error tracking
+# Run E2E tests on specific browser
+npx playwright test --project=chromium
+```
 
-### Performance Optimization
-- Next.js Image component for optimized images
-- Code splitting and lazy loading
-- Redis caching for API responses
-- CDN for static assets
-- Database query optimization
+## 🛠️ Development
 
-## 🎨 Design Requirements
+### Code Quality
 
-### UI/UX Principles
-- **Styling**: Tailwind CSS exclusively (no custom CSS)
-- **Theme**: Library/bookstore ambiance with modern aesthetics
-- **Responsive**: Mobile-first web design with desktop optimization
-- **Progressive Enhancement**: Enhanced features for larger screens
-- **Animations**: Smooth transitions using Tailwind and modern libraries
-- **Accessibility**: WCAG 2.1 AA compliance across all devices
-- **Touch Optimization**: Optimized touch targets for mobile web users
+```bash
+# Lint and fix code
+npm run lint:fix
 
-### Media Standards
-- **Images**: WebP format exclusively
-- **Videos**: WebM format exclusively
-- **Optimization**: Next.js Image component for all images
-- **Performance**: Lazy loading and progressive enhancement
+# Type checking
+npm run type-check
 
-## 🔄 Integration APIs
+# Run all quality checks
+npm run quality-gate
+```
 
-### Payment Processing
-- **Primary**: PayPal integration
-- **Features**: Recurring payments, refunds, currency support
-- **Security**: PCI DSS compliance
+### Database Operations
 
-### Authentication Providers
-- **Email**: Custom JWT implementation
-- **Google**: OAuth 2.0 integration
-- **Apple**: Sign in with Apple
-- **Two-Factor**: WebAuthn/passkeys support
+```bash
+# View database in browser
+npm run db:studio
 
-### External Services
-- **Email**: SMTP provider for newsletters
-- **Storage**: S3-compatible service
-- **CDN**: Cloudflare for asset delivery
-- **Analytics**: Google Analytics 4 with Google Tag Manager
-- **Monitoring**: Application performance monitoring with GA4 Core Web Vitals
+# Reset database
+npm run db:push --force-reset
 
-## 📈 Scalability Considerations
+# Create migration
+npm run db:migrate
+```
 
-### Current Architecture (Next.js Full-Stack)
-- **Single Application**: Next.js handling frontend and backend
-- **API Routes**: All backend logic in `/app/api/` directory
-- **Database**: PostgreSQL (Neon) in production, SQLite in development
-- **ORM**: Prisma for type-safe database operations
-- **Caching**: Redis (production) / In-memory (development)
-- **Deployment**: Netlify with automatic builds and deployments
+### Development Scripts
 
-### Future Scaling Path (When Needed)
-- **Horizontal Scaling**: Netlify Functions for compute-heavy operations
-- **Database Optimization**: Neon read replicas and connection pooling
-- **Microservices**: Extract specific domains (if traffic justifies complexity)
-- **CDN**: Netlify CDN + enhanced static asset delivery
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Check code quality
+npm run type-check   # TypeScript validation
+```
 
-## 🌍 Multilingual Support
+## 📁 Project Structure
 
-### Supported Languages
-- **Albanian**: Primary language for local market
-- **English**: International accessibility
-- **Implementation**: next-intl with dynamic locale switching
+```
+brenda-librave-next/
+├── src/
+│   ├── app/                 # Next.js 14 App Router
+│   │   ├── api/            # API routes
+│   │   │   └── health/     # Health check endpoint
+│   │   ├── globals.css     # Global styles with Albanian colors
+│   │   ├── layout.tsx      # Root layout with Albanian metadata
+│   │   └── page.tsx        # Homepage with Albanian content
+│   ├── components/         # Reusable React components
+│   ├── lib/               # Utility libraries
+│   │   └── logging/       # Pino structured logging
+│   ├── types/             # TypeScript type definitions
+│   └── __tests__/         # Unit and integration tests
+├── e2e/                   # Playwright end-to-end tests
+├── prisma/                # Database schema and migrations
+│   └── schema.prisma      # Prisma schema with Albanian-specific models
+├── docs/                  # Project documentation
+├── .eslintrc.json         # ESLint configuration with security rules
+├── jest.config.js         # Jest testing configuration
+├── playwright.config.ts   # Playwright E2E testing
+├── tailwind.config.ts     # Tailwind with Albanian color palette
+└── package.json           # Dependencies and scripts
+```
 
-### Localization Features
-- **Content**: All UI text and content
-- **Currency**: Multi-currency support
-- **Date/Time**: Locale-specific formatting
-- **SEO**: Localized URLs and meta tags
+## 🎨 Design System
 
-## 📝 Content Management
+### Albanian Cultural Colors
 
-### Book Management
-- Comprehensive book metadata
-- Multiple categories and tags
-- Inventory tracking
-- Pricing and promotions
-- Related book suggestions
+```css
+--albanian-red: #e41e20        /* Albanian flag red */
+--albanian-red-dark: #c41e3a   /* Darker red variant */
+--mountain-gray: #6b7280       /* Albanian mountains */
+--adriatic-blue: #0ea5e9       /* Adriatic Sea */
+--olive-green: #84cc16         /* Albanian olive trees */
+--golden-eagle: #f59e0b        /* Golden eagle */
+```
 
-### Blog System
-- Rich text content editor
-- SEO optimization tools
-- Comment moderation
-- Social media integration
-- Content scheduling
+### Mobile-First Approach
 
-## 🎯 Success Metrics
+- 📱 **Primary target**: Mobile users (Albanian diaspora)
+- 💻 **Progressive enhancement**: Desktop features
+- ⚡ **Performance**: < 3 second load times
+- ♿ **Accessibility**: WCAG 2.1 AA compliance
 
-### Business KPIs
-- Monthly active users (tracked via GA4 user engagement)
-- Conversion rates by traffic source and user segment
-- Average order value with product category breakdown
-- Customer lifetime value with attribution modeling
-- Content engagement rates and reading pattern analysis
-- AI recommendation effectiveness and click-through rates
-- Multi-language content performance and user preferences
+## 💰 Currency System
 
-### Technical Metrics
-- Page load performance
-- API response times
-- System uptime and reliability
-- Error rates and resolution times
-- Security incident tracking
+- **Primary**: Albanian Lek (ALL) - `1.500 L`
+- **Secondary**: Euro (EUR) - `€10.50`
+- **Conversion**: Admin-configurable exchange rates
+- **Display**: Shows both currencies with preference
 
-## 🔮 Future Expansion Opportunities
+## 🌍 Internationalization
 
-### Advanced Web Features & Integrations
-- **Enhanced PWA Experience**: Advanced web app capabilities with offline support and push notifications
-- **Voice Commerce**: Web-based voice search integration for book discovery
-- **AI Content Generation**: Automated book descriptions and personalized content creation
-- **Advanced ML Models**: Upgrade from Brain.js to TensorFlow.js or external AI services for complex NLP tasks
-- **Social Commerce**: Instagram Shopping and Facebook Marketplace integration
-- **Advanced Analytics**: Predictive customer behavior and inventory optimization
-- **Multi-Language Expansion**: Italian, German, French for European market growth
-- **Desktop Experience**: Optimized large-screen layouts and keyboard navigation
+- **Albanian (sq)**: Primary language - default
+- **English (en)**: Secondary language for diaspora
+- **URLs**: `/sq/libra/...` and `/en/books/...`
+- **Content**: Fully localized including currency
 
-### Business Intelligence & Operations
-- **Embedded Analytics**: Google Analytics 4 dashboard integration in admin interface
-- **Predictive Analytics**: Customer lifetime value and churn prediction models
-- **Advanced Segmentation**: RFM analysis and behavioral user cohorts
-- **Automated Marketing**: AI-driven email campaigns and retargeting strategies
-- **Financial Intelligence**: Real-time P&L reporting and inventory valuation
-- **Security & Compliance**: Advanced fraud detection and automated compliance monitoring
+## 📊 Monitoring & Error Tracking
 
-### Platform Ecosystem
-- **Partner Integrations**: Author platform connections and publisher APIs
-- **Affiliate Program**: Book blogger and influencer partnership system
-- **Community Features**: Virtual book clubs and author events platform
-- **Educational Tools**: Reading progress tracking and comprehension analytics
-- **Enterprise Solutions**: Bulk sales and institutional customer management
+### Health Check
+
+```bash
+# Check application health
+curl http://localhost:3000/api/health
+```
+
+Returns:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "service": "brenda-librave",
+  "environment": "development",
+  "uptime": 1234.56,
+  "memory": {
+    "used": 45,
+    "total": 128
+  }
+}
+```
+
+### Error Tracking
+
+- **Sentry**: Configured for error tracking
+- **Pino**: Structured logging
+- **Development**: Pretty-printed logs
+- **Production**: JSON structured logs
+
+## 🔒 Security
+
+### Security Features
+
+- ✅ **Security headers** (XSS, CSRF, etc.)
+- ✅ **Input validation** with Zod schemas
+- ✅ **Rate limiting** on API endpoints
+- ✅ **ESLint security rules** enforced
+- ✅ **Environment variable** validation
+
+### Security Testing
+
+```bash
+# Security audit
+npm audit
+
+# Security linting
+npm run lint -- --ext .ts,.tsx
+```
+
+## 🚀 Deployment
+
+### Phase 1 Deployment Checklist
+
+- ✅ Health check endpoint working
+- ✅ All tests passing (80%+ coverage)
+- ✅ ESLint security rules passing
+- ✅ TypeScript compilation successful
+- ✅ Database connection established
+- ✅ Error tracking configured
+- ✅ Mobile responsiveness verified
+
+### Production Environment
+
+- **Platform**: Netlify with Next.js optimization
+- **Database**: Neon PostgreSQL (serverless)
+- **Storage**: S3-compatible for eBooks
+- **CDN**: Global CDN for Albanian diaspora
+- **Monitoring**: Comprehensive health checks
+
+## 📋 Phase Development
+
+This is **Phase 1** of a multi-phase development approach:
+
+### ✅ Phase 1: Foundation (CURRENT)
+- Next.js 14+ setup with TypeScript
+- Database foundation with Prisma
+- Health monitoring and error tracking
+- Comprehensive testing setup
+- Security and code quality standards
+
+### 🔄 Upcoming Phases
+- **Phase 2**: Authentication & User Management
+- **Phase 3**: Book Catalog System  
+- **Phase 4**: Shopping Cart & Checkout
+- **Phase 5**: Admin Dashboard
+- **Phase 6**: Blog System
+- **Phase 7**: Community Features
+- **Phase 8**: AI Recommendations
+
+## 📞 Support
+
+### Development Support
+
+- **Health Check**: [/api/health](http://localhost:3000/api/health)
+- **Documentation**: See `/docs` folder
+- **Database GUI**: `npm run db:studio`
+
+### Troubleshooting
+
+**Database issues:**
+```bash
+# Reset database
+npm run db:push --force-reset
+npm run db:generate
+```
+
+**Test failures:**
+```bash
+# Run tests with verbose output
+npm run test -- --verbose
+npm run test:coverage
+```
+
+**TypeScript errors:**
+```bash
+# Check types
+npm run type-check
+```
+
+## 🎯 Success Criteria - Phase 1
+
+- ✅ **Working Next.js application** that starts without errors
+- ✅ **Database connection** established with Prisma
+- ✅ **Health check endpoint** at `/api/health`
+- ✅ **Error tracking** configured with Sentry
+- ✅ **Comprehensive testing** setup (Jest + Playwright)
+- ✅ **Code quality** enforced (ESLint + TypeScript strict)
+- ✅ **80% test coverage** achieved and maintained
+- ✅ **Security measures** implemented and tested
+- ✅ **Albanian content** and cultural design elements
+- ✅ **Mobile-first** responsive design
+
+## 🇦🇱 Albanian Market Focus
+
+This application is specifically designed for:
+
+- **🏠 Albanian users** in Albania and Kosovo
+- **🌍 Albanian diaspora** worldwide  
+- **📚 Albanian literature** enthusiasts
+- **💰 Albanian Lek** as primary currency
+- **📱 Mobile-first** usage patterns
 
 ---
 
-## 📋 Implementation Resources
+**Mirë se vini në Brënda Librave!** 📚🇦🇱
 
-- **[MVP Implementation](./MVP_IMPLEMENTATION.md)**: 6-8 week focused launch plan
-- **[Database Schema](./DATABASE_SCHEMA.md)**: Complete PostgreSQL schema with Prisma
-- **[Phase 2 & 3 Plans](./PHASE2_3_IMPLEMENTATION.md)**: Enhanced features and AI integration
-- **[ESLint Configuration](./ESLINT_CONFIG.md)**: Performance, SEO, and security-focused code quality
-- **[Netlify Deployment](./NETLIFY_DEPLOYMENT.md)**: Complete Netlify deployment guide with optimizations
-- **[Full Implementation](./IMPLEMENTATION.md)**: Complete technical strategy
-
----
-
-**Project Status**: Ready for implementation with comprehensive planning  
-**License**: Proprietary  
-**Team**: Full-stack development team specializing in Next.js and PostgreSQL  
-**Timeline**: MVP in 6-8 weeks, full features in 6 months  
-**Strategic Vision**: Albanian market leadership with European expansion potential  
-**Development Focus**: Next.js full-stack approach with PostgreSQL for maximum performance 
+*Welcome to the foundation of your Albanian digital bookstore.* 

@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* Albanian-inspired color theme for Tailwind CSS 4.0 */
+@theme {
+  --color-albanian-red: #e41e20;
+  --color-albanian-red-dark: #c41e3a;
+  --color-mountain-gray: #6b7280;
+  --color-adriatic-blue: #0ea5e9;
+  --color-olive-green: #84cc16;
+  --color-golden-eagle: #f59e0b;
+  
+  /* Liquid Glass Colors */
+  --color-glass-white: rgb(255 255 255 / 0.1);
+  --color-glass-border: rgb(255 255 255 / 0.2);
+  --color-glass-shadow: rgb(0 0 0 / 0.1);
+  
+  /* Semantic Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Animation keyframes */
+  --animate-liquid-morph: liquidMorph 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+
+  /* Extended spacing */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+
+  /* Extended border radius */
+  --radius-4xl: 2rem;
+
+  /* Backdrop blur extensions */
+  --blur-xs: 2px;
+  --blur-4xl: 72px;
+}
+
+@keyframes liquidMorph {
+  0%, 100% { 
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
+  }
+  50% { 
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; 
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0.8; 
+  }
+}
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  body {
+    @apply bg-white text-gray-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+} 
