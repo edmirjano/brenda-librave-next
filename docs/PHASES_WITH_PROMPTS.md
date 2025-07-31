@@ -17,7 +17,48 @@ Each phase is designed to be completed in **3-5 days** with:
 - **Specific success criteria** for validation
 - **Complete AI prompts** for implementation
 - **Albanian market focus** throughout
+- **Comprehensive testing** with mandatory test coverage
+- **Code quality gates** with linting and type checking
+- **No progression** without passing all tests and quality checks
 
+## 🧪 **Testing & Quality Requirements**
+
+### **Mandatory Quality Gates**
+Every phase must pass these requirements before proceeding:
+- ✅ **All tests pass**: Unit, integration, and E2E tests
+- ✅ **Linting passes**: ESLint with security and performance rules
+- ✅ **Type checking passes**: TypeScript compilation without errors
+- ✅ **Test coverage**: Minimum 80% coverage for new code
+- ✅ **Performance tests**: Meet Core Web Vitals thresholds
+- ✅ **Security audit**: No critical vulnerabilities
+
+### **Testing Stack**
+```bash
+# Testing dependencies for all phases
+npm install --save-dev \
+  jest @types/jest \
+  @testing-library/react @testing-library/jest-dom @testing-library/user-event \
+  playwright @playwright/test \
+  supertest @types/supertest \
+  jest-environment-jsdom \
+  @next/env
+```
+
+### **Quality Scripts**
+```json
+{
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "type-check": "tsc --noEmit",
+    "quality-gate": "npm run lint && npm run type-check && npm run test:coverage && npm run test:e2e"
+  }
+}
+```
 ---
 
 ## 📋 **PHASE 1: Project Foundation & Basic Setup**
@@ -45,6 +86,10 @@ REQUIREMENTS:
 6. Create basic health check API endpoint
 7. Implement error tracking with Sentry
 8. Set up structured logging with Pino
+9. Configure comprehensive testing setup (Jest, Testing Library, Playwright)
+10. Set up ESLint with security and performance rules
+11. Configure TypeScript strict mode
+12. Set up test coverage reporting
 
 DELIVERABLES:
 - Working Next.js application that starts without errors
@@ -54,6 +99,10 @@ DELIVERABLES:
 - Error tracking configured
 - Environment variables properly configured
 - README with setup instructions
+- Complete testing setup with example tests
+- ESLint configuration with security rules
+- TypeScript strict configuration
+- Test coverage reporting configured
 
 DEPENDENCIES TO INSTALL:
 ```bash
@@ -76,10 +125,78 @@ npm install react-hot-toast clsx tailwind-merge
 # Monitoring and logging
 npm install @sentry/nextjs pino pino-pretty
 
+# Testing dependencies
+npm install --save-dev \
+  jest @types/jest \
+  @testing-library/react @testing-library/jest-dom @testing-library/user-event \
+  playwright @playwright/test \
+  supertest @types/supertest \
+  jest-environment-jsdom \
+  @next/env
+
+# ESLint and code quality
+npm install --save-dev \
+  @typescript-eslint/eslint-plugin \
+  @typescript-eslint/parser \
+  eslint-plugin-react \
+  eslint-plugin-react-hooks \
+  eslint-plugin-jsx-a11y \
+  eslint-plugin-import \
+  eslint-plugin-security \
+  eslint-plugin-unicorn \
+  eslint-plugin-unused-imports \
+  eslint-plugin-simple-import-sort \
+  eslint-config-prettier \
+  eslint-import-resolver-typescript
 # Development dependencies
 npm install --save-dev @types/node typescript
 ```
 
+TESTING REQUIREMENTS:
+1. **Unit Tests**: Test utility functions, hooks, and components
+2. **Integration Tests**: Test API endpoints with supertest
+3. **E2E Tests**: Test critical user flows with Playwright
+4. **Test Coverage**: Minimum 80% coverage for new code
+5. **Performance Tests**: Core Web Vitals validation
+
+EXAMPLE TESTS TO CREATE:
+```typescript
+// __tests__/api/health.test.ts
+import { createMocks } from 'node-mocks-http';
+import handler from '@/app/api/health/route';
+
+describe('/api/health', () => {
+  it('returns 200 with health status', async () => {
+    const { req, res } = createMocks({ method: 'GET' });
+    await handler(req, res);
+    expect(res._getStatusCode()).toBe(200);
+    expect(JSON.parse(res._getData())).toMatchObject({
+      status: 'healthy'
+    });
+  });
+});
+
+// __tests__/components/HealthCheck.test.tsx
+import { render, screen } from '@testing-library/react';
+import HealthCheck from '@/components/HealthCheck';
+
+describe('HealthCheck Component', () => {
+  it('renders health status', () => {
+    render(<HealthCheck />);
+    expect(screen.getByText(/health/i)).toBeInTheDocument();
+  });
+});
+
+// e2e/health.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('health check endpoint works', async ({ page }) => {
+  const response = await page.request.get('/api/health');
+  expect(response.status()).toBe(200);
+  const data = await response.json();
+  expect(data.status).toBe('healthy');
+});
+```
 SUCCESS CRITERIA:
 - [ ] npm run dev starts without errors
 - [ ] /api/health returns 200 status
@@ -87,12 +204,27 @@ SUCCESS CRITERIA:
 - [ ] Error tracking captures test errors
 - [ ] Logging outputs structured JSON
 - [ ] Environment variables load correctly
+- [ ] **npm run test passes** with all tests green
+- [ ] **npm run lint passes** with no errors or warnings
+- [ ] **npm run type-check passes** with no TypeScript errors
+- [ ] **Test coverage ≥ 80%** for all new code
+- [ ] **Playwright E2E tests pass** for critical flows
+- [ ] **Security audit passes** with no critical vulnerabilities
 
+QUALITY GATES:
+```bash
+# Must pass before proceeding to Phase 2
+npm run quality-gate
+# This runs: lint + type-check + test:coverage + test:e2e
+```
 TECHNICAL NOTES:
 - Use App Router (not Pages Router)
 - Follow Albanian naming conventions where appropriate
 - Set up for mobile-first responsive design
 - Prepare for Albanian Lek currency integration
+- Write tests for every function and component
+- Maintain strict TypeScript configuration
+- Follow security-first development practices
 ```
 
 ---
@@ -110,6 +242,9 @@ CONTEXT FROM PHASE 1:
 - Prisma ORM with SQLite is configured
 - Basic project structure exists
 - Health check API and error tracking are working
+- Testing infrastructure is configured and all Phase 1 tests pass
+- ESLint and TypeScript strict mode are enforced
+- Code coverage reporting is set up
 
 NEW REQUIREMENTS:
 1. Set up NextAuth.js with email/password authentication
@@ -120,6 +255,10 @@ NEW REQUIREMENTS:
 6. Build user profile page with currency preference (ALL/EUR)
 7. Implement basic role system (USER, ADMIN)
 8. Add Albanian/English language preference
+9. Write comprehensive tests for all authentication flows
+10. Test password security and validation
+11. Test protected routes and middleware
+12. Add E2E tests for complete auth flows
 
 DELIVERABLES:
 - User registration form with validation
@@ -129,6 +268,10 @@ DELIVERABLES:
 - Database models for authentication
 - Mobile-optimized auth forms
 - Language and currency preference settings
+- Complete test suite for authentication
+- Security tests for password handling
+- E2E tests for auth user flows
+- Performance tests for auth pages
 
 PRISMA SCHEMA ADDITIONS:
 ```prisma
@@ -167,6 +310,82 @@ enum Currency {
 }
 ```
 
+TESTING REQUIREMENTS:
+1. **Unit Tests**: Auth utilities, password hashing, validation schemas
+2. **Integration Tests**: Auth API endpoints, middleware, session handling
+3. **Component Tests**: Auth forms, protected components, user profile
+4. **E2E Tests**: Complete registration, login, logout, profile update flows
+5. **Security Tests**: Password strength, session security, CSRF protection
+
+EXAMPLE TESTS TO CREATE:
+```typescript
+// __tests__/lib/auth.test.ts
+import { hashPassword, verifyPassword } from '@/lib/auth';
+
+describe('Password Security', () => {
+  it('hashes passwords securely', async () => {
+    const password = 'TestPassword123!';
+    const hash = await hashPassword(password);
+    expect(hash).not.toBe(password);
+    expect(await verifyPassword(password, hash)).toBe(true);
+  });
+});
+
+// __tests__/api/auth/register.test.ts
+import { createMocks } from 'node-mocks-http';
+import handler from '@/app/api/auth/register/route';
+
+describe('/api/auth/register', () => {
+  it('creates user with valid data', async () => {
+    const { req, res } = createMocks({
+      method: 'POST',
+      body: {
+        email: 'test@example.com',
+        password: 'SecurePass123!',
+        name: 'Test User'
+      }
+    });
+    await handler(req, res);
+    expect(res._getStatusCode()).toBe(201);
+  });
+
+  it('rejects weak passwords', async () => {
+    const { req, res } = createMocks({
+      method: 'POST',
+      body: {
+        email: 'test@example.com',
+        password: '123',
+        name: 'Test User'
+      }
+    });
+    await handler(req, res);
+    expect(res._getStatusCode()).toBe(400);
+  });
+});
+
+// e2e/auth.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('user can register and login', async ({ page }) => {
+  // Test registration
+  await page.goto('/register');
+  await page.fill('[data-testid=email]', 'test@example.com');
+  await page.fill('[data-testid=password]', 'SecurePass123!');
+  await page.fill('[data-testid=name]', 'Test User');
+  await page.click('[data-testid=register-button]');
+  
+  // Should redirect to login
+  await expect(page).toHaveURL('/login');
+  
+  // Test login
+  await page.fill('[data-testid=email]', 'test@example.com');
+  await page.fill('[data-testid=password]', 'SecurePass123!');
+  await page.click('[data-testid=login-button]');
+  
+  // Should be logged in
+  await expect(page).toHaveURL('/profile');
+});
+```
 SUCCESS CRITERIA:
 - [ ] Users can register with email/password
 - [ ] Users can login and logout
@@ -176,13 +395,29 @@ SUCCESS CRITERIA:
 - [ ] Language preference works
 - [ ] Forms are mobile-optimized
 - [ ] Admin role detection works
+- [ ] **All authentication tests pass** (unit, integration, E2E)
+- [ ] **Password security tests pass** with proper hashing
+- [ ] **Protected route tests pass** with proper middleware
+- [ ] **Form validation tests pass** with proper error handling
+- [ ] **Test coverage ≥ 80%** for all auth code
+- [ ] **Performance tests pass** for auth pages
+- [ ] **Security audit passes** for auth implementation
 
+QUALITY GATES:
+```bash
+# Must pass before proceeding to Phase 3
+npm run quality-gate
+npm run test -- --testPathPattern=auth
+```
 DESIGN REQUIREMENTS:
 - Mobile-first responsive forms
 - Apple Liquid Glass card design for auth forms
 - Albanian cultural colors in design
 - Touch-friendly buttons and inputs
 - Smooth transitions between auth states
+- Accessible forms with proper ARIA labels
+- Error states with clear messaging
+- Loading states during auth operations
 ```
 
 ---
@@ -200,6 +435,8 @@ CONTEXT FROM PREVIOUS PHASES:
 - Authentication system is complete
 - Users can register, login, and set currency preferences
 - Database and error tracking are configured
+- All previous tests pass and quality gates are met
+- Testing infrastructure is established and working
 
 NEW REQUIREMENTS:
 1. Create Book, Category, and Tag models in Prisma
@@ -210,6 +447,10 @@ NEW REQUIREMENTS:
 6. Implement category filtering
 7. Create admin interface for adding books
 8. Add book cover image support (WebP format)
+9. Write comprehensive tests for book catalog functionality
+10. Test currency conversion and pricing display
+11. Test search and filtering functionality
+12. Add performance tests for book listing pages
 
 DELIVERABLES:
 - Book catalog with grid layout
@@ -219,6 +460,10 @@ DELIVERABLES:
 - Admin book management (CRUD)
 - Mobile-optimized book cards
 - Currency conversion display
+- Complete test suite for book functionality
+- Performance tests for catalog pages
+- E2E tests for book browsing flows
+- Admin functionality tests
 
 PRISMA SCHEMA ADDITIONS:
 ```prisma
@@ -272,6 +517,80 @@ API ENDPOINTS TO CREATE:
 - POST /api/books - Create book (admin only)
 - PUT /api/books/[id] - Update book (admin only)
 
+TESTING REQUIREMENTS:
+1. **Unit Tests**: Book utilities, currency conversion, search algorithms
+2. **Integration Tests**: All book API endpoints with various scenarios
+3. **Component Tests**: Book cards, book details, search components
+4. **E2E Tests**: Complete book browsing, searching, and admin flows
+5. **Performance Tests**: Book listing page load times and rendering
+
+EXAMPLE TESTS TO CREATE:
+```typescript
+// __tests__/lib/currency.test.ts
+import { convertPrice, formatPrice } from '@/lib/currency';
+
+describe('Currency Conversion', () => {
+  it('converts ALL to EUR correctly', () => {
+    const priceALL = 1000; // 1000 Albanian Lek
+    const exchangeRate = 100; // 1 EUR = 100 ALL
+    const priceEUR = convertPrice(priceALL, 'EUR', exchangeRate);
+    expect(priceEUR).toBe(10);
+  });
+
+  it('formats Albanian Lek correctly', () => {
+    const price = 1500;
+    const formatted = formatPrice(price, 'ALL');
+    expect(formatted).toBe('1.500 L');
+  });
+});
+
+// __tests__/api/books.test.ts
+import { createMocks } from 'node-mocks-http';
+import handler from '@/app/api/books/route';
+
+describe('/api/books', () => {
+  it('returns paginated books', async () => {
+    const { req, res } = createMocks({
+      method: 'GET',
+      query: { page: '1', limit: '10' }
+    });
+    await handler(req, res);
+    expect(res._getStatusCode()).toBe(200);
+    const data = JSON.parse(res._getData());
+    expect(data).toHaveProperty('books');
+    expect(data).toHaveProperty('pagination');
+  });
+
+  it('filters books by category', async () => {
+    const { req, res } = createMocks({
+      method: 'GET',
+      query: { category: 'literatura-shqiptare' }
+    });
+    await handler(req, res);
+    expect(res._getStatusCode()).toBe(200);
+  });
+});
+
+// e2e/books.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('user can browse and search books', async ({ page }) => {
+  await page.goto('/books');
+  
+  // Check books are displayed
+  await expect(page.locator('[data-testid=book-card]')).toHaveCount.greaterThan(0);
+  
+  // Test search
+  await page.fill('[data-testid=search-input]', 'Kadare');
+  await page.click('[data-testid=search-button]');
+  await expect(page.locator('[data-testid=book-card]')).toContainText('Kadare');
+  
+  // Test book detail
+  await page.click('[data-testid=book-card]').first();
+  await expect(page).toHaveURL(/\/books\/[^\/]+$/);
+  await expect(page.locator('[data-testid=book-price]')).toBeVisible();
+});
+```
 SUCCESS CRITERIA:
 - [ ] Books display in mobile-optimized grid
 - [ ] Prices show in Albanian Lek (primary) and Euro
@@ -281,7 +600,21 @@ SUCCESS CRITERIA:
 - [ ] Admin can add/edit books
 - [ ] Currency conversion displays properly
 - [ ] Images load in WebP format
+- [ ] **All book catalog tests pass** (unit, integration, E2E)
+- [ ] **Currency conversion tests pass** with accurate calculations
+- [ ] **Search functionality tests pass** with relevant results
+- [ ] **Admin CRUD tests pass** with proper authorization
+- [ ] **Performance tests pass** with acceptable load times
+- [ ] **Test coverage ≥ 80%** for all book-related code
+- [ ] **Mobile responsiveness tests pass** on various screen sizes
 
+QUALITY GATES:
+```bash
+# Must pass before proceeding to Phase 4
+npm run quality-gate
+npm run test -- --testPathPattern=books
+npm run test:e2e -- books.spec.ts
+```
 DESIGN REQUIREMENTS:
 - Mobile-first book card design
 - Albanian Lek pricing prominently displayed
@@ -289,6 +622,9 @@ DESIGN REQUIREMENTS:
 - Touch-friendly category filters
 - Smooth loading animations
 - Cultural Albanian design elements
+- Accessible book cards with proper ARIA labels
+- Loading states for search and filtering
+- Error states for failed book loads
 ```
 
 ---
@@ -306,6 +642,8 @@ CONTEXT FROM PREVIOUS PHASES:
 - Book catalog displays with Albanian Lek pricing
 - Users can browse and view book details
 - Currency preferences (ALL/EUR) are set up
+- All previous tests pass and quality gates are met
+- Testing infrastructure covers authentication and book catalog
 
 NEW REQUIREMENTS:
 1. Create CartItem model in Prisma
@@ -316,6 +654,10 @@ NEW REQUIREMENTS:
 6. Implement cart state management with React Context
 7. Add cart icon with item count in navigation
 8. Handle currency conversion in cart totals
+9. Write comprehensive tests for cart functionality
+10. Test cart persistence and state management
+11. Test currency calculations in cart
+12. Add E2E tests for complete cart flows
 
 DELIVERABLES:
 - Add to cart buttons on book pages
@@ -325,6 +667,10 @@ DELIVERABLES:
 - Currency-aware pricing totals
 - Mobile-optimized cart interface
 - Cart item count in navigation
+- Complete test suite for cart functionality
+- State management tests for cart context
+- Currency calculation tests for cart totals
+- E2E tests for cart user flows
 
 PRISMA SCHEMA ADDITIONS:
 ```prisma
@@ -366,6 +712,96 @@ interface CartContextType {
 }
 ```
 
+TESTING REQUIREMENTS:
+1. **Unit Tests**: Cart utilities, price calculations, quantity validations
+2. **Integration Tests**: All cart API endpoints with edge cases
+3. **Component Tests**: Cart components, cart context, cart state
+4. **E2E Tests**: Complete add-to-cart, update, remove, checkout flows
+5. **State Tests**: Cart persistence, context state management
+
+EXAMPLE TESTS TO CREATE:
+```typescript
+// __tests__/lib/cart.test.ts
+import { calculateCartTotal, validateQuantity } from '@/lib/cart';
+
+describe('Cart Calculations', () => {
+  it('calculates cart total correctly in ALL', () => {
+    const items = [
+      { priceALL: 1500, quantity: 2 },
+      { priceALL: 2000, quantity: 1 }
+    ];
+    const total = calculateCartTotal(items, 'ALL');
+    expect(total).toBe(5000); // (1500 * 2) + (2000 * 1)
+  });
+
+  it('validates quantity limits', () => {
+    expect(validateQuantity(5, 10)).toBe(true);
+    expect(validateQuantity(15, 10)).toBe(false);
+    expect(validateQuantity(0, 10)).toBe(false);
+  });
+});
+
+// __tests__/context/CartContext.test.tsx
+import { renderHook, act } from '@testing-library/react';
+import { CartProvider, useCart } from '@/context/CartContext';
+
+describe('Cart Context', () => {
+  it('adds items to cart', () => {
+    const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+    const { result } = renderHook(() => useCart(), { wrapper });
+
+    act(() => {
+      result.current.addItem('book-1');
+    });
+
+    expect(result.current.items).toHaveLength(1);
+    expect(result.current.totalItems).toBe(1);
+  });
+
+  it('updates item quantities', () => {
+    const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+    const { result } = renderHook(() => useCart(), { wrapper });
+
+    act(() => {
+      result.current.addItem('book-1');
+      result.current.updateQuantity('item-1', 3);
+    });
+
+    expect(result.current.totalItems).toBe(3);
+  });
+});
+
+// e2e/cart.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('user can manage cart items', async ({ page }) => {
+  // Login first
+  await page.goto('/login');
+  await page.fill('[data-testid=email]', 'test@example.com');
+  await page.fill('[data-testid=password]', 'password');
+  await page.click('[data-testid=login-button]');
+
+  // Add item to cart
+  await page.goto('/books');
+  await page.click('[data-testid=book-card]').first();
+  await page.click('[data-testid=add-to-cart]');
+  
+  // Check cart count
+  await expect(page.locator('[data-testid=cart-count]')).toHaveText('1');
+  
+  // Go to cart
+  await page.click('[data-testid=cart-icon]');
+  await expect(page).toHaveURL('/cart');
+  
+  // Update quantity
+  await page.fill('[data-testid=quantity-input]', '2');
+  await expect(page.locator('[data-testid=cart-count]')).toHaveText('2');
+  
+  // Remove item
+  await page.click('[data-testid=remove-item]');
+  await expect(page.locator('[data-testid=empty-cart]')).toBeVisible();
+});
+```
 SUCCESS CRITERIA:
 - [ ] Users can add books to cart
 - [ ] Cart persists between sessions
@@ -375,7 +811,21 @@ SUCCESS CRITERIA:
 - [ ] Cart icon shows item count
 - [ ] Mobile cart interface is touch-friendly
 - [ ] Currency conversion works in cart
+- [ ] **All cart functionality tests pass** (unit, integration, E2E)
+- [ ] **Cart state management tests pass** with proper persistence
+- [ ] **Currency calculation tests pass** with accurate totals
+- [ ] **Cart context tests pass** with proper state updates
+- [ ] **Performance tests pass** for cart operations
+- [ ] **Test coverage ≥ 80%** for all cart-related code
+- [ ] **Mobile cart tests pass** on various screen sizes
 
+QUALITY GATES:
+```bash
+# Must pass before proceeding to Phase 5
+npm run quality-gate
+npm run test -- --testPathPattern=cart
+npm run test:e2e -- cart.spec.ts
+```
 DESIGN REQUIREMENTS:
 - Mobile-first cart layout
 - Albanian Lek pricing prominently displayed
@@ -383,6 +833,9 @@ DESIGN REQUIREMENTS:
 - Touch-friendly quantity controls
 - Apple Liquid Glass cart cards
 - Clear total pricing in both currencies
+- Accessible cart controls with proper ARIA labels
+- Loading states for cart operations
+- Error states for cart failures
 ```
 
 ---
