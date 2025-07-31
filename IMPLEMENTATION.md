@@ -384,6 +384,8 @@ interface BlogPost {
 ### Detailed Implementation Guides
 - **Database Schema**: [DATABASE_SCHEMA.md](./DATABASE_SCHEMA.md) - Complete PostgreSQL schema with Prisma
 - **MVP Implementation**: [MVP_IMPLEMENTATION.md](./MVP_IMPLEMENTATION.md) - Focused 6-8 week MVP plan
+- **UX Design System**: [UX_DESIGN_SYSTEM.md](./UX_DESIGN_SYSTEM.md) - Mobile-first design with smooth animations
+- **I18n & SEO Strategy**: [I18N_SEO_SYSTEM.md](./I18N_SEO_SYSTEM.md) - Zero hardcoded text and SEO best practices
 - **Phase 2 & 3**: [PHASE2_3_IMPLEMENTATION.md](./PHASE2_3_IMPLEMENTATION.md) - Enhanced features and AI integration
 
 ### Key Technical Decisions Made

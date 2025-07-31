@@ -66,6 +66,10 @@ model User {
   emailVerified   DateTime?
   image           String?
   
+  // Push notification settings
+  fcmTokens       UserFCMToken[]
+  notificationSettings NotificationSettings?
+  
   // Relations
   accounts        Account[]
   sessions        Session[]
@@ -210,11 +214,13 @@ model Order {
   orderNumber     String      @unique
   status          OrderStatus @default(PENDING)
   totalAmount     Decimal     @db.Decimal(10, 2)
+  shippingCost    Decimal     @db.Decimal(10, 2) @default(0)
   currency        String      @default("EUR")
   
   // Shipping information
   shippingName    String
   shippingEmail   String
+  shippingPhone   String      // Added phone number requirement
   shippingAddress String
   shippingCity    String
   shippingZip     String
@@ -788,6 +794,55 @@ model Setting {
   
   updatedAt DateTime @updatedAt
 }
+
+// Push Notifications & FCM
+model UserFCMToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  deviceType String? // 'web', 'mobile', 'pwa'
+  userAgent String?
+  isActive  Boolean  @default(true)
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId])
+  @@index([token])
+}
+
+model NotificationSettings {
+  id              String  @id @default(cuid())
+  userId          String  @unique
+  
+  // Notification preferences
+  newBooks        Boolean @default(true)
+  orderUpdates    Boolean @default(true)
+  promotions      Boolean @default(true)
+  blog            Boolean @default(true)
+  newsletter      Boolean @default(true)
+  bookRecommendations Boolean @default(true)
+  priceAlerts     Boolean @default(true)
+  
+  // Delivery preferences
+  pushEnabled     Boolean @default(true)
+  emailEnabled    Boolean @default(true)
+  
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Common settings for shipping management:
+// - shipping_rate_domestic: Flat rate for domestic shipping
+// - shipping_rate_international: Flat rate for international shipping  
+// - shipping_free_threshold: Minimum order amount for free shipping
+// - shipping_enabled_countries: JSON array of supported countries
+// - business_phone: Contact phone for shipping inquiries
+// - business_address: Business address for returns/exchanges
 ```
 
 ## 🔧 Database Setup Commands
