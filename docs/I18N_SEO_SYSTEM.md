@@ -15,7 +15,8 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 - **Albanian (sq)**: Primary language, default locale
 - **English (en)**: Secondary language for international users
 - **Timezone**: Europe/Tirane for Albanian market
-- **Currency**: EUR (Euro) as standard
+- **Currency**: ALL (Albanian Lek) as primary, EUR (Euro) as secondary
+- **Currency Conversion**: Admin-configurable exchange rates with real-time updates
 
 ### Translation File Structure
 - **Namespace Organization**: Logical grouping (navigation, common, book, cart, etc.)
@@ -28,10 +29,11 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 #### Key Namespaces to Implement
 1. **metadata**: Site titles, descriptions, keywords for SEO
 2. **navigation**: Menu items, breadcrumbs, page navigation
-3. **common**: Buttons, actions, states, currency formatting
+3. **common**: Buttons, actions, states, currency formatting (ALL/EUR)
 4. **auth**: Login, registration, account management
 5. **book**: Book-related terminology, attributes, actions
 6. **cart**: Shopping cart, checkout process
+7. **currency**: Currency symbols, conversion messages, price displays
 7. **notifications**: Push notification messages and settings
 8. **seo**: Page-specific SEO metadata templates
 
@@ -44,8 +46,10 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 #### Dynamic Content Support
 - **Parametric messages**: Book titles, author names, pricing
 - **Pluralization**: Proper Albanian plural forms for quantities
+- **Currency formatting**: Albanian Lek and Euro with proper symbols and decimals
 - **Date/time formatting**: European format for Albanian users
 - **Number formatting**: European decimal notation
+- **Price conversion**: Dynamic currency conversion with exchange rates
 
 ## 🔍 SEO Strategy & Best Practices
 
@@ -61,6 +65,7 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 #### URL Structure & Localization
 - **Albanian URLs**: `/sq/libra/titulli-librit` (Albanian book pages)
 - **English URLs**: `/en/books/book-title` (English book pages)  
+- **Currency URLs**: `/sq/libra/titulli-librit?currency=ALL` (currency preference)
 - **Category URLs**: `/sq/libra/kategoria/literatura-shqiptare`
 - **Blog URLs**: `/sq/blog/titulli-artikullit`
 - **Canonical URLs**: Prevent duplicate content issues
@@ -69,6 +74,7 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 #### Meta Tags Strategy
 - **Dynamic Titles**: Book title + Author + Site name format
 - **Compelling Descriptions**: Include book excerpt, author, and value proposition
+- **Price Information**: Include pricing in Albanian Lek for local SEO
 - **Localized Keywords**: Albanian and English keyword targeting
 - **Open Graph**: Social media sharing optimization
 - **Twitter Cards**: Enhanced social media presentation
@@ -84,13 +90,15 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 #### Schema.org Implementation Plan
 1. **Book Schema**: Detailed book information for rich search results
    - Title, author, ISBN, page count, language
-   - Price, currency, availability status
+   - Price in Albanian Lek (primary) and Euro (secondary)
+   - Currency, availability status, local pricing
    - Publisher information and ratings
    - Cover image and description
 
 2. **Organization Schema**: Business information for local SEO
    - Company name, logo, description
    - Contact information and customer service
+   - Accepted currencies (ALL, EUR)
    - Social media profiles
    - Available languages (Albanian, English)
 
@@ -104,11 +112,11 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
    - Improved user navigation understanding
 
 #### Rich Snippets Target Results
-- **Book listings**: Price, availability, ratings in search results
+- **Book listings**: Price in ALL/EUR, availability, ratings in search results
 - **Author pages**: Author information and book collections
 - **Category pages**: Book collections with filtering options
 - **Blog articles**: Publication date, author, and reading time
-- **Organization info**: Contact details, hours, location
+- **Organization info**: Contact details, hours, location, accepted currencies
 
 ### Performance Optimization Strategy
 
@@ -130,17 +138,20 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 #### Translation Integration Points
 1. **Navigation Components**: All menu items, buttons, labels
 2. **Book Display Components**: Titles, descriptions, actions, states
-3. **Shopping Components**: Cart, checkout, payment messages
+3. **Shopping Components**: Cart, checkout, payment messages, currency selection
 4. **User Interface**: Loading states, error messages, success confirmations
 5. **Form Components**: Input labels, validation messages, placeholders
+6. **Currency Components**: Price displays, conversion rates, currency switcher
 6. **Notification Components**: Push notification messages and settings
 
 #### Dynamic Content Handling
 - **Book Metadata**: Translated alt text for book covers
 - **Author Information**: Localized author descriptions and bios
 - **Category Names**: Translated category labels and descriptions  
+- **Price Information**: Localized currency formatting and conversion messages
 - **Search Results**: Localized result counts and filtering options
 - **Error Handling**: User-friendly error messages in appropriate language
+- **Currency Conversion**: Real-time conversion messages and exchange rate updates
 
 ### Technical Implementation Requirements
 
@@ -153,6 +164,7 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 #### Sitemap & Robots.txt Strategy
 - **Dynamic XML Sitemap**: Auto-generated based on database content
 - **Multilingual Support**: Proper hreflang declarations for all pages
+- **Currency Variants**: Include currency preference variations in sitemap
 - **Priority Hierarchy**: Homepage (1.0) > Books (0.8) > Categories (0.7) > Blog (0.6)
 - **Update Frequency**: Homepage (daily), Books/Categories (weekly), Blog (monthly)
 - **Robots.txt**: Search engine guidance with sitemap references
@@ -167,6 +179,7 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 
 ### Technical SEO
 - ✅ **Multilingual hreflang tags** for Albanian/English
+- ✅ **Currency-aware meta tags** with Albanian Lek pricing
 - ✅ **Structured data** for books, blog posts, organization
 - ✅ **Dynamic sitemap generation** with localized URLs
 - ✅ **Robots.txt optimization** for search engines
@@ -178,10 +191,11 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 ### Content SEO
 - ✅ **Zero hardcoded text** - everything externalized
 - ✅ **SEO-friendly URLs** with book/author slugs
-- ✅ **Rich snippets** for books and reviews
+- ✅ **Rich snippets** for books and reviews with Albanian Lek pricing
 - ✅ **Internal linking** optimization
 - ✅ **Image alt texts** with translations
 - ✅ **Schema markup** for enhanced search results
+- ✅ **Currency-specific content** for local Albanian market
 
 ### Performance SEO
 - ✅ **Core Web Vitals** monitoring and optimization
@@ -193,6 +207,7 @@ Complete documentation for implementing i18n and SEO best practices ensuring zer
 This comprehensive i18n and SEO system ensures:
 - **🌍 Complete internationalization** with zero hardcoded text
 - **🔍 Maximum search visibility** in Albanian and English
+- **💰 Albanian Lek integration** with proper currency SEO
 - **⚡ Optimal performance** for search engine ranking
 - **📱 Mobile-first** approach for modern SEO
-- **🎯 Structured data** for rich search results 
+- **🎯 Structured data** for rich search results with local pricing

@@ -46,6 +46,45 @@ These concerns are not one-time tasks but continuous efforts throughout all phas
 - **Screen Reader Support**: Proper ARIA labels and semantic HTML structure
 - **Color Contrast**: Sufficient contrast ratios for all text and UI elements
 
+### 🎨 Design Requirements
+
+### UI/UX Principles
+- **Styling**: Tailwind CSS exclusively (no custom CSS)
+- **Theme**: Library/bookstore ambiance with modern aesthetics
+- **Responsive**: Mobile-first web design with desktop optimization
+- **Mobile-like Transitions**: Native app-style page transitions and animations
+- **Progressive Enhancement**: Enhanced features for larger screens
+- **Animations**: Smooth transitions using Tailwind and modern libraries
+- **Accessibility**: WCAG 2.1 AA compliance across all devices
+- **Touch Optimization**: Optimized touch targets for mobile web users
+
+#### Mobile-like Page Transitions
+- **Native App Feel**: Implement iOS/Android-style page transitions
+- **Gesture Support**: Swipe gestures for navigation (back/forward)
+- **Stack Navigation**: Page stack management with smooth slide transitions
+- **Loading States**: Skeleton screens and progressive loading
+- **Touch Feedback**: Haptic-like visual feedback for interactions
+
+### Media Standards
+- **Images**: WebP format exclusively
+- **Videos**: WebM format exclusively
+- **Icons**: Lucide React icons (no emojis)
+- **Optimization**: Next.js Image component with lazy loading
+- **Responsive**: Multiple breakpoints with srcSet optimization
+
+### Supported Languages
+- **Albanian (sq)**: Primary language, default locale
+- **English (en)**: Secondary language for international users
+- **Timezone**: Europe/Tirane for Albanian market
+- **Currency**: ALL (Albanian Lek) as primary, EUR (Euro) as secondary
+- **Currency Conversion**: Admin-configurable exchange rates
+
+### Translation File Structure
+- **Namespace Organization**: Logical grouping (navigation, common, book, cart, etc.)
+- **Parametric Messages**: Support for dynamic content insertion
+- **Pluralization**: Proper plural forms for both languages
+- **Context-Aware**: Different translations based on user context
+
 ## 📋 Phase 1: Minimum Viable Product (MVP)
 
 **Timeline**: 6-8 weeks
@@ -68,6 +107,12 @@ npm install react-hook-form @hookform/resolvers zod
 npm install @paypal/react-paypal-js
 npm install gtag react-cookie-consent
 
+# Mobile-like transitions and animations
+npm install framer-motion
+npm install react-spring
+npm install @use-gesture/react
+npm install react-transition-group
+
 # SEO & Internationalization
 npm install next-seo next-sitemap
 npm install @next/bundle-analyzer
@@ -79,6 +124,7 @@ npm install @tailwindcss/typography @tailwindcss/forms @tailwindcss/aspect-ratio
 npm install clsx tailwind-merge class-variance-authority
 npm install lucide-react
 npm install react-hot-toast
+npm install react-spring @use-gesture/react
 
 # PWA & Push Notifications
 npm install firebase
@@ -284,6 +330,7 @@ model User {
   name            String
   role            Role      @default(USER)
   language        Language  @default(SQ)
+  currency        Currency  @default(ALL)
   newsletter      Boolean   @default(false)
   emailVerified   DateTime?
   image           String?
@@ -307,6 +354,11 @@ enum Role {
 enum Language {
   SQ
   EN
+}
+
+enum Currency {
+  ALL  // Albanian Lek
+  EUR  // Euro
 }
 ```
 
@@ -349,8 +401,10 @@ model Book {
   description     String    @db.Text
   isbn            String?   @unique
   categoryId      String
-  price           Decimal?  // Physical book price
-  digitalPrice    Decimal?  // Digital book price
+  priceALL        Decimal?  @db.Decimal(10, 2) // Price in Albanian Lek
+  priceEUR        Decimal?  @db.Decimal(10, 2) // Price in Euro
+  digitalPriceALL Decimal?  @db.Decimal(10, 2) // Digital price in Albanian Lek
+  digitalPriceEUR Decimal?  @db.Decimal(10, 2) // Digital price in Euro
   inventory       Int       @default(0)
   hasDigital      Boolean   @default(false)
   coverImage      String?   // WebP format
@@ -583,6 +637,11 @@ interface BlogPost {
 #### UX Polish & Apple Liquid Glass Implementation
 - **Apple Liquid Glass Design**: Implement components following Apple's Liquid Glass specifications
 - **Proper Icon System**: Replace all emojis with Lucide React icons for consistency and performance
+- **Mobile-like Page Transitions**: Implement native app-style transitions
+  - **Stack Navigation**: iOS/Android-style page stack with slide transitions
+  - **Gesture Support**: Swipe-to-go-back functionality
+  - **Loading States**: Skeleton screens and progressive loading
+  - **Touch Feedback**: Visual feedback for all touch interactions
 - **Optimized Media**: Implement WebP/AVIF images and WebM videos for superior performance
 - **Mobile-First Responsive Design**: Liquid glass morphism components with advanced backdrop filters
 - **Smooth Framer Motion Animations**: 60fps animations with Apple's liquid spring physics
@@ -590,6 +649,10 @@ interface BlogPost {
 - **Performance Testing**: Ensure smooth liquid glass effects and optimized media loading
 - **Touch Interactions**: Implement liquid ripple effects and touch-friendly navigation
 - **Advanced Visual Polish**: Apply liquid glass surfaces, flowing transitions, and iOS-quality interactions
+- **Currency System**: Implement Albanian Lek with Euro conversion
+  - **Admin Currency Settings**: Exchange rate management interface
+  - **Dynamic Price Display**: Show prices in user's preferred currency
+  - **Conversion API**: Real-time or admin-configured exchange rates
 
 #### Analytics Implementation & GDPR Compliance
 
@@ -1124,4 +1187,4 @@ ALTER TABLE "User" ADD CONSTRAINT "User_status_check"
 - **Faster Time to Market**: Launch sooner with web-only approach
 - **European Expansion Ready**: No app store localization complexities
 - **Albanian Market Focus**: Web-first aligns with local browsing habits
-- **Desktop + Mobile Excellence**: Optimized for both usage patterns 
+- **Desktop + Mobile Excellence**: Optimized for both usage patterns

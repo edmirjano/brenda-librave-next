@@ -62,6 +62,7 @@ model User {
   name            String
   role            Role      @default(USER)
   language        Language  @default(SQ)
+  currency        Currency  @default(ALL)
   newsletter      Boolean   @default(false)
   emailVerified   DateTime?
   image           String?
@@ -106,6 +107,11 @@ enum Language {
   EN
 }
 
+enum Currency {
+  ALL  // Albanian Lek
+  EUR  // Euro
+}
+
 // Book Catalog
 model Book {
   id              String    @id @default(cuid())
@@ -114,8 +120,10 @@ model Book {
   description     String    @db.Text
   isbn            String?   @unique
   categoryId      String
-  price           Decimal?  @db.Decimal(10, 2)
-  digitalPrice    Decimal?  @db.Decimal(10, 2)
+  priceALL        Decimal?  @db.Decimal(10, 2) // Price in Albanian Lek
+  priceEUR        Decimal?  @db.Decimal(10, 2) // Price in Euro
+  digitalPriceALL Decimal?  @db.Decimal(10, 2) // Digital price in Albanian Lek
+  digitalPriceEUR Decimal?  @db.Decimal(10, 2) // Digital price in Euro
   inventory       Int       @default(0)
   hasDigital      Boolean   @default(false)
   digitalFileUrl  String?   // S3 URL for digital book
@@ -198,6 +206,7 @@ model CartItem {
   bookId   String
   quantity Int       @default(1)
   isDigital Boolean  @default(false)
+  currency Currency  @default(ALL)
   
   user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
   book     Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
@@ -215,7 +224,8 @@ model Order {
   status          OrderStatus @default(PENDING)
   totalAmount     Decimal     @db.Decimal(10, 2)
   shippingCost    Decimal     @db.Decimal(10, 2) @default(0)
-  currency        String      @default("EUR")
+  currency        Currency    @default(ALL)
+  exchangeRate    Decimal?    @db.Decimal(10, 4) // Exchange rate used at time of order
   
   // Shipping information
   shippingName    String
@@ -249,6 +259,7 @@ model OrderItem {
   bookId    String
   quantity  Int
   price     Decimal @db.Decimal(10, 2)
+  currency  Currency @default(ALL)
   isDigital Boolean @default(false)
   
   order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
@@ -795,6 +806,20 @@ model Setting {
   updatedAt DateTime @updatedAt
 }
 
+// Currency Exchange Rates
+model ExchangeRate {
+  id           String   @id @default(cuid())
+  fromCurrency Currency
+  toCurrency   Currency
+  rate         Decimal  @db.Decimal(10, 4)
+  isActive     Boolean  @default(true)
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  @@unique([fromCurrency, toCurrency])
+  @@index([isActive])
+}
 // Push Notifications & FCM
 model UserFCMToken {
   id        String   @id @default(cuid())
@@ -837,12 +862,18 @@ model NotificationSettings {
 }
 
 // Common settings for shipping management:
-// - shipping_rate_domestic: Flat rate for domestic shipping
-// - shipping_rate_international: Flat rate for international shipping  
+// - shipping_rate_domestic_all: Flat rate for domestic shipping in ALL
+// - shipping_rate_international_all: Flat rate for international shipping in ALL
+// - shipping_rate_domestic_eur: Flat rate for domestic shipping in EUR
+// - shipping_rate_international_eur: Flat rate for international shipping in EUR
 // - shipping_free_threshold: Minimum order amount for free shipping
 // - shipping_enabled_countries: JSON array of supported countries
 // - business_phone: Contact phone for shipping inquiries
 // - business_address: Business address for returns/exchanges
+// - exchange_rate_all_eur: Current exchange rate from ALL to EUR
+// - exchange_rate_eur_all: Current exchange rate from EUR to ALL
+// - default_currency: Default currency for new users (ALL)
+// - currency_display_both: Whether to show both currencies (true/false)
 ```
 
 ## 🔧 Database Setup Commands
