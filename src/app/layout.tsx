@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
+import { SessionProvider } from '@/components/providers/SessionProvider';
+import { ToastProvider } from '@/components/providers/ToastProvider';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -56,7 +59,10 @@ export default function RootLayout({
   return (
     <html lang="sq" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
-        {children}
+        <SessionProvider>
+          {children}
+          <ToastProvider />
+        </SessionProvider>
       </body>
     </html>
   );
