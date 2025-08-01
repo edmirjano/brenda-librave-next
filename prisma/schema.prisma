@@ -114,13 +114,13 @@ model Book {
   id              String    @id @default(cuid())
   title           String
   author          String
-  description     String    @db.Text
+  description     String
   isbn            String?   @unique
   categoryId      String
-  priceALL        Decimal?  @db.Decimal(10, 2) // Albanian Lek
-  priceEUR        Decimal?  @db.Decimal(10, 2) // Euro
-  digitalPriceALL Decimal?  @db.Decimal(10, 2)
-  digitalPriceEUR Decimal?  @db.Decimal(10, 2)
+  priceALL        Float?    // Albanian Lek (using Float for SQLite compatibility)
+  priceEUR        Float?    // Euro (using Float for SQLite compatibility)
+  digitalPriceALL Float?    // Digital price in Albanian Lek
+  digitalPriceEUR Float?    // Digital price in Euro
   inventory       Int       @default(0)
   hasDigital      Boolean   @default(false)
   coverImage      String?
