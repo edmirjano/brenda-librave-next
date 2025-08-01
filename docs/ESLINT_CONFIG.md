@@ -1,10 +1,12 @@
 # Brënda Librave - ESLint Configuration
 
-Comprehensive ESLint setup for optimal performance, SEO, and code quality in our Next.js bookshop platform.
+Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
+Next.js bookshop platform.
 
 ## 📋 Complete ESLint Configuration
 
 ### `.eslintrc.json`
+
 ```json
 {
   "extends": [
@@ -60,74 +62,89 @@ Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
   },
   "rules": {
     // ==================== PERFORMANCE RULES ====================
-    
+
     // Prevent performance-killing patterns
     "react-hooks/exhaustive-deps": "error",
     "react-hooks/rules-of-hooks": "error",
     "react/no-array-index-key": "warn",
     "react/no-unstable-nested-components": "error",
-    "react/jsx-no-bind": ["error", {
-      "allowArrowFunctions": false,
-      "allowBind": false,
-      "allowFunctions": false
-    }],
-    
+    "react/jsx-no-bind": [
+      "error",
+      {
+        "allowArrowFunctions": false,
+        "allowBind": false,
+        "allowFunctions": false
+      }
+    ],
+
     // Optimize bundle size
     "import/no-duplicates": "error",
-    "import/no-unused-modules": ["error", {
-      "unusedExports": true
-    }],
+    "import/no-unused-modules": [
+      "error",
+      {
+        "unusedExports": true
+      }
+    ],
     "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": ["warn", {
-      "vars": "all",
-      "varsIgnorePattern": "^_",
-      "args": "after-used",
-      "argsIgnorePattern": "^_"
-    }],
-    
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+
     // Prevent memory leaks
     "react/no-direct-mutation-state": "error",
     "react/no-this-in-sfc": "error",
     "react/no-will-update-set-state": "error",
-    
+
     // Optimize re-renders
     "react/jsx-no-constructed-context-values": "error",
     "react/no-object-type-as-prop": "error",
-    
+
     // ==================== SEO RULES ====================
-    
+
     // Meta tags and SEO structure
     "@next/next/no-page-custom-font": "warn",
     "@next/next/no-title-in-document-head": "error",
     "@next/next/no-head-element": "error",
     "@next/next/no-html-link-for-pages": "error",
-    
+
     // Accessibility (crucial for SEO)
-    "jsx-a11y/alt-text": ["error", {
-      "elements": ["img", "object", "area", "input[type=\"image\"]"],
-      "img": ["Image"],
-      "object": ["Object"],
-      "area": ["Area"],
-      "input[type=\"image\"]": ["InputImage"]
-    }],
+    "jsx-a11y/alt-text": [
+      "error",
+      {
+        "elements": ["img", "object", "area", "input[type=\"image\"]"],
+        "img": ["Image"],
+        "object": ["Object"],
+        "area": ["Area"],
+        "input[type=\"image\"]": ["InputImage"]
+      }
+    ],
     "jsx-a11y/anchor-has-content": "error",
-    "jsx-a11y/anchor-is-valid": ["error", {
-      "components": ["Link"],
-      "specialLink": ["hrefLeft", "hrefRight"],
-      "aspects": ["noHref", "invalidHref", "preferButton"]
-    }],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ],
     "jsx-a11y/heading-has-content": "error",
     "jsx-a11y/html-has-lang": "error",
     "jsx-a11y/lang": "error",
     "jsx-a11y/no-redundant-roles": "error",
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/role-supports-aria-props": "error",
-    
+
     // Image optimization for SEO
     "@next/next/no-img-element": "error",
-    
+
     // ==================== SECURITY RULES ====================
-    
+
     "security/detect-object-injection": "error",
     "security/detect-non-literal-regexp": "error",
     "security/detect-unsafe-regex": "error",
@@ -140,17 +157,20 @@ Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
     "security/detect-non-literal-require": "error",
     "security/detect-possible-timing-attacks": "error",
     "security/detect-pseudoRandomBytes": "error",
-    
+
     // Prevent XSS in React
     "react/no-danger": "warn",
     "react/no-danger-with-children": "error",
-    
+
     // ==================== TYPESCRIPT RULES ====================
-    
-    "@typescript-eslint/no-unused-vars": ["error", {
-      "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_"
-    }],
+
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/prefer-nullish-coalescing": "error",
     "@typescript-eslint/prefer-optional-chain": "error",
@@ -159,30 +179,36 @@ Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
     "@typescript-eslint/await-thenable": "error",
     "@typescript-eslint/no-misused-promises": "error",
     "@typescript-eslint/require-await": "error",
-    "@typescript-eslint/consistent-type-imports": ["error", {
-      "prefer": "type-imports",
-      "disallowTypeAnnotations": false
-    }],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": false
+      }
+    ],
     "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
-    
+
     // ==================== IMPORT ORGANIZATION ====================
-    
-    "simple-import-sort/imports": ["error", {
-      "groups": [
-        // React and Next.js
-        ["^react", "^next"],
-        // External packages
-        ["^@?\\w"],
-        // Internal packages
-        ["^(@|@/|~/|src/)"],
-        // Parent imports
-        ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-        // Other relative imports
-        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-        // Style imports
-        ["^.+\\.s?css$"]
-      ]
-    }],
+
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          // React and Next.js
+          ["^react", "^next"],
+          // External packages
+          ["^@?\\w"],
+          // Internal packages
+          ["^(@|@/|~/|src/)"],
+          // Parent imports
+          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+          // Other relative imports
+          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+          // Style imports
+          ["^.+\\.s?css$"]
+        ]
+      }
+    ],
     "simple-import-sort/exports": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
@@ -190,9 +216,9 @@ Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
     "import/no-unresolved": "error",
     "import/no-cycle": "error",
     "import/no-self-import": "error",
-    
+
     // ==================== REACT BEST PRACTICES ====================
-    
+
     "react/prop-types": "off", // Using TypeScript
     "react/react-in-jsx-scope": "off", // Next.js handles this
     "react/display-name": "error",
@@ -205,19 +231,22 @@ Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
     "react/require-render-return": "error",
     "react/self-closing-comp": "error",
     "react/jsx-boolean-value": ["error", "never"],
-    "react/jsx-curly-brace-presence": ["error", {
-      "props": "never",
-      "children": "never"
-    }],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "never",
+        "children": "never"
+      }
+    ],
     "react/jsx-fragments": ["error", "syntax"],
     "react/jsx-no-duplicate-props": "error",
     "react/jsx-no-undef": "error",
     "react/jsx-pascal-case": "error",
     "react/jsx-uses-react": "off", // Next.js handles this
     "react/jsx-uses-vars": "error",
-    
+
     // ==================== GENERAL CODE QUALITY ====================
-    
+
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-debugger": "error",
     "no-alert": "error",
@@ -230,27 +259,33 @@ Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
     "object-shorthand": "error",
     "prefer-arrow-callback": "error",
     "prefer-template": "error",
-    "prefer-destructuring": ["error", {
-      "VariableDeclarator": {
-        "array": false,
-        "object": true
-      },
-      "AssignmentExpression": {
-        "array": true,
-        "object": false
+    "prefer-destructuring": [
+      "error",
+      {
+        "VariableDeclarator": {
+          "array": false,
+          "object": true
+        },
+        "AssignmentExpression": {
+          "array": true,
+          "object": false
+        }
       }
-    }],
-    
+    ],
+
     // ==================== UNICORN RULES (Performance & Modern JS) ====================
-    
+
     "unicorn/prevent-abbreviations": "off", // Too strict for our use case
-    "unicorn/filename-case": ["error", {
-      "cases": {
-        "camelCase": true,
-        "pascalCase": true,
-        "kebabCase": true
+    "unicorn/filename-case": [
+      "error",
+      {
+        "cases": {
+          "camelCase": true,
+          "pascalCase": true,
+          "kebabCase": true
+        }
       }
-    }],
+    ],
     "unicorn/no-array-for-each": "error",
     "unicorn/no-for-loop": "error",
     "unicorn/prefer-modern-math-apis": "error",
@@ -304,6 +339,7 @@ Comprehensive ESLint setup for optimal performance, SEO, and code quality in our
 ## 📦 Required Dependencies
 
 ### Development Dependencies to Install
+
 ```bash
 npm install --save-dev \
   @typescript-eslint/eslint-plugin \
@@ -323,48 +359,66 @@ npm install --save-dev \
 ## 🎯 Performance-Specific Rules Explained
 
 ### React Performance
-- **`react-hooks/exhaustive-deps`**: Prevents infinite re-renders and ensures proper dependency arrays
-- **`react/jsx-no-bind`**: Prevents inline function creation that causes unnecessary re-renders
-- **`react/no-unstable-nested-components`**: Prevents component re-creation on every render
-- **`react/jsx-no-constructed-context-values`**: Prevents unnecessary context re-renders
+
+- **`react-hooks/exhaustive-deps`**: Prevents infinite re-renders and ensures
+  proper dependency arrays
+- **`react/jsx-no-bind`**: Prevents inline function creation that causes
+  unnecessary re-renders
+- **`react/no-unstable-nested-components`**: Prevents component re-creation on
+  every render
+- **`react/jsx-no-constructed-context-values`**: Prevents unnecessary context
+  re-renders
 
 ### Bundle Size Optimization
+
 - **`import/no-duplicates`**: Combines duplicate imports to reduce bundle size
 - **`unused-imports/no-unused-imports`**: Removes dead code automatically
 - **`import/no-unused-modules`**: Identifies completely unused files
 
 ### Memory Management
-- **`react/no-direct-mutation-state`**: Prevents memory leaks in React components
-- **`@typescript-eslint/no-floating-promises`**: Ensures promises are properly handled
+
+- **`react/no-direct-mutation-state`**: Prevents memory leaks in React
+  components
+- **`@typescript-eslint/no-floating-promises`**: Ensures promises are properly
+  handled
 
 ## 🔍 SEO-Specific Rules Explained
 
 ### Meta Tags & Structure
-- **`@next/next/no-title-in-document-head`**: Ensures proper title handling in Next.js
+
+- **`@next/next/no-title-in-document-head`**: Ensures proper title handling in
+  Next.js
 - **`@next/next/no-head-element`**: Enforces use of Next.js Head component
 - **`jsx-a11y/html-has-lang`**: Ensures lang attribute for search engines
 
 ### Image Optimization
-- **`@next/next/no-img-element`**: Enforces Next.js Image component for better SEO and performance
+
+- **`@next/next/no-img-element`**: Enforces Next.js Image component for better
+  SEO and performance
 - **`jsx-a11y/alt-text`**: Ensures alt attributes for screen readers and SEO
 
 ### Accessibility (SEO Factor)
+
 - **`jsx-a11y/anchor-is-valid`**: Proper link structure for crawlers
-- **`jsx-a11y/heading-has-content`**: Ensures headings have content for SEO hierarchy
+- **`jsx-a11y/heading-has-content`**: Ensures headings have content for SEO
+  hierarchy
 
 ## 🛡️ Security Rules Explained
 
 ### XSS Prevention
+
 - **`react/no-danger`**: Warns about dangerouslySetInnerHTML usage
 - **`security/detect-eval-with-expression`**: Prevents eval() usage
 
 ### Input Validation
+
 - **`security/detect-object-injection`**: Prevents object injection attacks
 - **`security/detect-non-literal-regexp`**: Ensures safe regex patterns
 
 ## 📁 VSCode Configuration
 
 ### `.vscode/settings.json`
+
 ```json
 {
   "editor.formatOnSave": true,
@@ -399,6 +453,7 @@ npm install --save-dev \
 ## 🎭 Pre-commit Hooks
 
 ### `.husky/pre-commit`
+
 ```bash
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
@@ -410,6 +465,7 @@ npm run type-check
 ## 📊 Performance Linting Profile
 
 ### `.eslintrc.performance.json` (Stricter for Critical Files)
+
 ```json
 {
   "extends": ["./.eslintrc.json"],
@@ -437,18 +493,21 @@ npm run type-check
 ## 🚀 Benefits for Brënda Librave
 
 ### Performance Benefits
+
 - **Faster page loads** through optimized imports and component patterns
 - **Better Core Web Vitals** scores for SEO ranking
 - **Reduced bundle size** through dead code elimination
 - **Fewer re-renders** in React components
 
 ### SEO Benefits
+
 - **Better accessibility** scores improve search rankings
 - **Proper meta tag structure** for social media sharing
 - **Optimized images** with Next.js Image component
 - **Semantic HTML** through accessibility rules
 
 ### Developer Experience
+
 - **Consistent code style** across the team
 - **Automatic import organization** for better readability
 - **Early bug detection** through TypeScript integration
@@ -457,6 +516,7 @@ npm run type-check
 ## 🎯 Integration with CI/CD
 
 ### GitHub Actions Example
+
 ```yaml
 name: Code Quality
 on: [push, pull_request]
@@ -471,4 +531,6 @@ jobs:
       - run: npm run type-check
 ```
 
-This ESLint configuration ensures that Brënda Librave maintains high code quality, optimal performance, and excellent SEO practices throughout development.
+This ESLint configuration ensures that Brënda Librave maintains high code
+quality, optimal performance, and excellent SEO practices throughout
+development.

@@ -1,15 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+
 import { useSession } from 'next-auth/react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Save, User } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
-import { updateProfileSchema, type UpdateProfileFormData } from '@/lib/validations/auth';
-import { FormField } from '@/components/ui/form/FormField';
 import { Button } from '@/components/ui/Button';
+import { FormField } from '@/components/ui/form/FormField';
+
+import { type UpdateProfileFormData, updateProfileSchema } from '@/lib/validations/auth';
 
 interface ProfileUser {
   id: string;
@@ -29,8 +32,11 @@ interface ProfileFormProps {
 }
 
 export function ProfileForm({ user, onUpdate }: ProfileFormProps) {
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const { update } = useSession();
+  const [_message, _setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(
+    null
+  );
 
   const {
     register,
@@ -66,9 +72,9 @@ export function ProfileForm({ user, onUpdate }: ProfileFormProps) {
       }
 
       toast.success('Profili u përditësua me sukses!');
-      
+
       // Update session data
-      await update({
+      await session?.update({
         name: data.name,
         language: data.language,
         currency: data.currency,
@@ -81,7 +87,6 @@ export function ProfileForm({ user, onUpdate }: ProfileFormProps) {
 
       // Reset form dirty state
       reset(data);
-
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Përditësimi dështoi');
     } finally {
@@ -93,9 +98,7 @@ export function ProfileForm({ user, onUpdate }: ProfileFormProps) {
     <div className="bg-white p-6 rounded-lg shadow">
       <div className="flex items-center mb-6">
         <User className="h-6 w-6 text-gray-400 mr-3" />
-        <h2 className="text-xl font-semibold text-gray-900">
-          Informacionet personale
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-900">Informacionet personale</h2>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -161,12 +164,7 @@ export function ProfileForm({ user, onUpdate }: ProfileFormProps) {
         </div>
 
         <div className="flex justify-end">
-          <Button
-            type="submit"
-            loading={isLoading}
-            disabled={!isDirty}
-            className="min-w-[120px]"
-          >
+          <Button type="submit" loading={isLoading} disabled={!isDirty} className="min-w-[120px]">
             <Save className="w-4 h-4 mr-2" />
             Ruaj ndryshimet
           </Button>

@@ -1,13 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { Button } from '@/components/ui/Button';
-import { PriceDisplay } from '@/components/ui/PriceDisplay';
 import { Pagination } from '@/components/ui/Pagination';
-import type { BookSearchResult } from '@/types/book';
+import { PriceDisplay } from '@/components/ui/PriceDisplay';
+
 import { cn } from '@/lib/utils';
+
+import type { BookSearchResult } from '@/types/book';
 
 interface AdminBooksTableProps {
   searchParams: {
@@ -30,7 +34,7 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
     const fetchBooks = async () => {
       try {
         setLoading(true);
-        
+
         const params = new URLSearchParams();
         if (searchParams.query) params.set('query', searchParams.query);
         if (searchParams.categoryId) params.set('categoryId', searchParams.categoryId);
@@ -43,7 +47,7 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
 
         const response = await fetch(`/api/books?${params.toString()}`);
         const data = await response.json();
-        
+
         if (data.success) {
           setBooks(data.data);
         }
@@ -69,26 +73,28 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
 
   const toggleAllBooks = () => {
     if (!books) return;
-    
+
     const allSelected = selectedBooks.size === books.books.length;
     if (allSelected) {
       setSelectedBooks(new Set());
     } else {
-      setSelectedBooks(new Set(books.books.map(book => book.id)));
+      setSelectedBooks(new Set(books.books.map((book) => book.id)));
     }
   };
 
-  const handleBulkAction = async (action: 'activate' | 'deactivate' | 'feature' | 'unfeature' | 'delete') => {
+  const handleBulkAction = async (
+    action: 'activate' | 'deactivate' | 'feature' | 'unfeature' | 'delete'
+  ) => {
     if (selectedBooks.size === 0) return;
 
     setBulkActionLoading(true);
     try {
       // TODO: Implement bulk action API calls
-      console.log(`Bulk ${action} for books:`, Array.from(selectedBooks));
-      
+      console.warn(`Bulk ${action} for books:`, Array.from(selectedBooks));
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // TODO: Refresh the table data
       setSelectedBooks(new Set());
     } catch (error) {
@@ -105,7 +111,7 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
 
     try {
       // TODO: Implement delete API call
-      console.log('Deleting book:', bookId);
+      console.warn('Deleting book:', bookId);
       // TODO: Refresh the table data
     } catch (error) {
       console.error('Error deleting book:', error);
@@ -120,8 +126,18 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
     return (
       <div className="p-8 text-center">
         <div className="text-gray-400 mb-4">
-          <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          <svg
+            className="w-16 h-16 mx-auto mb-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            />
           </svg>
           <p className="text-lg font-medium text-gray-600">Nuk u gjetën libra</p>
         </div>
@@ -135,10 +151,8 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
       {selectedBooks.size > 0 && (
         <div className="bg-blue-50 border-b border-blue-200 px-6 py-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-800">
-              {selectedBooks.size} libra të zgjedhur
-            </span>
-            
+            <span className="text-sm text-blue-800">{selectedBooks.size} libra të zgjedhur</span>
+
             <div className="flex items-center space-x-2">
               <Button
                 size="sm"
@@ -212,12 +226,9 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {books.books.map((book) => (
-              <tr 
+              <tr
                 key={book.id}
-                className={cn(
-                  'hover:bg-gray-50',
-                  selectedBooks.has(book.id) && 'bg-blue-50'
-                )}
+                className={cn('hover:bg-gray-50', selectedBooks.has(book.id) && 'bg-blue-50')}
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <input
@@ -227,7 +238,7 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                   />
                 </td>
-                
+
                 <td className="px-6 py-4">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-12">
@@ -241,13 +252,23 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
                         />
                       ) : (
                         <div className="h-16 w-12 bg-gray-200 rounded flex items-center justify-center">
-                          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          <svg
+                            className="w-6 h-6 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                            />
                           </svg>
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">
                         <Link href={`/admin/books/${book.slug}`} className="hover:text-blue-600">
@@ -270,11 +291,11 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
                     </div>
                   </div>
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {book.category.name}
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap">
                   <PriceDisplay
                     priceALL={book.priceALL || 0}
@@ -283,27 +304,30 @@ export function AdminBooksTable({ searchParams }: AdminBooksTableProps) {
                     size="sm"
                   />
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {book.inventory}
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={cn(
-                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-                    book.active 
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
-                  )}>
+                  <span
+                    className={cn(
+                      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                      book.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    )}
+                  >
                     {book.active ? '✅ Aktiv' : '❌ Joaktiv'}
                   </span>
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                   <Link href={`/books/${book.slug}`} className="text-blue-600 hover:text-blue-900">
                     👁️ Shiko
                   </Link>
-                  <Link href={`/admin/books/${book.slug}/edit`} className="text-indigo-600 hover:text-indigo-900">
+                  <Link
+                    href={`/admin/books/${book.slug}/edit`}
+                    className="text-indigo-600 hover:text-indigo-900"
+                  >
                     ✏️ Përditëso
                   </Link>
                   <button

@@ -1,14 +1,17 @@
 import { Suspense } from 'react';
+
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-import { authOptions } from '@/lib/auth/config';
 import { RegisterForm } from '@/components/auth/RegisterForm';
+
+import { authOptions } from '@/lib/auth/config';
 
 export const metadata: Metadata = {
   title: 'Regjistrohuni | Brënda Librave',
-  description: 'Krijoni një llogari të re në Brënda Librave për të aksesuar koleksionin tonë të librave.',
+  description:
+    'Krijoni një llogari të re në Brënda Librave për të aksesuar koleksionin tonë të librave.',
   robots: {
     index: false,
     follow: true,

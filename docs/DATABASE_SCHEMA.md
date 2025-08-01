@@ -1,6 +1,7 @@
 # Brënda Librave - Database Schema
 
-This document contains the complete PostgreSQL database schema for Brënda Librave using Prisma ORM.
+This document contains the complete PostgreSQL database schema for Brënda
+Librave using Prisma ORM.
 
 ## 🗄️ Complete Prisma Schema
 
@@ -15,7 +16,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Note: For production deployment on Netlify, this will be automatically 
+// Note: For production deployment on Netlify, this will be automatically
 // configured to use PostgreSQL via Neon. See NETLIFY_DEPLOYMENT.md for setup.
 
 // Authentication Models (NextAuth.js compatible)
@@ -66,11 +67,11 @@ model User {
   newsletter      Boolean   @default(false)
   emailVerified   DateTime?
   image           String?
-  
+
   // Push notification settings
   fcmTokens       UserFCMToken[]
   notificationSettings NotificationSettings?
-  
+
   // Relations
   accounts        Account[]
   sessions        Session[]
@@ -79,7 +80,7 @@ model User {
   readingHistory  ReadingHistory[]
   blogPosts       BlogPost[]
   comments        Comment[]
-  
+
   // New relations
   forumTopics     ForumTopic[]
   forumPosts      ForumPost[]
@@ -92,7 +93,7 @@ model User {
   collections     BookCollection[]
   moderatedPosts  BlogPost[]   @relation("ModeratedPosts")
   blogPostLikes   BlogPostLike[]
-  
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -134,29 +135,29 @@ model Book {
   language        Language  @default(SQ)
   featured        Boolean   @default(false)
   active          Boolean   @default(true)
-  
+
   // SEO fields
   slug            String    @unique
   metaTitle       String?
   metaDescription String?
-  
+
   // Relations
   category        Category  @relation(fields: [categoryId], references: [id])
   tags            BookTag[]
   cartItems       CartItem[]
   orderItems      OrderItem[]
   readingHistory  ReadingHistory[]
-  
+
   // New relations
   forumTopics     ForumTopic[]
   gifts           BookGift[]
   preview         BookPreview?
   wishlistItems   Wishlist[]
   collectionItems BookCollectionItem[]
-  
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-  
+
   @@index([featured])
   @@index([active])
   @@index([categoryId])
@@ -170,12 +171,12 @@ model Category {
   description String?
   active      Boolean @default(true)
   sortOrder   Int     @default(0)
-  
+
   books       Book[]
-  
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   @@index([active, sortOrder])
 }
 
@@ -183,19 +184,19 @@ model Tag {
   id      String    @id @default(cuid())
   name    String    @unique
   nameEn  String?
-  
+
   books   BookTag[]
-  
+
   createdAt DateTime @default(now())
 }
 
 model BookTag {
   bookId  String
   tagId   String
-  
+
   book    Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
   tag     Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
-  
+
   @@id([bookId, tagId])
 }
 
@@ -207,13 +208,13 @@ model CartItem {
   quantity Int       @default(1)
   isDigital Boolean  @default(false)
   currency Currency  @default(ALL)
-  
+
   user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
   book     Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@unique([userId, bookId, isDigital])
 }
 
@@ -226,7 +227,7 @@ model Order {
   shippingCost    Decimal     @db.Decimal(10, 2) @default(0)
   currency        Currency    @default(ALL)
   exchangeRate    Decimal?    @db.Decimal(10, 4) // Exchange rate used at time of order
-  
+
   // Shipping information
   shippingName    String
   shippingEmail   String
@@ -235,20 +236,20 @@ model Order {
   shippingCity    String
   shippingZip     String
   shippingCountry String
-  
+
   // Payment information
   paymentMethod   PaymentMethod
   paymentId       String?     // PayPal transaction ID
   paidAt          DateTime?
-  
+
   // Relations
   user            User        @relation(fields: [userId], references: [id])
   items           OrderItem[]
   couponUsage     CouponUsage?
-  
+
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
-  
+
   @@index([userId])
   @@index([status])
 }
@@ -261,12 +262,12 @@ model OrderItem {
   price     Decimal @db.Decimal(10, 2)
   currency  Currency @default(ALL)
   isDigital Boolean @default(false)
-  
+
   order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
   book      Book  @relation(fields: [bookId], references: [id])
-  
+
   createdAt DateTime @default(now())
-  
+
   @@index([orderId])
 }
 
@@ -306,11 +307,11 @@ model BlogPost {
   rejectionReason String?
   views           Int           @default(0)
   likes           Int           @default(0)
-  
+
   // SEO fields
   metaTitle       String?
   metaDescription String?
-  
+
   // Relations
   author          User          @relation(fields: [authorId], references: [id])
   category        BlogCategory? @relation(fields: [categoryId], references: [id])
@@ -318,10 +319,10 @@ model BlogPost {
   tags            BlogPostTag[]
   comments        Comment[]
   likes_relation  BlogPostLike[]
-  
+
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
-  
+
   @@index([published])
   @@index([authorId])
   @@index([categoryId])
@@ -333,12 +334,12 @@ model BlogPostLike {
   id       String   @id @default(cuid())
   userId   String
   postId   String
-  
+
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   post     BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
-  
+
   @@unique([userId, postId])
   @@index([postId])
 }
@@ -364,9 +365,9 @@ model BlogCategory {
   slug        String     @unique
   description String?
   active      Boolean    @default(true)
-  
+
   posts       BlogPost[]
-  
+
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
@@ -375,19 +376,19 @@ model BlogTag {
   id      String        @id @default(cuid())
   name    String        @unique
   nameEn  String?
-  
+
   posts   BlogPostTag[]
-  
+
   createdAt DateTime @default(now())
 }
 
 model BlogPostTag {
   postId String
   tagId  String
-  
+
   post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
   tag    BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
-  
+
   @@id([postId, tagId])
 }
 
@@ -398,15 +399,15 @@ model Comment {
   postId    String
   parentId  String?       // For threaded comments
   status    CommentStatus @default(PENDING)
-  
+
   author    User      @relation(fields: [authorId], references: [id])
   post      BlogPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
   parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
   replies   Comment[] @relation("CommentReplies")
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@index([postId])
   @@index([status])
 }
@@ -427,13 +428,13 @@ model ReadingHistory {
   progress  Int      @default(0) // Percentage 0-100
   completed Boolean  @default(false)
   rating    Int?     // 1-5 stars
-  
+
   user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
   book      Book @relation(fields: [bookId], references: [id])
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@unique([userId, bookId])
   @@index([userId])
 }
@@ -446,7 +447,7 @@ model AnalyticsEvent {
   event      String
   properties Json?
   timestamp  DateTime @default(now())
-  
+
   @@index([event])
   @@index([timestamp])
 }
@@ -459,10 +460,10 @@ model NewsletterSubscriber {
   language  Language @default(SQ)
   active    Boolean  @default(true)
   tags      String[] // Subscription preferences
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@index([active])
 }
 
@@ -479,10 +480,10 @@ model Newsletter {
   recipients  Int       @default(0)
   openRate    Float?
   clickRate   Float?
-  
+
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  
+
   @@index([status])
   @@index([scheduledAt])
 }
@@ -505,12 +506,12 @@ model ForumCategory {
   color       String? // Hex color for category
   sortOrder   Int     @default(0)
   active      Boolean @default(true)
-  
+
   topics      ForumTopic[]
-  
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   @@index([active, sortOrder])
 }
 
@@ -526,16 +527,16 @@ model ForumTopic {
   locked      Boolean     @default(false)
   status      TopicStatus @default(ACTIVE)
   views       Int         @default(0)
-  
+
   author      User         @relation(fields: [authorId], references: [id])
   category    ForumCategory @relation(fields: [categoryId], references: [id])
   book        Book?        @relation(fields: [bookId], references: [id])
   posts       ForumPost[]
   tags        ForumTopicTag[]
-  
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   @@index([categoryId])
   @@index([authorId])
   @@index([bookId])
@@ -549,15 +550,15 @@ model ForumPost {
   topicId   String
   parentId  String?    // For threaded replies
   status    PostStatus @default(ACTIVE)
-  
+
   author    User       @relation(fields: [authorId], references: [id])
   topic     ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
   parent    ForumPost? @relation("PostReplies", fields: [parentId], references: [id])
   replies   ForumPost[] @relation("PostReplies")
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@index([topicId])
   @@index([authorId])
   @@index([status])
@@ -568,19 +569,19 @@ model ForumTag {
   name    String          @unique
   nameEn  String?
   color   String?         // Hex color for tag
-  
+
   topics  ForumTopicTag[]
-  
+
   createdAt DateTime @default(now())
 }
 
 model ForumTopicTag {
   topicId String
   tagId   String
-  
+
   topic   ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
   tag     ForumTag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
-  
+
   @@id([topicId, tagId])
 }
 
@@ -611,15 +612,15 @@ model BookGift {
   claimedAt     DateTime?
   claimedById   String?
   shippingInfo  Json?      // Shipping details if physical
-  
+
   book          Book       @relation(fields: [bookId], references: [id])
   fromUser      User?      @relation("GiftsSent", fields: [fromUserId], references: [id])
   toUser        User?      @relation("GiftsReceived", fields: [toUserId], references: [id])
   claimedBy     User?      @relation("GiftsClaimed", fields: [claimedById], references: [id])
-  
+
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  
+
   @@index([status])
   @@index([bookId])
   @@index([toUserId])
@@ -659,12 +660,12 @@ model Coupon {
   validUntil        DateTime?
   applicableToBooks String[]    // Book IDs (empty = all books)
   applicableToCategories String[] // Category IDs
-  
+
   uses              CouponUsage[]
-  
+
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
-  
+
   @@index([code])
   @@index([isActive])
   @@index([validFrom, validUntil])
@@ -676,13 +677,13 @@ model CouponUsage {
   userId    String
   orderId   String   @unique
   discount  Decimal  @db.Decimal(10, 2)
-  
+
   coupon    Coupon   @relation(fields: [couponId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
   order     Order    @relation(fields: [orderId], references: [id])
-  
+
   createdAt DateTime @default(now())
-  
+
   @@index([couponId])
   @@index([userId])
 }
@@ -704,9 +705,9 @@ model BookPreview {
   readingTime   Int?     // Estimated reading time in minutes
   difficulty    String?  // Reading difficulty level
   excerpt       String?  @db.Text
-  
+
   book          Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -723,12 +724,12 @@ model Subscription {
   endDate       DateTime?
   renewalDate   DateTime
   paymentId     String?          // Payment provider ID
-  
+
   user          User             @relation(fields: [userId], references: [id])
-  
+
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @updatedAt
-  
+
   @@index([userId])
   @@index([status])
   @@index([renewalDate])
@@ -756,12 +757,12 @@ model Wishlist {
   bookId    String
   priority  Int    @default(1) // 1=low, 2=medium, 3=high
   notes     String?
-  
+
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   book      Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
-  
+
   @@unique([userId, bookId])
   @@index([userId])
 }
@@ -772,13 +773,13 @@ model BookCollection {
   description String?
   userId      String
   isPublic    Boolean              @default(false)
-  
+
   user        User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   books       BookCollectionItem[]
-  
+
   createdAt   DateTime             @default(now())
   updatedAt   DateTime             @updatedAt
-  
+
   @@index([userId])
   @@index([isPublic])
 }
@@ -789,10 +790,10 @@ model BookCollectionItem {
   bookId       String
   sortOrder    Int            @default(0)
   notes        String?
-  
+
   collection   BookCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   book         Book           @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  
+
   @@unique([collectionId, bookId])
   @@index([collectionId])
 }
@@ -802,7 +803,7 @@ model Setting {
   id    String @id @default(cuid())
   key   String @unique
   value String @db.Text
-  
+
   updatedAt DateTime @updatedAt
 }
 
@@ -813,10 +814,10 @@ model ExchangeRate {
   toCurrency   Currency
   rate         Decimal  @db.Decimal(10, 4)
   isActive     Boolean  @default(true)
-  
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  
+
   @@unique([fromCurrency, toCurrency])
   @@index([isActive])
 }
@@ -828,12 +829,12 @@ model UserFCMToken {
   deviceType String? // 'web', 'mobile', 'pwa'
   userAgent String?
   isActive  Boolean  @default(true)
-  
+
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@index([userId])
   @@index([token])
 }
@@ -841,7 +842,7 @@ model UserFCMToken {
 model NotificationSettings {
   id              String  @id @default(cuid())
   userId          String  @unique
-  
+
   // Notification preferences
   newBooks        Boolean @default(true)
   orderUpdates    Boolean @default(true)
@@ -850,13 +851,13 @@ model NotificationSettings {
   newsletter      Boolean @default(true)
   bookRecommendations Boolean @default(true)
   priceAlerts     Boolean @default(true)
-  
+
   // Delivery preferences
   pushEnabled     Boolean @default(true)
   emailEnabled    Boolean @default(true)
-  
+
   user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -879,6 +880,7 @@ model NotificationSettings {
 ## 🔧 Database Setup Commands
 
 ### Development Setup (SQLite)
+
 ```bash
 # Initialize Prisma
 npx prisma init
@@ -897,6 +899,7 @@ npx prisma db seed
 ```
 
 ### Production Setup (Neon PostgreSQL on Netlify)
+
 ```bash
 # Set production database URL in Netlify environment
 # DATABASE_URL="postgresql://username:password@ep-name.region.aws.neon.tech/dbname?sslmode=require"
@@ -909,6 +912,7 @@ npx prisma generate
 ```
 
 ### Database Strategy
+
 - **Local Development**: SQLite for simplicity and speed
 - **Production (Netlify)**: Neon PostgreSQL for scalability and performance
 - **Schema Compatibility**: Prisma handles differences automatically
@@ -917,12 +921,14 @@ npx prisma generate
 ## 📊 Database Indexing Strategy
 
 ### Performance Indexes
+
 - **Books**: `featured`, `active`, `categoryId` for fast filtering
 - **Orders**: `userId`, `status` for user orders and admin management
 - **Blog Posts**: `published`, `authorId`, `categoryId` for content queries
 - **Analytics**: `event`, `timestamp` for performance tracking
 
 ### Unique Constraints
+
 - **Books**: `isbn`, `slug` for data integrity
 - **Categories**: `slug` for URL routing
 - **Users**: `email` for authentication
@@ -931,17 +937,20 @@ npx prisma generate
 ## 🔄 Migration Strategy
 
 ### Phase 1 (MVP)
+
 - Core user authentication tables
 - Basic book catalog
 - Simple cart and order system
 - Essential blog functionality
 
 ### Phase 2 (Enhanced)
+
 - Reading history and user preferences
 - Advanced blog features (comments, tags)
 - Analytics events table
 
 ### Phase 3 (Advanced)
+
 - Newsletter subscription system
 - Advanced user activity tracking
 - Settings management
@@ -949,17 +958,20 @@ npx prisma generate
 ## 📈 Database Performance Considerations
 
 ### Query Optimization
+
 - Use appropriate indexes for common queries
 - Implement pagination for large datasets
 - Use database-level constraints for data integrity
 
 ### Scaling Preparation
+
 - **Development**: SQLite for fast local development and testing
 - **Production**: Neon PostgreSQL serverless architecture for automatic scaling
 - **Migration Path**: Seamless transition from SQLite to PostgreSQL via Prisma
 - **Future Scaling**: Ready for read replicas and connection pooling in Phase 4
 
 ### Data Retention
+
 - Analytics events: 2 years (configurable)
 - User sessions: 30 days
 - Order history: Permanent

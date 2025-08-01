@@ -28,7 +28,7 @@ For additional features, you can add:
 ```bash
 # Monitoring & Error Tracking (optional for development)
 SENTRY_DSN="your-sentry-dsn-here"
-SENTRY_ORG="brenda-librave" 
+SENTRY_ORG="brenda-librave"
 SENTRY_PROJECT="brenda-librave"
 
 # PayPal Integration (for testing - use sandbox)
@@ -54,6 +54,7 @@ echo 'NODE_ENV="development"' >> .env.local
 ## Production Environment
 
 For production deployment on Netlify:
+
 - Use Neon PostgreSQL for DATABASE_URL
 - Generate a secure NEXTAUTH_SECRET
 - Set NEXTAUTH_URL to your production domain
@@ -64,4 +65,4 @@ For production deployment on Netlify:
 - Never commit `.env.local` to version control
 - Use strong, unique secrets for production
 - Rotate secrets regularly
-- Use environment-specific configurations 
+- Use environment-specific configurations

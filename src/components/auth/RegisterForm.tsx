@@ -1,16 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
-import { Eye, EyeOff, UserPlus, Check } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Check, Eye, EyeOff, UserPlus } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
-import { registerSchema, type RegisterFormData } from '@/lib/validations/auth';
-import { FormField } from '@/components/ui/form/FormField';
 import { Button } from '@/components/ui/Button';
+import { FormField } from '@/components/ui/form/FormField';
+
+import { type RegisterFormData, registerSchema } from '@/lib/validations/auth';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -71,12 +74,8 @@ export function RegisterForm() {
   return (
     <div className="w-full max-w-md mx-auto p-6">
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Krijoni llogarinë tuaj
-        </h1>
-        <p className="text-gray-600">
-          Bashkohuni me Brënda Librave sot
-        </p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Krijoni llogarinë tuaj</h1>
+        <p className="text-gray-600">Bashkohuni me Brënda Librave sot</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -109,26 +108,18 @@ export function RegisterForm() {
             className="absolute right-3 top-8 text-gray-400 hover:text-gray-600"
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? (
-              <EyeOff className="h-5 w-5" />
-            ) : (
-              <Eye className="h-5 w-5" />
-            )}
+            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
         </div>
 
         {password && (
           <div className="bg-gray-50 p-4 rounded-md">
-            <h4 className="text-sm font-medium text-gray-700 mb-2">
-              Kërkesat për fjalëkalimin:
-            </h4>
+            <h4 className="text-sm font-medium text-gray-700 mb-2">Kërkesat për fjalëkalimin:</h4>
             <ul className="space-y-1">
               {passwordRequirements.map((req, index) => (
                 <li key={index} className="flex items-center text-sm">
-                  <Check 
-                    className={`h-4 w-4 mr-2 ${
-                      req.check ? 'text-green-500' : 'text-gray-400'
-                    }`} 
+                  <Check
+                    className={`h-4 w-4 mr-2 ${req.check ? 'text-green-500' : 'text-gray-400'}`}
                   />
                   <span className={req.check ? 'text-green-700' : 'text-gray-600'}>
                     {req.label}
@@ -152,19 +143,13 @@ export function RegisterForm() {
             className="absolute right-3 top-8 text-gray-400 hover:text-gray-600"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           >
-            {showConfirmPassword ? (
-              <EyeOff className="h-5 w-5" />
-            ) : (
-              <Eye className="h-5 w-5" />
-            )}
+            {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Gjuha
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Gjuha</label>
             <select
               {...register('language')}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -175,9 +160,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Monedha
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Monedha</label>
             <select
               {...register('currency')}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -200,12 +183,7 @@ export function RegisterForm() {
           </label>
         </div>
 
-        <Button
-          type="submit"
-          loading={isLoading}
-          className="w-full"
-          size="lg"
-        >
+        <Button type="submit" loading={isLoading} className="w-full" size="lg">
           <UserPlus className="w-5 h-5 mr-2" />
           Krijo llogarinë
         </Button>
@@ -214,10 +192,7 @@ export function RegisterForm() {
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
           Keni një llogari?{' '}
-          <Link 
-            href="/auth/login"
-            className="font-medium text-blue-600 hover:text-blue-500"
-          >
+          <Link href="/auth/login" className="font-medium text-blue-600 hover:text-blue-500">
             Hyni këtu
           </Link>
         </p>

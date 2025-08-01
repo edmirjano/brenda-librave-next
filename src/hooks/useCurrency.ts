@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { SupportedCurrency, DEFAULT_EXCHANGE_RATE } from '@/lib/currency/config';
-import { convertPrice, formatPrice, formatDualPrice } from '@/lib/currency/utils';
+import { useEffect, useState } from 'react';
+
+import { DEFAULT_EXCHANGE_RATE, SupportedCurrency } from '@/lib/currency/config';
+import { convertPrice, formatDualPrice, formatPrice } from '@/lib/currency/utils';
 
 interface UseCurrencyReturn {
   exchangeRate: number;
@@ -44,7 +45,7 @@ export function useCurrency(): UseCurrencyReturn {
     };
 
     fetchExchangeRate();
-    
+
     // Refresh exchange rate every hour
     const interval = setInterval(fetchExchangeRate, 60 * 60 * 1000);
     return () => clearInterval(interval);
@@ -55,7 +56,10 @@ export function useCurrency(): UseCurrencyReturn {
     localStorage.setItem('userCurrency', currency);
   };
 
-  const convertPriceWithRate = (priceALL: number, targetCurrency: SupportedCurrency = userCurrency) => {
+  const convertPriceWithRate = (
+    priceALL: number,
+    targetCurrency: SupportedCurrency = userCurrency
+  ) => {
     return convertPrice(priceALL, targetCurrency, exchangeRate);
   };
 
@@ -74,6 +78,6 @@ export function useCurrency(): UseCurrencyReturn {
     convertPrice: convertPriceWithRate,
     formatPrice: formatPriceWithCurrency,
     formatDualPrice: formatDualPriceWithRate,
-    isLoading
+    isLoading,
   };
 }

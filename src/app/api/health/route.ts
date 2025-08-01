@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import { logger } from '@/lib/logging/logger';
 
 export async function GET() {
@@ -15,9 +16,9 @@ export async function GET() {
         total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
       },
     };
-    
+
     logger.info('Health check passed', healthStatus);
-    
+
     return NextResponse.json(healthStatus, {
       status: 200,
       headers: {
@@ -32,9 +33,9 @@ export async function GET() {
       error: error instanceof Error ? error.message : 'Unknown error',
       service: 'brenda-librave',
     };
-    
+
     logger.error('Health check failed', { error: errorStatus });
-    
+
     return NextResponse.json(errorStatus, {
       status: 503,
       headers: {
@@ -43,4 +44,4 @@ export async function GET() {
       },
     });
   }
-} 
+}

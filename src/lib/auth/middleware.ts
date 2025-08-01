@@ -1,11 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
+
 import { logSecurity, logWarning } from '@/lib/logging/logger';
 
-export async function authMiddleware(request: NextRequest) {
-  const token = await getToken({ 
+export async function authMiddleware(
+  request: NextRequest,
+  _event: NextFetchEvent
+): Promise<Response | undefined> {
+  const token = await getToken({
     req: request,
-    secret: process.env.NEXTAUTH_SECRET 
+    secret: process.env.NEXTAUTH_SECRET,
   });
 
   const { pathname } = request.nextUrl;
@@ -23,31 +27,16 @@ export async function authMiddleware(request: NextRequest) {
   ];
 
   // Admin-only paths
-  const adminPaths = [
-    '/admin',
-    '/api/admin',
-  ];
+  const adminPaths = ['/admin', '/api/admin'];
 
   // Protected paths that require authentication
-  const protectedPaths = [
-    '/profile',
-    '/cart',
-    '/checkout',
-    '/orders',
-    '/api/user',
-  ];
+  const protectedPaths = ['/profile', '/cart', '/checkout', '/orders', '/api/user'];
 
-  const isPublicPath = publicPaths.some(path => 
-    pathname.startsWith(path) || pathname === path
-  );
+  const isPublicPath = publicPaths.some((path) => pathname.startsWith(path) || pathname === path);
 
-  const isAdminPath = adminPaths.some(path => 
-    pathname.startsWith(path)
-  );
+  const isAdminPath = adminPaths.some((path) => pathname.startsWith(path));
 
-  const isProtectedPath = protectedPaths.some(path => 
-    pathname.startsWith(path)
-  );
+  const isProtectedPath = protectedPaths.some((path) => pathname.startsWith(path));
 
   // Allow public paths
   if (isPublicPath && !isAdminPath) {
@@ -63,10 +52,7 @@ export async function authMiddleware(request: NextRequest) {
     });
 
     if (pathname.startsWith('/api/')) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Redirect to login for web pages
@@ -85,10 +71,7 @@ export async function authMiddleware(request: NextRequest) {
     });
 
     if (pathname.startsWith('/api/')) {
-      return NextResponse.json(
-        { error: 'Forbidden - Admin access required' },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: 'Forbidden - Admin access required' }, { status: 403 });
     }
 
     // Redirect to home for web pages
@@ -115,9 +98,9 @@ export function withAuth(
       return handler(request);
     }
 
-    const token = await getToken({ 
+    const token = await getToken({
       req: request,
-      secret: process.env.NEXTAUTH_SECRET 
+      secret: process.env.NEXTAUTH_SECRET,
     });
 
     if (!token) {
@@ -126,10 +109,7 @@ export function withAuth(
         ip: request.ip,
       });
 
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
     if (allowedRoles.length > 0 && !allowedRoles.includes(token.role as string)) {
@@ -140,10 +120,7 @@ export function withAuth(
         requiredRoles: allowedRoles,
       });
 
-      return NextResponse.json(
-        { error: 'Insufficient permissions' },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
     return handler(request);
@@ -166,9 +143,9 @@ export function withRateLimit(
     const ip = request.ip || 'unknown';
     const now = Date.now();
     const windowMs = options.windowMs;
-    
+
     const record = rateLimitMap.get(ip);
-    
+
     if (!record || now > record.resetTime) {
       rateLimitMap.set(ip, {
         count: 1,
@@ -176,7 +153,7 @@ export function withRateLimit(
       });
       return handler(request);
     }
-    
+
     if (record.count >= options.limit) {
       logWarning('Rate limit exceeded', {
         ip,
@@ -184,13 +161,10 @@ export function withRateLimit(
         limit: options.limit,
         windowMs,
       });
-      
-      return NextResponse.json(
-        { error: 'Too many requests' },
-        { status: 429 }
-      );
+
+      return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
     }
-    
+
     record.count++;
     return handler(request);
   };

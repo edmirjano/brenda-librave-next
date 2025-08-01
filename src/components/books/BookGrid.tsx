@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { BookCard } from './BookCard';
+
 import { Pagination } from '@/components/ui/Pagination';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+
+import type { BookSearchResult } from '@/types/book';
+
+import { BookCard } from './BookCard';
 import { BookGridSkeleton } from './BookGridSkeleton';
-import type { BookSearchResult, BookSearchParams } from '@/types/book';
 
 interface BookGridProps {
   searchParams: {
@@ -36,7 +38,7 @@ export function BookGrid({ searchParams }: BookGridProps) {
 
         // Build query parameters
         const params = new URLSearchParams();
-        
+
         if (searchParams.query) params.set('query', searchParams.query);
         if (searchParams.categoryId) params.set('categoryId', searchParams.categoryId);
         if (searchParams.tags) params.set('tags', searchParams.tags);
@@ -50,13 +52,13 @@ export function BookGrid({ searchParams }: BookGridProps) {
         if (searchParams.page) params.set('page', searchParams.page);
 
         const response = await fetch(`/api/books?${params.toString()}`);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch books');
         }
 
         const data = await response.json();
-        
+
         if (!data.success) {
           throw new Error(data.error || 'Failed to fetch books');
         }
@@ -80,13 +82,23 @@ export function BookGrid({ searchParams }: BookGridProps) {
     return (
       <div className="text-center py-12">
         <div className="text-red-600 mb-4">
-          <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            className="w-12 h-12 mx-auto mb-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           <p className="text-lg font-medium">Gabim në ngarkimin e librave</p>
           <p className="text-sm text-gray-600 mt-2">{error}</p>
         </div>
-        <button 
+        <button
           onClick={() => window.location.reload()}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
@@ -100,8 +112,18 @@ export function BookGrid({ searchParams }: BookGridProps) {
     return (
       <div className="text-center py-12">
         <div className="text-gray-400 mb-4">
-          <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          <svg
+            className="w-16 h-16 mx-auto mb-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            />
           </svg>
           <p className="text-lg font-medium text-gray-600">Nuk u gjetën libra</p>
           <p className="text-sm text-gray-500 mt-2">
@@ -117,15 +139,12 @@ export function BookGrid({ searchParams }: BookGridProps) {
       {/* Results count */}
       <div className="flex justify-between items-center mb-6">
         <p className="text-sm text-gray-600">
-          {books.totalCount === 1 
-            ? `1 libër u gjet`
-            : `${books.totalCount} libra u gjetën`
-          }
+          {books.totalCount === 1 ? `1 libër u gjet` : `${books.totalCount} libra u gjetën`}
         </p>
-        
+
         {/* Sort dropdown for mobile */}
         <div className="lg:hidden">
-          <select 
+          <select
             className="text-sm border border-gray-300 rounded-lg px-3 py-1 bg-white"
             value={`${searchParams.sortBy || 'createdAt'}-${searchParams.sortOrder || 'desc'}`}
             onChange={(e) => {

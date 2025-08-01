@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
+
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-import { authOptions } from '@/lib/auth/config';
 import { LoginForm } from '@/components/auth/LoginForm';
+
+import { authOptions } from '@/lib/auth/config';
 
 export const metadata: Metadata = {
   title: 'Hyrje | Brënda Librave',

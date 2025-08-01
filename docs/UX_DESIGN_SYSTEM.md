@@ -1,12 +1,16 @@
 # Brënda Librave - UX Design System
 
-Complete design system for mobile-like transitions, Albanian Lek currency, and Apple Liquid Glass aesthetics.
+Complete design system for mobile-like transitions, Albanian Lek currency, and
+Apple Liquid Glass aesthetics.
 
 ## 🎨 Design Philosophy
 
 ### Core Principles
-- **Mobile-First Native Feel**: Web app that feels like a native mobile application
-- **Albanian Cultural Identity**: Design elements that resonate with Albanian users
+
+- **Mobile-First Native Feel**: Web app that feels like a native mobile
+  application
+- **Albanian Cultural Identity**: Design elements that resonate with Albanian
+  users
 - **Apple Liquid Glass Aesthetics**: Premium, modern visual language
 - **Accessibility First**: WCAG 2.1 AA compliance throughout
 - **Performance Optimized**: 60fps animations and smooth interactions
@@ -14,6 +18,7 @@ Complete design system for mobile-like transitions, Albanian Lek currency, and A
 ## 📱 Mobile-like Page Transitions
 
 ### Stack Navigation System
+
 ```typescript
 // lib/navigation/stack-navigation.ts
 export const StackNavigation = {
@@ -22,45 +27,46 @@ export const StackNavigation = {
     enter: {
       x: '100%',
       opacity: 0,
-      transition: { type: 'spring', stiffness: 300, damping: 30 }
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
     },
     center: {
       x: 0,
       opacity: 1,
-      transition: { type: 'spring', stiffness: 300, damping: 30 }
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
     },
     exit: {
       x: '-100%',
       opacity: 0,
-      transition: { type: 'spring', stiffness: 300, damping: 30 }
-    }
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
+    },
   },
-  
+
   // Android-style material transitions
   materialTransitions: {
     enter: {
       y: 50,
       opacity: 0,
       scale: 0.95,
-      transition: { type: 'spring', stiffness: 400, damping: 25 }
+      transition: { type: 'spring', stiffness: 400, damping: 25 },
     },
     center: {
       y: 0,
       opacity: 1,
       scale: 1,
-      transition: { type: 'spring', stiffness: 400, damping: 25 }
+      transition: { type: 'spring', stiffness: 400, damping: 25 },
     },
     exit: {
       y: -50,
       opacity: 0,
       scale: 1.05,
-      transition: { type: 'spring', stiffness: 400, damping: 25 }
-    }
-  }
+      transition: { type: 'spring', stiffness: 400, damping: 25 },
+    },
+  },
 };
 ```
 
 ### Gesture Support Implementation
+
 ```typescript
 // components/navigation/GestureNavigation.tsx
 import { useSpring, animated } from '@react-spring/web';
@@ -68,14 +74,14 @@ import { useDrag } from '@use-gesture/react';
 
 export const GestureNavigation = ({ children, onSwipeBack }) => {
   const [{ x }, api] = useSpring(() => ({ x: 0 }));
-  
+
   const bind = useDrag(({ active, movement: [mx], cancel, canceled }) => {
     // Swipe right to go back (iOS style)
     if (mx > 100 && !canceled) {
       cancel();
       onSwipeBack();
     }
-    
+
     api.start({
       x: active ? Math.max(0, mx) : 0,
       immediate: active
@@ -102,6 +108,7 @@ export const GestureNavigation = ({ children, onSwipeBack }) => {
 ```
 
 ### Loading States & Skeleton Screens
+
 ```typescript
 // components/ui/SkeletonLoader.tsx
 export const BookCardSkeleton = () => (
@@ -130,70 +137,78 @@ export const PageSkeleton = () => (
 ## 💰 Albanian Lek Currency System
 
 ### Currency Configuration
+
 ```typescript
 // lib/currency/config.ts
 export const CurrencyConfig = {
   primary: 'ALL', // Albanian Lek
   secondary: 'EUR', // Euro
-  
+
   symbols: {
     ALL: 'L', // Albanian Lek symbol
-    EUR: '€'
+    EUR: '€',
   },
-  
+
   formatting: {
     ALL: {
       locale: 'sq-AL',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     },
     EUR: {
       locale: 'sq-AL',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }
-  }
+      maximumFractionDigits: 2,
+    },
+  },
 };
 ```
 
 ### Currency Conversion Hook
+
 ```typescript
 // hooks/useCurrency.ts
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useCurrency = () => {
   const [exchangeRate, setExchangeRate] = useState(1);
   const [userCurrency, setUserCurrency] = useState('ALL');
-  
-  const convertPrice = (priceALL: number, targetCurrency: string = userCurrency) => {
+
+  const convertPrice = (
+    priceALL: number,
+    targetCurrency: string = userCurrency
+  ) => {
     if (targetCurrency === 'ALL') return priceALL;
     if (targetCurrency === 'EUR') return priceALL / exchangeRate;
     return priceALL;
   };
-  
+
   const formatPrice = (price: number, currency: string = userCurrency) => {
     const config = CurrencyConfig.formatting[currency];
     const symbol = CurrencyConfig.symbols[currency];
-    
+
     return new Intl.NumberFormat(config.locale, {
       style: 'currency',
       currency: currency,
       minimumFractionDigits: config.minimumFractionDigits,
-      maximumFractionDigits: config.maximumFractionDigits
-    }).format(price).replace(currency, symbol);
+      maximumFractionDigits: config.maximumFractionDigits,
+    })
+      .format(price)
+      .replace(currency, symbol);
   };
-  
+
   return {
     exchangeRate,
     userCurrency,
     setUserCurrency,
     convertPrice,
-    formatPrice
+    formatPrice,
   };
 };
 ```
 
 ### Price Display Component
+
 ```typescript
 // components/ui/PriceDisplay.tsx
 import { useCurrency } from '@/hooks/useCurrency';
@@ -205,17 +220,17 @@ interface PriceDisplayProps {
   className?: string;
 }
 
-export const PriceDisplay = ({ 
-  priceALL, 
-  priceEUR, 
+export const PriceDisplay = ({
+  priceALL,
+  priceEUR,
   showBoth = false,
-  className = '' 
+  className = ''
 }: PriceDisplayProps) => {
   const { userCurrency, formatPrice, convertPrice } = useCurrency();
-  
+
   const primaryPrice = userCurrency === 'ALL' ? priceALL : (priceEUR || convertPrice(priceALL, 'EUR'));
   const secondaryPrice = userCurrency === 'ALL' ? (priceEUR || convertPrice(priceALL, 'EUR')) : priceALL;
-  
+
   return (
     <div className={`price-display ${className}`}>
       <span className="text-lg font-bold text-gray-900">
@@ -234,6 +249,7 @@ export const PriceDisplay = ({
 ## 🎭 Apple Liquid Glass Components
 
 ### Glass Card Component
+
 ```typescript
 // components/ui/GlassCard.tsx
 import { motion } from 'framer-motion';
@@ -247,8 +263,8 @@ interface GlassCardProps {
 export const GlassCard = ({ children, className = '', hover = true }: GlassCardProps) => (
   <motion.div
     className={`
-      backdrop-blur-xl bg-white/10 
-      border border-white/20 
+      backdrop-blur-xl bg-white/10
+      border border-white/20
       rounded-2xl shadow-2xl
       ${hover ? 'hover:bg-white/20 hover:border-white/30' : ''}
       ${className}
@@ -262,6 +278,7 @@ export const GlassCard = ({ children, className = '', hover = true }: GlassCardP
 ```
 
 ### Liquid Button Component
+
 ```typescript
 // components/ui/LiquidButton.tsx
 import { motion } from 'framer-motion';
@@ -274,25 +291,25 @@ interface LiquidButtonProps {
   disabled?: boolean;
 }
 
-export const LiquidButton = ({ 
-  children, 
-  variant = 'primary', 
+export const LiquidButton = ({
+  children,
+  variant = 'primary',
   size = 'md',
   onClick,
-  disabled = false 
+  disabled = false
 }: LiquidButtonProps) => {
   const variants = {
     primary: 'bg-gradient-to-r from-blue-500 to-purple-600 text-white',
     secondary: 'bg-white/10 backdrop-blur-xl border border-white/20 text-gray-900',
     ghost: 'bg-transparent hover:bg-white/10 text-gray-700'
   };
-  
+
   const sizes = {
     sm: 'px-4 py-2 text-sm',
     md: 'px-6 py-3 text-base',
     lg: 'px-8 py-4 text-lg'
   };
-  
+
   return (
     <motion.button
       className={`
@@ -316,24 +333,25 @@ export const LiquidButton = ({
 ## 🎨 Color System
 
 ### Albanian-Inspired Palette
+
 ```css
 /* globals.css */
 :root {
   /* Albanian Flag Colors */
   --albanian-red: #e41e20;
   --albanian-red-dark: #c41e3a;
-  
+
   /* Cultural Colors */
   --mountain-gray: #6b7280;
   --adriatic-blue: #0ea5e9;
   --olive-green: #84cc16;
   --golden-eagle: #f59e0b;
-  
+
   /* Liquid Glass Colors */
   --glass-white: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-shadow: rgba(0, 0, 0, 0.1);
-  
+
   /* Semantic Colors */
   --success: #10b981;
   --warning: #f59e0b;
@@ -343,6 +361,7 @@ export const LiquidButton = ({
 ```
 
 ### Tailwind Configuration
+
 ```javascript
 // tailwind.config.js
 module.exports = {
@@ -351,51 +370,52 @@ module.exports = {
       colors: {
         albanian: {
           red: '#e41e20',
-          'red-dark': '#c41e3a'
+          'red-dark': '#c41e3a',
         },
         cultural: {
           mountain: '#6b7280',
           adriatic: '#0ea5e9',
           olive: '#84cc16',
-          golden: '#f59e0b'
+          golden: '#f59e0b',
         },
         glass: {
           white: 'rgba(255, 255, 255, 0.1)',
           border: 'rgba(255, 255, 255, 0.2)',
-          shadow: 'rgba(0, 0, 0, 0.1)'
-        }
+          shadow: 'rgba(0, 0, 0, 0.1)',
+        },
       },
       backdropBlur: {
         xs: '2px',
-        '4xl': '72px'
+        '4xl': '72px',
       },
       animation: {
         'liquid-morph': 'liquidMorph 3s ease-in-out infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-soft': 'pulseSoft 2s ease-in-out infinite'
+        float: 'float 6s ease-in-out infinite',
+        'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
       },
       keyframes: {
         liquidMorph: {
           '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
-          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' }
+          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' }
+          '50%': { transform: 'translateY(-10px)' },
         },
         pulseSoft: {
           '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0.8 }
-        }
-      }
-    }
-  }
+          '50%': { opacity: 0.8 },
+        },
+      },
+    },
+  },
 };
 ```
 
 ## 📱 Touch Interactions
 
 ### Haptic-like Feedback
+
 ```typescript
 // lib/interactions/haptic-feedback.ts
 export const HapticFeedback = {
@@ -408,7 +428,7 @@ export const HapticFeedback = {
       element.style.opacity = '1';
     }, 100);
   },
-  
+
   medium: (element: HTMLElement) => {
     element.style.transform = 'scale(0.95)';
     element.style.opacity = '0.7';
@@ -417,7 +437,7 @@ export const HapticFeedback = {
       element.style.opacity = '1';
     }, 150);
   },
-  
+
   heavy: (element: HTMLElement) => {
     element.style.transform = 'scale(0.92)';
     element.style.opacity = '0.6';
@@ -425,11 +445,12 @@ export const HapticFeedback = {
       element.style.transform = 'scale(1)';
       element.style.opacity = '1';
     }, 200);
-  }
+  },
 };
 ```
 
 ### Touch-Optimized Components
+
 ```typescript
 // components/ui/TouchCard.tsx
 import { motion } from 'framer-motion';
@@ -453,6 +474,7 @@ export const TouchCard = ({ children, onTap, ...props }) => (
 ## 🎯 Performance Optimizations
 
 ### Animation Performance
+
 ```typescript
 // lib/animations/performance.ts
 export const PerformantAnimations = {
@@ -461,25 +483,28 @@ export const PerformantAnimations = {
     initial: { x: 100, opacity: 0 },
     animate: { x: 0, opacity: 1 },
     exit: { x: -100, opacity: 0 },
-    transition: { 
-      type: 'spring', 
-      stiffness: 300, 
+    transition: {
+      type: 'spring',
+      stiffness: 300,
       damping: 30,
       // Use GPU acceleration
-      willChange: 'transform, opacity'
-    }
+      willChange: 'transform, opacity',
+    },
   },
-  
+
   // Reduce motion for accessibility
   respectsReducedMotion: {
     transition: {
-      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 0.3
-    }
-  }
+      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 0
+        : 0.3,
+    },
+  },
 };
 ```
 
 ### Lazy Loading Components
+
 ```typescript
 // components/ui/LazyImage.tsx
 import { useState, useRef, useEffect } from 'react';
@@ -534,4 +559,5 @@ This comprehensive UX design system provides:
 5. **Accessibility First**: Reduced motion support and WCAG compliance
 6. **Touch Optimized**: Haptic-like feedback and touch-friendly interactions
 
-The system ensures Brënda Librave feels like a premium native mobile application while maintaining web accessibility and performance standards.
+The system ensures Brënda Librave feels like a premium native mobile application
+while maintaining web accessibility and performance standards.

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+
 import { AlertCircle, Home, LogIn } from 'lucide-react';
 
 import { Button } from '@/components/ui/Button';
@@ -36,13 +37,9 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <div className="text-center">
             <AlertCircle className="mx-auto h-12 w-12 text-red-500 mb-4" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Gabim në autentifikim
-            </h1>
-            <p className="text-gray-600 mb-8">
-              {errorMessage}
-            </p>
-            
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Gabim në autentifikim</h1>
+            <p className="text-gray-600 mb-8">{errorMessage}</p>
+
             <div className="space-y-3">
               <Link href="/auth/login" className="block">
                 <Button className="w-full">
@@ -50,7 +47,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
                   Provoni përsëri
                 </Button>
               </Link>
-              
+
               <Link href="/" className="block">
                 <Button variant="outline" className="w-full">
                   <Home className="w-5 h-5 mr-2" />

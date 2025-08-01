@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+
 import { cn } from '@/lib/utils';
+
 import type { BookDetailView } from '@/types/book';
 
 interface BookDetailTabsProps {
@@ -17,11 +19,9 @@ export function BookDetailTabs({ book }: BookDetailTabsProps) {
       label: 'Përshkrimi',
       content: (
         <div className="prose prose-sm max-w-none">
-          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-            {book.description}
-          </p>
+          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{book.description}</p>
         </div>
-      )
+      ),
     },
     {
       id: 'details',
@@ -46,7 +46,7 @@ export function BookDetailTabs({ book }: BookDetailTabsProps) {
               <p className="font-medium">{book.language === 'SQ' ? 'Shqip' : 'Anglisht'}</p>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             {book.isbn && (
               <div>
@@ -61,7 +61,7 @@ export function BookDetailTabs({ book }: BookDetailTabsProps) {
                   {new Date(book.publishedDate).toLocaleDateString('sq-AL', {
                     year: 'numeric',
                     month: 'long',
-                    day: 'numeric'
+                    day: 'numeric',
                   })}
                 </p>
               </div>
@@ -84,12 +84,12 @@ export function BookDetailTabs({ book }: BookDetailTabsProps) {
             )}
           </div>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   // Only show shipping tab if book has physical copies
-  if (book.inventory > 0 || (book.priceALL || book.priceEUR)) {
+  if (book.inventory > 0 || book.priceALL || book.priceEUR) {
     tabs.push({
       id: 'shipping',
       label: 'Dërgimi',
@@ -104,7 +104,7 @@ export function BookDetailTabs({ book }: BookDetailTabsProps) {
                 <li>• Çmimi: 300 Lek</li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-medium text-gray-900 mb-2">🌍 Dërgimi ndërkombëtar</h4>
               <ul className="text-sm text-gray-600 space-y-1">
@@ -114,14 +114,15 @@ export function BookDetailTabs({ book }: BookDetailTabsProps) {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-blue-50 p-4 rounded-lg">
             <p className="text-sm text-blue-800">
-              <strong>Shënim:</strong> Librat dixhitalë janë të disponueshëm për shkarkim të menjëhershëm pas pagesës.
+              <strong>Shënim:</strong> Librat dixhitalë janë të disponueshëm për shkarkim të
+              menjëhershëm pas pagesës.
             </p>
           </div>
         </div>
-      )
+      ),
     });
   }
 
@@ -148,9 +149,7 @@ export function BookDetailTabs({ book }: BookDetailTabsProps) {
       </div>
 
       {/* Tab Content */}
-      <div className="p-6">
-        {tabs.find(tab => tab.id === activeTab)?.content}
-      </div>
+      <div className="p-6">{tabs.find((tab) => tab.id === activeTab)?.content}</div>
     </div>
   );
 }

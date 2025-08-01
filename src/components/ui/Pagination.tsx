@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+
 import { cn } from '@/lib/utils';
 
 interface PaginationProps {
@@ -18,23 +19,23 @@ export function Pagination({
   hasNextPage,
   hasPreviousPage,
   baseUrl,
-  searchParams
+  searchParams,
 }: PaginationProps) {
   const buildUrl = (page: number) => {
     const params = new URLSearchParams();
-    
+
     // Add all existing search params except page
     Object.entries(searchParams).forEach(([key, value]) => {
       if (key !== 'page' && value) {
         params.set(key, value);
       }
     });
-    
+
     // Add the new page
     if (page > 1) {
       params.set('page', page.toString());
     }
-    
+
     const paramString = params.toString();
     return `${baseUrl}${paramString ? `?${paramString}` : ''}`;
   };
@@ -45,9 +46,11 @@ export function Pagination({
     const range = [];
     const rangeWithDots = [];
 
-    for (let i = Math.max(2, currentPage - delta); 
-         i <= Math.min(totalPages - 1, currentPage + delta); 
-         i++) {
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
       range.push(i);
     }
 
@@ -79,14 +82,24 @@ export function Pagination({
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 hover:text-gray-700"
         >
           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           Mëparshme
         </Link>
       ) : (
         <span className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-300 bg-white border border-gray-300 rounded-l-md cursor-not-allowed">
           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           Mëparshme
         </span>

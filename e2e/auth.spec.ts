@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test.describe('Authentication Flows', () => {
   const testUser = {
@@ -34,7 +34,7 @@ test.describe('Authentication Flows', () => {
 
     // Should redirect to login page with success message
     await expect(page).toHaveURL('/auth/login');
-    
+
     // Check for success notification (if using toast notifications)
     // This might need adjustment based on how notifications are implemented
   });
@@ -77,7 +77,7 @@ test.describe('Authentication Flows', () => {
 
     // Should stay on login page
     await expect(page).toHaveURL('/auth/login');
-    
+
     // Check for error message
     // This would depend on how error messages are displayed
   });
@@ -92,7 +92,7 @@ test.describe('Authentication Flows', () => {
 
     // Check that password requirements are shown
     await expect(page.locator('text=Kërkesat për fjalëkalimin')).toBeVisible();
-    
+
     // Verify that some requirements are not met (red indicators)
     const requirements = page.locator('li:has(svg)');
     await expect(requirements.first()).toBeVisible();
@@ -107,7 +107,7 @@ test.describe('Authentication Flows', () => {
 
     // Try to access login page while authenticated
     await page.goto('/auth/login');
-    
+
     // Should redirect to home page
     await expect(page).toHaveURL('/');
   });

@@ -1,14 +1,18 @@
 # 📚 Brënda Librave - Albanian Bookshop
 
-> **"Inside Books"** - Your Albanian online bookstore for physical and digital books
+> **"Inside Books"** - Your Albanian online bookstore for physical and digital
+> books
 
-A modern, mobile-first web application built with Next.js 14+ specifically designed for Albanian book lovers worldwide. Features Albanian Lek pricing, bilingual support (Albanian/English), and Apple Liquid Glass design aesthetics.
+A modern, mobile-first web application built with Next.js 14+ specifically
+designed for Albanian book lovers worldwide. Features Albanian Lek pricing,
+bilingual support (Albanian/English), and Apple Liquid Glass design aesthetics.
 
 ## 🎯 Project Overview
 
 **Brënda Librave** is a comprehensive Albanian bookshop platform that combines:
+
 - 📚 Physical and digital book sales
-- 💰 Albanian Lek (ALL) and Euro (EUR) currency support  
+- 💰 Albanian Lek (ALL) and Euro (EUR) currency support
 - 🌍 Albanian/English internationalization
 - 📱 Mobile-first design with Apple Liquid Glass aesthetics
 - 🛒 Complete e-commerce functionality
@@ -20,28 +24,31 @@ A modern, mobile-first web application built with Next.js 14+ specifically desig
 
 ### Prerequisites
 
-- **Node.js** 18+ 
+- **Node.js** 18+
 - **npm** 9+
 - **Git**
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd brenda-librave-next
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    # Copy the example file (when available)
    cp .env.example .env.local
-   
+
    # Or create .env.local manually with:
    echo 'DATABASE_URL="file:./dev.db"' > .env.local
    echo 'NEXTAUTH_SECRET="your-development-secret-key"' >> .env.local
@@ -50,21 +57,23 @@ A modern, mobile-first web application built with Next.js 14+ specifically desig
    ```
 
 4. **Set up the database**
+
    ```bash
    # Generate Prisma client
    npm run db:generate
-   
+
    # Push schema to SQLite database
    npm run db:push
    ```
 
 5. **Run the development server**
+
    ```bash
    npm run dev
    ```
 
-6. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+6. **Open your browser** Navigate to
+   [http://localhost:3000](http://localhost:3000)
 
 You should see the Albanian welcome page: "Mirë se vini në Brënda Librave" 🇦🇱
 
@@ -181,12 +190,10 @@ brenda-librave-next/
 ### Albanian Cultural Colors
 
 ```css
---albanian-red: #e41e20        /* Albanian flag red */
---albanian-red-dark: #c41e3a   /* Darker red variant */
---mountain-gray: #6b7280       /* Albanian mountains */
---adriatic-blue: #0ea5e9       /* Adriatic Sea */
---olive-green: #84cc16         /* Albanian olive trees */
---golden-eagle: #f59e0b        /* Golden eagle */
+--albanian-red: #e41e20 /* Albanian flag red */ --albanian-red-dark: #c41e3a
+  /* Darker red variant */ --mountain-gray: #6b7280 /* Albanian mountains */
+  --adriatic-blue: #0ea5e9 /* Adriatic Sea */ --olive-green: #84cc16
+  /* Albanian olive trees */ --golden-eagle: #f59e0b /* Golden eagle */;
 ```
 
 ### Mobile-First Approach
@@ -220,6 +227,7 @@ curl http://localhost:3000/api/health
 ```
 
 Returns:
+
 ```json
 {
   "status": "healthy",
@@ -286,6 +294,7 @@ npm run lint -- --ext .ts,.tsx
 This is **Phase 1** of a multi-phase development approach:
 
 ### ✅ Phase 1: Foundation (CURRENT)
+
 - Next.js 14+ setup with TypeScript
 - Database foundation with Prisma
 - Health monitoring and error tracking
@@ -293,8 +302,9 @@ This is **Phase 1** of a multi-phase development approach:
 - Security and code quality standards
 
 ### 🔄 Upcoming Phases
+
 - **Phase 2**: Authentication & User Management
-- **Phase 3**: Book Catalog System  
+- **Phase 3**: Book Catalog System
 - **Phase 4**: Shopping Cart & Checkout
 - **Phase 5**: Admin Dashboard
 - **Phase 6**: Blog System
@@ -312,6 +322,7 @@ This is **Phase 1** of a multi-phase development approach:
 ### Troubleshooting
 
 **Database issues:**
+
 ```bash
 # Reset database
 npm run db:push --force-reset
@@ -319,6 +330,7 @@ npm run db:generate
 ```
 
 **Test failures:**
+
 ```bash
 # Run tests with verbose output
 npm run test -- --verbose
@@ -326,6 +338,7 @@ npm run test:coverage
 ```
 
 **TypeScript errors:**
+
 ```bash
 # Check types
 npm run type-check
@@ -349,7 +362,7 @@ npm run type-check
 This application is specifically designed for:
 
 - **🏠 Albanian users** in Albania and Kosovo
-- **🌍 Albanian diaspora** worldwide  
+- **🌍 Albanian diaspora** worldwide
 - **📚 Albanian literature** enthusiasts
 - **💰 Albanian Lek** as primary currency
 - **📱 Mobile-first** usage patterns
@@ -358,4 +371,4 @@ This application is specifically designed for:
 
 **Mirë se vini në Brënda Librave!** 📚🇦🇱
 
-*Welcome to the foundation of your Albanian digital bookstore.* 
+_Welcome to the foundation of your Albanian digital bookstore._

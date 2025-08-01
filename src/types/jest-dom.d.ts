@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import '@testing-library/jest-dom';
 
 declare global {
@@ -21,4 +20,4 @@ declare global {
       toHaveFocus(): R;
     }
   }
-} 
+}

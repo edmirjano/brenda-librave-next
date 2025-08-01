@@ -1,15 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+
 import Image from 'next/image';
-import { PriceDisplay } from '@/components/ui/PriceDisplay';
-import { Button } from '@/components/ui/Button';
-import { AddToCartButton } from '@/components/cart/AddToCartButton';
-import { CurrencyToggle } from '@/components/ui/CurrencyToggle';
-import { ShareButton } from '@/components/ui/ShareButton';
+
 import { BookDetailTabs } from '@/components/books/BookDetailTabs';
-import type { BookDetailView as BookDetailType } from '@/types/book';
+import { AddToCartButton } from '@/components/cart/AddToCartButton';
+import { Button } from '@/components/ui/Button';
+import { CurrencyToggle } from '@/components/ui/CurrencyToggle';
+import { PriceDisplay } from '@/components/ui/PriceDisplay';
+import { ShareButton } from '@/components/ui/ShareButton';
+
 import { cn } from '@/lib/utils';
+
+import type { BookDetailView as BookDetailType } from '@/types/book';
 
 interface BookDetailViewProps {
   book: BookDetailType;
@@ -18,19 +22,19 @@ interface BookDetailViewProps {
 export function BookDetailView({ book }: BookDetailViewProps) {
   const [selectedFormat, setSelectedFormat] = useState<'physical' | 'digital'>('physical');
 
-  const hasPhysicalCopy = book.inventory > 0 || (book.priceALL || book.priceEUR);
+  const hasPhysicalCopy = book.inventory > 0 || book.priceALL || book.priceEUR;
   const hasDigitalCopy = book.hasDigital && (book.digitalPriceALL || book.digitalPriceEUR);
 
   const getCurrentPrice = () => {
     if (selectedFormat === 'digital') {
       return {
         priceALL: book.digitalPriceALL || 0,
-        priceEUR: book.digitalPriceEUR
+        priceEUR: book.digitalPriceEUR,
       };
     }
     return {
       priceALL: book.priceALL || 0,
-      priceEUR: book.priceEUR
+      priceEUR: book.priceEUR,
     };
   };
 
@@ -53,17 +57,17 @@ export function BookDetailView({ book }: BookDetailViewProps) {
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                <svg 
-                  className="w-20 h-20 text-gray-400" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-20 h-20 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
                   />
                 </svg>
               </div>
@@ -85,7 +89,7 @@ export function BookDetailView({ book }: BookDetailViewProps) {
 
             {/* Share Button - Mobile */}
             <div className="absolute top-4 right-4 lg:hidden">
-              <ShareButton 
+              <ShareButton
                 url={`/books/${book.slug}`}
                 title={book.title}
                 description={book.description}
@@ -100,17 +104,15 @@ export function BookDetailView({ book }: BookDetailViewProps) {
           <div className="mb-6">
             <div className="flex justify-between items-start mb-2">
               <div className="flex-1">
-                <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
-                  {book.title}
-                </h1>
+                <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{book.title}</h1>
                 <p className="text-lg text-gray-600 mb-1">
                   nga <span className="font-semibold">{book.author}</span>
                 </p>
               </div>
-              
+
               {/* Share Button - Desktop */}
               <div className="hidden lg:block ml-4">
-                <ShareButton 
+                <ShareButton
                   url={`/books/${book.slug}`}
                   title={book.title}
                   description={book.description}
@@ -122,12 +124,8 @@ export function BookDetailView({ book }: BookDetailViewProps) {
             <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
               <span>📚 {book.category.name}</span>
               <span>🌐 {book.language === 'SQ' ? 'Shqip' : 'Anglisht'}</span>
-              {book.publishedDate && (
-                <span>📅 {new Date(book.publishedDate).getFullYear()}</span>
-              )}
-              {book.isbn && (
-                <span>📖 ISBN: {book.isbn}</span>
-              )}
+              {book.publishedDate && <span>📅 {new Date(book.publishedDate).getFullYear()}</span>}
+              {book.isbn && <span>📖 ISBN: {book.isbn}</span>}
             </div>
 
             {/* Tags */}
@@ -187,7 +185,7 @@ export function BookDetailView({ book }: BookDetailViewProps) {
                   size="lg"
                   className="mb-2"
                 />
-                
+
                 {/* Stock Status */}
                 <div className="text-sm">
                   {selectedFormat === 'physical' ? (
@@ -196,18 +194,14 @@ export function BookDetailView({ book }: BookDetailViewProps) {
                         ✓ Në stok ({book.inventory} copë)
                       </span>
                     ) : (
-                      <span className="text-red-600 font-medium">
-                        ✗ Mbaruar
-                      </span>
+                      <span className="text-red-600 font-medium">✗ Mbaruar</span>
                     )
                   ) : (
-                    <span className="text-green-600 font-medium">
-                      ✓ Gati për shkarkim
-                    </span>
+                    <span className="text-green-600 font-medium">✓ Gati për shkarkim</span>
                   )}
                 </div>
               </div>
-              
+
               <CurrencyToggle />
             </div>
 
@@ -219,14 +213,14 @@ export function BookDetailView({ book }: BookDetailViewProps) {
                 disabled={selectedFormat === 'physical' && book.inventory === 0}
                 className="w-full"
               />
-              
+
               {selectedFormat === 'digital' && (
                 <Button
                   variant="outline"
                   className="w-full"
                   onClick={() => {
                     // Handle direct digital purchase
-                    console.log('Direct digital purchase');
+                    console.warn('Direct digital purchase');
                   }}
                 >
                   🛒 Blej tani (shkarkim i menjëhershëm)

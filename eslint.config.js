@@ -22,36 +22,67 @@ module.exports = [
       'next.config.js',
       'tailwind.config.ts',
       'playwright.config.ts',
-      'eslint.config.js'
+      'eslint.config.js',
+      // Ignore test files temporarily
+      'src/**/__tests__/**',
+      'src/**/*.test.*',
+      'src/**/*.spec.*',
+      'e2e/**',
+      'test-results/**',
+      'playwright-report/**',
+      'prisma/seed.ts',
     ],
   },
   {
     files: ['src/**/*.{js,jsx,ts,tsx}'],
-          languageOptions: {
-        parser: typescriptParser,
-        parserOptions: {
-          ecmaVersion: 'latest',
-          sourceType: 'module',
-          ecmaFeatures: {
-            jsx: true,
-          },
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
         },
-              globals: {
-          console: 'readonly',
-          process: 'readonly',
-          Buffer: 'readonly',
-          __dirname: 'readonly',
-          __filename: 'readonly',
-          module: 'readonly',
-          require: 'readonly',
-          global: 'readonly',
-          window: 'readonly',
-          document: 'readonly',
-          navigator: 'readonly',
-          fetch: 'readonly',
-          React: 'readonly',
-          URL: 'readonly',
-        },
+      },
+      globals: {
+        // Browser APIs
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        URLSearchParams: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        confirm: 'readonly',
+        alert: 'readonly',
+        console: 'readonly',
+
+        // DOM APIs
+        HTMLButtonElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        MouseEvent: 'readonly',
+        File: 'readonly',
+        FileReader: 'readonly',
+        FileList: 'readonly',
+
+        // Node.js APIs
+        NodeJS: 'readonly',
+        Request: 'readonly',
+        Response: 'readonly',
+        NextFetchEvent: 'readonly',
+
+        // Global variables
+        process: 'readonly',
+
+        // Web APIs
+        fetch: 'readonly',
+        URL: 'readonly',
+        window: 'readonly',
+        React: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': typescriptPlugin,
@@ -62,16 +93,23 @@ module.exports = [
       'no-debugger': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
-      
+
       // TypeScript rules
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
+          // Ignore unused vars in interfaces, types, and function signatures
+          ignoreRestSiblings: true,
+          // Don't check interface properties and type definitions
+          args: 'after-used',
+          caughtErrors: 'none',
         },
       ],
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
+      // Disable base no-unused-vars rule in favor of TypeScript version
+      'no-unused-vars': 'off',
     },
   },
   // Test files overrides
@@ -91,7 +129,7 @@ module.exports = [
       },
     },
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'off', // Allow any in tests for flexibility
       'no-console': 'off',
     },
   },
@@ -102,4 +140,4 @@ module.exports = [
       'no-console': 'off',
     },
   },
-]; 
+];

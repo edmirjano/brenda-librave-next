@@ -2,9 +2,10 @@ import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-import { authOptions } from '@/lib/auth/config';
-import { ProfileForm } from '@/components/auth/ProfileForm';
 import { ChangePasswordForm } from '@/components/auth/ChangePasswordForm';
+import { ProfileForm } from '@/components/auth/ProfileForm';
+
+import { authOptions } from '@/lib/auth/config';
 
 export const metadata: Metadata = {
   title: 'Profili im | Brënda Librave',

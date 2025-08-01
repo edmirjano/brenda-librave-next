@@ -1,10 +1,10 @@
-import { CurrencyConfig, SupportedCurrency, DEFAULT_EXCHANGE_RATE } from './config';
+import { CurrencyConfig, DEFAULT_EXCHANGE_RATE, SupportedCurrency } from './config';
 
 /**
  * Convert price from Albanian Lek to target currency
  */
 export function convertPrice(
-  priceALL: number, 
+  priceALL: number,
   targetCurrency: SupportedCurrency = 'ALL',
   exchangeRate: number = DEFAULT_EXCHANGE_RATE
 ): number {
@@ -16,19 +16,16 @@ export function convertPrice(
 /**
  * Format price with proper currency symbol and locale
  */
-export function formatPrice(
-  price: number, 
-  currency: SupportedCurrency = 'ALL'
-): string {
+export function formatPrice(price: number, currency: SupportedCurrency = 'ALL'): string {
   const config = CurrencyConfig.formatting[currency];
   const symbol = CurrencyConfig.symbols[currency];
-  
+
   // Format the number with proper decimals
   const formattedNumber = new Intl.NumberFormat(config.locale, {
     minimumFractionDigits: config.minimumFractionDigits,
-    maximumFractionDigits: config.maximumFractionDigits
+    maximumFractionDigits: config.maximumFractionDigits,
   }).format(price);
-  
+
   // Return with currency symbol
   if (currency === 'ALL') {
     return `${formattedNumber} ${symbol}`;
@@ -46,12 +43,14 @@ export function formatDualPrice(
   userCurrency: SupportedCurrency = 'ALL',
   exchangeRate: number = DEFAULT_EXCHANGE_RATE
 ): { primary: string; secondary: string } {
-  const primaryPrice = userCurrency === 'ALL' ? priceALL : (priceEUR || convertPrice(priceALL, 'EUR', exchangeRate));
-  const secondaryPrice = userCurrency === 'ALL' ? (priceEUR || convertPrice(priceALL, 'EUR', exchangeRate)) : priceALL;
-  
+  const primaryPrice =
+    userCurrency === 'ALL' ? priceALL : priceEUR || convertPrice(priceALL, 'EUR', exchangeRate);
+  const secondaryPrice =
+    userCurrency === 'ALL' ? priceEUR || convertPrice(priceALL, 'EUR', exchangeRate) : priceALL;
+
   return {
     primary: formatPrice(primaryPrice, userCurrency),
-    secondary: formatPrice(secondaryPrice, userCurrency === 'ALL' ? 'EUR' : 'ALL')
+    secondary: formatPrice(secondaryPrice, userCurrency === 'ALL' ? 'EUR' : 'ALL'),
   };
 }
 

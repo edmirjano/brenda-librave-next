@@ -1,5 +1,6 @@
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
+
 import { logSecurity } from '@/lib/logging/logger';
 
 export default withAuth(
@@ -9,7 +10,7 @@ export default withAuth(
 
     // Admin-only paths
     const adminPaths = ['/admin'];
-    const isAdminPath = adminPaths.some(path => pathname.startsWith(path));
+    const isAdminPath = adminPaths.some((path) => pathname.startsWith(path));
 
     // Check admin role for admin paths
     if (isAdminPath && token?.role !== 'ADMIN') {
@@ -40,18 +41,13 @@ export default withAuth(
         ];
 
         // API routes that don't require authentication
-        const publicApiPaths = [
-          '/api/auth',
-          '/api/health',
-        ];
+        const publicApiPaths = ['/api/auth', '/api/health'];
 
-        const isPublicPath = publicPaths.some(path => 
-          pathname === path || pathname.startsWith(path + '/')
+        const isPublicPath = publicPaths.some(
+          (path) => pathname === path || pathname.startsWith(path + '/')
         );
 
-        const isPublicApiPath = publicApiPaths.some(path => 
-          pathname.startsWith(path)
-        );
+        const isPublicApiPath = publicApiPaths.some((path) => pathname.startsWith(path));
 
         // Allow access to public paths
         if (isPublicPath || isPublicApiPath) {

@@ -1,5 +1,6 @@
-import { BookCard } from './BookCard';
 import type { BookListItem } from '@/types/book';
+
+import { BookCard } from './BookCard';
 
 interface RelatedBooksProps {
   books: BookListItem[];

@@ -1,4 +1,5 @@
-import { hash, compare } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
+
 import { logError, logSecurity } from '@/lib/logging/logger';
 
 const SALT_ROUNDS = 12;
@@ -64,8 +65,16 @@ export function validatePasswordStrength(password: string): {
 
   // Check for common weak passwords
   const commonPasswords = [
-    'password', '123456789', 'qwerty', 'abc123', 'password123',
-    'admin', 'letmein', 'welcome', 'monkey', '1234567890'
+    'password',
+    '123456789',
+    'qwerty',
+    'abc123',
+    'password123',
+    'admin',
+    'letmein',
+    'welcome',
+    'monkey',
+    '1234567890',
   ];
 
   if (commonPasswords.includes(password.toLowerCase())) {

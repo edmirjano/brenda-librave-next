@@ -1,14 +1,14 @@
 import { prisma } from '@/lib/db/prisma';
 import { slugify } from '@/lib/utils';
+
 import type {
+  BookDetailView,
+  BookListItem,
   BookSearchParams,
   BookSearchResult,
+  BookStats,
   CreateBookInput,
   UpdateBookInput,
-  BookListItem,
-  BookDetailView,
-  BookStats,
-  PaginationOptions
 } from '@/types/book';
 
 /**
@@ -32,21 +32,21 @@ export class BookService {
       sortBy = 'createdAt',
       sortOrder = 'desc',
       page = 1,
-      limit = 12
+      limit = 12,
     } = params;
 
     const offset = (page - 1) * limit;
 
     // Build where clause
     const where: any = {
-      active: active
+      active: active,
     };
 
     if (query) {
       where.OR = [
         { title: { contains: query, mode: 'insensitive' } },
         { author: { contains: query, mode: 'insensitive' } },
-        { description: { contains: query, mode: 'insensitive' } }
+        { description: { contains: query, mode: 'insensitive' } },
       ];
     }
 
@@ -66,9 +66,9 @@ export class BookService {
       where.tags = {
         some: {
           tagId: {
-            in: tags
-          }
-        }
+            in: tags,
+          },
+        },
       };
     }
 
@@ -76,11 +76,11 @@ export class BookService {
     if (minPrice !== undefined || maxPrice !== undefined) {
       const priceField = currency === 'ALL' ? 'priceALL' : 'priceEUR';
       where[priceField] = {};
-      
+
       if (minPrice !== undefined) {
         where[priceField].gte = minPrice;
       }
-      
+
       if (maxPrice !== undefined) {
         where[priceField].lte = maxPrice;
       }
@@ -102,15 +102,15 @@ export class BookService {
             category: true,
             tags: {
               include: {
-                tag: true
-              }
-            }
+                tag: true,
+              },
+            },
           },
           orderBy,
           skip: offset,
-          take: limit
+          take: limit,
         }),
-        prisma.book.count({ where })
+        prisma.book.count({ where }),
       ]);
 
       const totalPages = Math.ceil(totalCount / limit);
@@ -121,7 +121,7 @@ export class BookService {
         totalPages,
         currentPage: page,
         hasNextPage: page < totalPages,
-        hasPreviousPage: page > 1
+        hasPreviousPage: page > 1,
       };
     } catch (error) {
       console.error('Error searching books:', error);
@@ -140,10 +140,10 @@ export class BookService {
           category: true,
           tags: {
             include: {
-              tag: true
-            }
-          }
-        }
+              tag: true,
+            },
+          },
+        },
       });
 
       return book as BookDetailView | null;
@@ -164,10 +164,10 @@ export class BookService {
           category: true,
           tags: {
             include: {
-              tag: true
-            }
-          }
-        }
+              tag: true,
+            },
+          },
+        },
       });
 
       return book as BookDetailView | null;
@@ -185,20 +185,20 @@ export class BookService {
       const books = await prisma.book.findMany({
         where: {
           featured: true,
-          active: true
+          active: true,
         },
         include: {
           category: true,
           tags: {
             include: {
-              tag: true
-            }
-          }
+              tag: true,
+            },
+          },
         },
         orderBy: {
-          createdAt: 'desc'
+          createdAt: 'desc',
         },
-        take: limit
+        take: limit,
       });
 
       return books as BookListItem[];
@@ -215,7 +215,7 @@ export class BookService {
     try {
       const book = await prisma.book.findUnique({
         where: { id: bookId },
-        select: { categoryId: true, author: true }
+        select: { categoryId: true, author: true },
       });
 
       if (!book) return [];
@@ -226,25 +226,22 @@ export class BookService {
             { id: { not: bookId } },
             { active: true },
             {
-              OR: [
-                { categoryId: book.categoryId },
-                { author: book.author }
-              ]
-            }
-          ]
+              OR: [{ categoryId: book.categoryId }, { author: book.author }],
+            },
+          ],
         },
         include: {
           category: true,
           tags: {
             include: {
-              tag: true
-            }
-          }
+              tag: true,
+            },
+          },
         },
         orderBy: {
-          createdAt: 'desc'
+          createdAt: 'desc',
         },
-        take: limit
+        take: limit,
       });
 
       return books as BookListItem[];
@@ -266,7 +263,7 @@ export class BookService {
 
       // Ensure slug is unique
       const existingBook = await prisma.book.findUnique({
-        where: { slug: input.slug }
+        where: { slug: input.slug },
       });
 
       if (existingBook) {
@@ -278,22 +275,24 @@ export class BookService {
       const book = await prisma.book.create({
         data: {
           ...bookData,
-          tags: tagIds ? {
-            create: tagIds.map(tagId => ({
-              tag: {
-                connect: { id: tagId }
+          tags: tagIds
+            ? {
+                create: tagIds.map((tagId) => ({
+                  tag: {
+                    connect: { id: tagId },
+                  },
+                })),
               }
-            }))
-          } : undefined
+            : undefined,
         },
         include: {
           category: true,
           tags: {
             include: {
-              tag: true
-            }
-          }
-        }
+              tag: true,
+            },
+          },
+        },
       });
 
       return book as BookDetailView;
@@ -314,16 +313,16 @@ export class BookService {
       if (tagIds !== undefined) {
         // Remove existing tags
         await prisma.bookTag.deleteMany({
-          where: { bookId: id }
+          where: { bookId: id },
         });
 
         // Add new tags
         if (tagIds.length > 0) {
           await prisma.bookTag.createMany({
-            data: tagIds.map(tagId => ({
+            data: tagIds.map((tagId) => ({
               bookId: id,
-              tagId
-            }))
+              tagId,
+            })),
           });
         }
       }
@@ -335,10 +334,10 @@ export class BookService {
           category: true,
           tags: {
             include: {
-              tag: true
-            }
-          }
-        }
+              tag: true,
+            },
+          },
+        },
       });
 
       return book as BookDetailView;
@@ -354,7 +353,7 @@ export class BookService {
   static async deleteBook(id: string): Promise<void> {
     try {
       await prisma.book.delete({
-        where: { id }
+        where: { id },
       });
     } catch (error) {
       console.error('Error deleting book:', error);
@@ -367,21 +366,15 @@ export class BookService {
    */
   static async getBookStats(): Promise<BookStats> {
     try {
-      const [
-        totalBooks,
-        activeBooks,
-        featuredBooks,
-        booksWithDigital,
-        categoriesCount,
-        tagsCount
-      ] = await Promise.all([
-        prisma.book.count(),
-        prisma.book.count({ where: { active: true } }),
-        prisma.book.count({ where: { featured: true } }),
-        prisma.book.count({ where: { hasDigital: true } }),
-        prisma.category.count({ where: { active: true } }),
-        prisma.tag.count()
-      ]);
+      const [totalBooks, activeBooks, featuredBooks, booksWithDigital, categoriesCount, tagsCount] =
+        await Promise.all([
+          prisma.book.count(),
+          prisma.book.count({ where: { active: true } }),
+          prisma.book.count({ where: { featured: true } }),
+          prisma.book.count({ where: { hasDigital: true } }),
+          prisma.category.count({ where: { active: true } }),
+          prisma.tag.count(),
+        ]);
 
       return {
         totalBooks,
@@ -389,7 +382,7 @@ export class BookService {
         featuredBooks,
         booksWithDigital,
         categoriesCount,
-        tagsCount
+        tagsCount,
       };
     } catch (error) {
       console.error('Error fetching book stats:', error);
@@ -405,12 +398,12 @@ export class BookService {
       const result = await prisma.book.updateMany({
         where: {
           id: {
-            in: bookIds
-          }
+            in: bookIds,
+          },
         },
         data: {
-          active
-        }
+          active,
+        },
       });
 
       return result.count;

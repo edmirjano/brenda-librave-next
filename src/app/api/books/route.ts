@@ -1,26 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { BookService } from '@/lib/services/books';
+
 import type { BookSearchParams } from '@/types/book';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    
+
     // Parse search parameters
     const params: BookSearchParams = {
       query: searchParams.get('query') || undefined,
       categoryId: searchParams.get('categoryId') || undefined,
       tags: searchParams.get('tags')?.split(',').filter(Boolean) || undefined,
-      language: searchParams.get('language') as 'SQ' | 'EN' || undefined,
+      language: (searchParams.get('language') as 'SQ' | 'EN') || undefined,
       minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
       maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
-      currency: searchParams.get('currency') as 'ALL' | 'EUR' || 'ALL',
+      currency: (searchParams.get('currency') as 'ALL' | 'EUR') || 'ALL',
       featured: searchParams.get('featured') ? searchParams.get('featured') === 'true' : undefined,
       active: searchParams.get('active') ? searchParams.get('active') === 'true' : true,
-      sortBy: searchParams.get('sortBy') as 'title' | 'author' | 'price' | 'featured' | 'createdAt' || 'createdAt',
-      sortOrder: searchParams.get('sortOrder') as 'asc' | 'desc' || 'desc',
+      sortBy:
+        (searchParams.get('sortBy') as 'title' | 'author' | 'price' | 'featured' | 'createdAt') ||
+        'createdAt',
+      sortOrder: (searchParams.get('sortOrder') as 'asc' | 'desc') || 'desc',
       page: searchParams.get('page') ? Number(searchParams.get('page')) : 1,
-      limit: searchParams.get('limit') ? Number(searchParams.get('limit')) : 12
+      limit: searchParams.get('limit') ? Number(searchParams.get('limit')) : 12,
     };
 
     // Validate pagination parameters
@@ -64,15 +68,14 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: result
+      data: result,
     });
-
   } catch (error) {
     console.error('Error in books API:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Failed to fetch books'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch books',
       },
       { status: 500 }
     );
@@ -83,9 +86,9 @@ export async function POST(request: NextRequest) {
   try {
     // This endpoint is for creating books (admin only)
     // Authentication and authorization would be added here
-    
+
     const body = await request.json();
-    
+
     // Basic validation
     if (!body.title || !body.author || !body.categoryId) {
       return NextResponse.json(
@@ -96,17 +99,19 @@ export async function POST(request: NextRequest) {
 
     const book = await BookService.createBook(body);
 
-    return NextResponse.json({
-      success: true,
-      data: book
-    }, { status: 201 });
-
+    return NextResponse.json(
+      {
+        success: true,
+        data: book,
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error('Error creating book:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Failed to create book'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to create book',
       },
       { status: 500 }
     );

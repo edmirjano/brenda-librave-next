@@ -5,7 +5,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export const logger = pino({
   level: isDevelopment ? 'debug' : 'info',
-  
+
   formatters: {
     level: (label) => ({ level: label }),
     bindings: (bindings) => ({
@@ -15,14 +15,14 @@ export const logger = pino({
       environment: process.env.NODE_ENV,
     }),
   },
-  
+
   timestamp: () => `,"timestamp":"${new Date().toISOString()}"`,
-  
+
   // Simple console output in development to avoid worker thread issues
   ...(isDevelopment && {
     level: 'info',
   }),
-  
+
   // Structured logging in production
   ...(isProduction && {
     serializers: {
@@ -47,14 +47,21 @@ export const logInfo = (message: string, meta?: Record<string, unknown>) => {
   logger.info(meta, message);
 };
 
-export const logError = (message: string, error?: Error | unknown, meta?: Record<string, unknown>) => {
+export const logError = (
+  message: string,
+  error?: Error | unknown,
+  meta?: Record<string, unknown>
+) => {
   const errorMeta = {
     ...meta,
-    error: error instanceof Error ? {
-      message: error.message,
-      stack: error.stack,
-      name: error.name,
-    } : error,
+    error:
+      error instanceof Error
+        ? {
+            message: error.message,
+            stack: error.stack,
+            name: error.name,
+          }
+        : error,
   };
   logger.error(errorMeta, message);
 };
@@ -68,21 +75,31 @@ export const logDebug = (message: string, meta?: Record<string, unknown>) => {
 };
 
 // Performance logging
-export const logPerformance = (operation: string, duration: number, meta?: Record<string, unknown>) => {
-  logger.info({
-    ...meta,
-    operation,
-    duration,
-    type: 'performance',
-  }, `Operation ${operation} completed in ${duration}ms`);
+export const logPerformance = (
+  operation: string,
+  duration: number,
+  meta?: Record<string, unknown>
+) => {
+  logger.info(
+    {
+      ...meta,
+      operation,
+      duration,
+      type: 'performance',
+    },
+    `Operation ${operation} completed in ${duration}ms`
+  );
 };
 
 // Security logging
 export const logSecurity = (event: string, meta?: Record<string, unknown>) => {
-  logger.warn({
-    ...meta,
-    event,
-    type: 'security',
-    timestamp: new Date().toISOString(),
-  }, `Security event: ${event}`);
-}; 
+  logger.warn(
+    {
+      ...meta,
+      event,
+      type: 'security',
+      timestamp: new Date().toISOString(),
+    },
+    `Security event: ${event}`
+  );
+};

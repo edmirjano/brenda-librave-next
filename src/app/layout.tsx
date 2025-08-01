@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
 
 import { SessionProvider } from '@/components/providers/SessionProvider';
 import { ToastProvider } from '@/components/providers/ToastProvider';
+
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,8 +13,15 @@ export const metadata: Metadata = {
     template: '%s | Brënda Librave',
     default: 'Brënda Librave - Libraria Juaj Shqiptare Online',
   },
-  description: 'Zbuloni libra shqiptarë dhe ndërkombëtarë në librarinë tonë online. Porositni libra fizikë dhe dixhitalë me çmime të favorshme.',
-  keywords: ['libra shqiptarë', 'librari online', 'libra dixhitalë', 'literatura shqiptare', 'Albanian books'],
+  description:
+    'Zbuloni libra shqiptarë dhe ndërkombëtarë në librarinë tonë online. Porositni libra fizikë dhe dixhitalë me çmime të favorshme.',
+  keywords: [
+    'libra shqiptarë',
+    'librari online',
+    'libra dixhitalë',
+    'literatura shqiptare',
+    'Albanian books',
+  ],
   authors: [{ name: 'Brënda Librave' }],
   creator: 'Brënda Librave',
   publisher: 'Brënda Librave',
@@ -21,8 +29,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
     languages: {
-      'sq': '/sq',
-      'en': '/en',
+      sq: '/sq',
+      en: '/en',
     },
   },
   openGraph: {
@@ -51,11 +59,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="sq" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
@@ -66,4 +70,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-} 
+}

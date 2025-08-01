@@ -1,10 +1,11 @@
 import { prisma } from '@/lib/db/prisma';
 import { slugify } from '@/lib/utils';
+
 import type {
   Category,
   CategoryWithoutRelations,
   CreateCategoryInput,
-  UpdateCategoryInput
+  UpdateCategoryInput,
 } from '@/types/book';
 
 /**
@@ -18,11 +19,11 @@ export class CategoryService {
     try {
       const categories = await prisma.category.findMany({
         where: {
-          active: true
+          active: true,
         },
         orderBy: {
-          name: 'asc'
-        }
+          name: 'asc',
+        },
       });
 
       return categories;
@@ -39,8 +40,8 @@ export class CategoryService {
     try {
       const categories = await prisma.category.findMany({
         orderBy: {
-          name: 'asc'
-        }
+          name: 'asc',
+        },
       });
 
       return categories;
@@ -60,10 +61,10 @@ export class CategoryService {
         include: {
           books: {
             where: {
-              active: true
-            }
-          }
-        }
+              active: true,
+            },
+          },
+        },
       });
 
       return category as Category | null;
@@ -83,10 +84,10 @@ export class CategoryService {
         include: {
           books: {
             where: {
-              active: true
-            }
-          }
-        }
+              active: true,
+            },
+          },
+        },
       });
 
       return category as Category | null;
@@ -99,29 +100,31 @@ export class CategoryService {
   /**
    * Get categories with book counts
    */
-  static async getCategoriesWithCounts(): Promise<Array<CategoryWithoutRelations & { bookCount: number }>> {
+  static async getCategoriesWithCounts(): Promise<
+    Array<CategoryWithoutRelations & { bookCount: number }>
+  > {
     try {
       const categories = await prisma.category.findMany({
         where: {
-          active: true
+          active: true,
         },
         include: {
           _count: {
             select: {
               books: {
                 where: {
-                  active: true
-                }
-              }
-            }
-          }
+                  active: true,
+                },
+              },
+            },
+          },
         },
         orderBy: {
-          name: 'asc'
-        }
+          name: 'asc',
+        },
       });
 
-      return categories.map(category => ({
+      return categories.map((category) => ({
         id: category.id,
         name: category.name,
         nameEn: category.nameEn,
@@ -130,7 +133,7 @@ export class CategoryService {
         active: category.active,
         createdAt: category.createdAt,
         updatedAt: category.updatedAt,
-        bookCount: category._count.books
+        bookCount: category._count.books,
       }));
     } catch (error) {
       console.error('Error fetching categories with counts:', error);
@@ -150,7 +153,7 @@ export class CategoryService {
 
       // Ensure slug is unique
       const existingCategory = await prisma.category.findUnique({
-        where: { slug: input.slug }
+        where: { slug: input.slug },
       });
 
       if (existingCategory) {
@@ -158,7 +161,7 @@ export class CategoryService {
       }
 
       const category = await prisma.category.create({
-        data: input
+        data: input,
       });
 
       return category;
@@ -180,8 +183,8 @@ export class CategoryService {
         const existingCategory = await prisma.category.findFirst({
           where: {
             slug: updateData.slug,
-            id: { not: id }
-          }
+            id: { not: id },
+          },
         });
 
         if (existingCategory) {
@@ -191,7 +194,7 @@ export class CategoryService {
 
       const category = await prisma.category.update({
         where: { id },
-        data: updateData
+        data: updateData,
       });
 
       return category;
@@ -208,7 +211,7 @@ export class CategoryService {
     try {
       // Check if category has any books
       const bookCount = await prisma.book.count({
-        where: { categoryId: id }
+        where: { categoryId: id },
       });
 
       if (bookCount > 0) {
@@ -216,7 +219,7 @@ export class CategoryService {
       }
 
       await prisma.category.delete({
-        where: { id }
+        where: { id },
       });
     } catch (error) {
       console.error('Error deleting category:', error);
@@ -233,7 +236,7 @@ export class CategoryService {
   static async toggleCategoryStatus(id: string): Promise<CategoryWithoutRelations> {
     try {
       const category = await prisma.category.findUnique({
-        where: { id }
+        where: { id },
       });
 
       if (!category) {
@@ -243,8 +246,8 @@ export class CategoryService {
       const updatedCategory = await prisma.category.update({
         where: { id },
         data: {
-          active: !category.active
-        }
+          active: !category.active,
+        },
       });
 
       return updatedCategory;
@@ -264,13 +267,13 @@ export class CategoryService {
           OR: [
             { name: { contains: query, mode: 'insensitive' } },
             { nameEn: { contains: query, mode: 'insensitive' } },
-            { description: { contains: query, mode: 'insensitive' } }
+            { description: { contains: query, mode: 'insensitive' } },
           ],
-          active: true
+          active: true,
         },
         orderBy: {
-          name: 'asc'
-        }
+          name: 'asc',
+        },
       });
 
       return categories;

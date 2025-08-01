@@ -16,7 +16,7 @@ describe('/api/health endpoint logic', () => {
         total: expect.any(Number),
       },
     };
-    
+
     // Verify the structure matches our expectations
     expect(expectedHealthData.service).toBe('brenda-librave');
     expect(expectedHealthData.status).toBe('healthy');
@@ -27,7 +27,7 @@ describe('/api/health endpoint logic', () => {
       used: 100,
       total: 200,
     };
-    
+
     expect(memoryData.used).toBeGreaterThan(0);
     expect(memoryData.total).toBeGreaterThan(0);
     expect(memoryData.used).toBeLessThanOrEqual(memoryData.total);
@@ -39,9 +39,9 @@ describe('/api/health endpoint logic', () => {
       environment: 'test',
       version: '0.1.0',
     };
-    
+
     expect(serviceInfo.service).toBe('brenda-librave');
     expect(serviceInfo.environment).toBe('test');
     expect(serviceInfo.version).toBeDefined();
   });
-}); 
+});

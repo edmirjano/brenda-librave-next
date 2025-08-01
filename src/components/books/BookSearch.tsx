@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import { debounce } from '@/lib/utils';
 
 interface BookSearchProps {
@@ -16,16 +18,16 @@ export function BookSearch({ defaultQuery = '' }: BookSearchProps) {
   // Debounced search function
   const debouncedSearch = debounce((searchQuery: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    
+
     if (searchQuery.trim()) {
       params.set('query', searchQuery.trim());
     } else {
       params.delete('query');
     }
-    
+
     // Reset to first page when searching
     params.delete('page');
-    
+
     const paramString = params.toString();
     router.push(`/books${paramString ? `?${paramString}` : ''}`);
   }, 300);
@@ -63,7 +65,7 @@ export function BookSearch({ defaultQuery = '' }: BookSearchProps) {
             />
           </svg>
         </div>
-        
+
         <input
           type="text"
           placeholder="Kërkoni libra, autorë..."
@@ -71,7 +73,7 @@ export function BookSearch({ defaultQuery = '' }: BookSearchProps) {
           onChange={(e) => setQuery(e.target.value)}
           className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
         />
-        
+
         {query && (
           <button
             onClick={handleClear}

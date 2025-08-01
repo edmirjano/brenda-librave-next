@@ -1,5 +1,6 @@
-import Link from 'next/link';
 import { ReactNode } from 'react';
+
+import Link from 'next/link';
 
 interface AdminPageLayoutProps {
   children: ReactNode;
@@ -31,15 +32,13 @@ export function AdminPageLayout({ children, title, description }: AdminPageLayou
                 Admin Panel
               </span>
             </div>
-            
+
             <div className="flex items-center space-x-4">
               <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">
                 🌐 Shiko Faqen
               </Link>
               <div className="h-6 w-px bg-gray-300"></div>
-              <button className="text-sm text-gray-600 hover:text-gray-900">
-                👤 Admin
-              </button>
+              <button className="text-sm text-gray-600 hover:text-gray-900">👤 Admin</button>
             </div>
           </div>
         </div>
@@ -65,9 +64,9 @@ export function AdminPageLayout({ children, title, description }: AdminPageLayou
 
           {/* Mobile Navigation */}
           <div className="lg:hidden mb-6">
-            <select 
+            <select
               className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white"
-              onChange={(e) => window.location.href = e.target.value}
+              onChange={(e) => (window.location.href = e.target.value)}
             >
               {navigationItems.map((item) => (
                 <option key={item.href} value={item.href}>
@@ -82,9 +81,7 @@ export function AdminPageLayout({ children, title, description }: AdminPageLayou
             {/* Page Header */}
             <div className="mb-8">
               <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-              {description && (
-                <p className="mt-2 text-gray-600">{description}</p>
-              )}
+              {description && <p className="mt-2 text-gray-600">{description}</p>}
             </div>
 
             {/* Page Content */}

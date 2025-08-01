@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { CategoryService } from '@/lib/services/categories';
 
 export async function GET(request: NextRequest) {
@@ -26,15 +27,14 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: categories
+      data: categories,
     });
-
   } catch (error) {
     console.error('Error in categories API:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Failed to fetch categories'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch categories',
       },
       { status: 500 }
     );
@@ -45,9 +45,9 @@ export async function POST(request: NextRequest) {
   try {
     // This endpoint is for creating categories (admin only)
     // Authentication and authorization would be added here
-    
+
     const body = await request.json();
-    
+
     // Basic validation
     if (!body.name) {
       return NextResponse.json(
@@ -58,17 +58,19 @@ export async function POST(request: NextRequest) {
 
     const category = await CategoryService.createCategory(body);
 
-    return NextResponse.json({
-      success: true,
-      data: category
-    }, { status: 201 });
-
+    return NextResponse.json(
+      {
+        success: true,
+        data: category,
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error('Error creating category:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Failed to create category'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to create category',
       },
       { status: 500 }
     );

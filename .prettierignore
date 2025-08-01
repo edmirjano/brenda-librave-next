@@ -1,0 +1,55 @@
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env*
+
+# Generated files
+*.min.js
+*.min.css
+
+# Logs
+*.log
+
+# Database
+*.db
+*.db-journal
+
+# Coverage reports
+coverage/
+
+# Test results
+test-results/
+playwright-report/
+
+# IDE
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Netlify
+.netlify/
+
+# Vercel
+.vercel/
+
+# Prisma generated
+prisma/migrations/
+dev.db
+
+# Package locks (don't format these)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Generated docs
+docs/api/

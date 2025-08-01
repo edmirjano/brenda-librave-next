@@ -1,0 +1,24 @@
+# NextAuth.js Configuration
+NEXTAUTH_SECRET=879aecb78a83126c321ece72fd4f1b66e5600a36d483e318b097387ee64df70b
+NEXTAUTH_URL=https://your-site-name.netlify.app
+
+# Database (Netlify will auto-populate this when you add a database)
+NETLIFY_DATABASE_URL=your-netlify-database-url-here
+
+# Firebase Configuration
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyANo35Vi0P4DQsYwPL2--tdYjuPDaTDCok
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=brenda-librave.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=brenda-librave
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=brenda-librave.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=958582584729
+NEXT_PUBLIC_FIREBASE_APP_ID=1:958582584729:web:6b9e876fe6131a6f258f08
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XDJ0CMFJN4
+
+# Environment
+NODE_ENV=production
+
+# Optional: Google Analytics (using Firebase measurement ID)
+NEXT_PUBLIC_GA_ID=G-XDJ0CMFJN4
+
+# Optional: Sentry for error tracking (add your DSN if you use Sentry)
+SENTRY_DSN=your-sentry-dsn-here

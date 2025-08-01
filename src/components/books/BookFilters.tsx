@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 
 interface BookFiltersProps {
@@ -9,7 +10,9 @@ interface BookFiltersProps {
 }
 
 export function BookFilters({ searchParams, isMobile }: BookFiltersProps) {
-  const [categories, setCategories] = useState<Array<{id: string, name: string, bookCount: number}>>([]);
+  const [categories, setCategories] = useState<
+    Array<{ id: string; name: string; bookCount: number }>
+  >([]);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const urlSearchParams = useSearchParams();
@@ -35,19 +38,19 @@ export function BookFilters({ searchParams, isMobile }: BookFiltersProps) {
 
   const updateFilter = (key: string, value: string | null) => {
     const params = new URLSearchParams(urlSearchParams.toString());
-    
+
     if (value) {
       params.set(key, value);
     } else {
       params.delete(key);
     }
-    
+
     // Reset to first page when filtering
     params.delete('page');
-    
+
     const paramString = params.toString();
     router.push(`/books${paramString ? `?${paramString}` : ''}`);
-    
+
     if (isMobile) {
       setIsOpen(false);
     }
@@ -55,25 +58,25 @@ export function BookFilters({ searchParams, isMobile }: BookFiltersProps) {
 
   const clearFilters = () => {
     const params = new URLSearchParams();
-    
+
     // Keep only the search query if it exists
     if (searchParams.query) {
       params.set('query', searchParams.query);
     }
-    
+
     const paramString = params.toString();
     router.push(`/books${paramString ? `?${paramString}` : ''}`);
-    
+
     if (isMobile) {
       setIsOpen(false);
     }
   };
 
   const hasActiveFilters = Boolean(
-    searchParams.categoryId || 
-    searchParams.minPrice || 
-    searchParams.maxPrice || 
-    searchParams.language
+    searchParams.categoryId ||
+      searchParams.minPrice ||
+      searchParams.maxPrice ||
+      searchParams.language
   );
 
   if (isMobile) {
@@ -84,12 +87,15 @@ export function BookFilters({ searchParams, isMobile }: BookFiltersProps) {
           className="flex items-center px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
         >
           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+            />
           </svg>
           Filtro
-          {hasActiveFilters && (
-            <span className="ml-1 w-2 h-2 bg-blue-600 rounded-full"></span>
-          )}
+          {hasActiveFilters && <span className="ml-1 w-2 h-2 bg-blue-600 rounded-full"></span>}
         </button>
 
         {isOpen && (
@@ -123,29 +129,26 @@ export function BookFilters({ searchParams, isMobile }: BookFiltersProps) {
 }
 
 interface FilterContentProps {
-  categories: Array<{id: string, name: string, bookCount: number}>;
+  categories: Array<{ id: string; name: string; bookCount: number }>;
   searchParams: Record<string, string | undefined>;
   updateFilter: (key: string, value: string | null) => void;
   clearFilters: () => void;
   hasActiveFilters: boolean;
 }
 
-function FilterContent({ 
-  categories, 
-  searchParams, 
-  updateFilter, 
-  clearFilters, 
-  hasActiveFilters 
+function FilterContent({
+  categories,
+  searchParams,
+  updateFilter,
+  clearFilters,
+  hasActiveFilters,
 }: FilterContentProps) {
   return (
     <>
       {/* Clear filters */}
       {hasActiveFilters && (
         <div className="pb-4 border-b border-gray-200">
-          <button
-            onClick={clearFilters}
-            className="text-sm text-blue-600 hover:text-blue-800"
-          >
+          <button onClick={clearFilters} className="text-sm text-blue-600 hover:text-blue-800">
             Pastro të gjitha filtrat
           </button>
         </div>
@@ -165,7 +168,7 @@ function FilterContent({
             />
             <span className="ml-2 text-sm text-gray-700">Të gjitha</span>
           </label>
-          
+
           {categories.map((category) => (
             <label key={category.id} className="flex items-center justify-between">
               <div className="flex items-center">
@@ -198,7 +201,7 @@ function FilterContent({
             />
             <span className="ml-2 text-sm text-gray-700">Të gjitha</span>
           </label>
-          
+
           <label className="flex items-center">
             <input
               type="radio"
@@ -209,7 +212,7 @@ function FilterContent({
             />
             <span className="ml-2 text-sm text-gray-700">Shqip</span>
           </label>
-          
+
           <label className="flex items-center">
             <input
               type="radio"
@@ -243,7 +246,7 @@ function FilterContent({
               className="w-full px-2 py-1 text-sm border border-gray-300 rounded"
             />
           </div>
-          
+
           {/* Quick price filters */}
           <div className="space-y-1">
             <button

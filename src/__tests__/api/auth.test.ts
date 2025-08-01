@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/db/prisma';
 import { validatePasswordStrength } from '@/lib/auth/password';
+import { prisma } from '@/lib/db/prisma';
 
 // Mock Next.js
 jest.mock('next/server', () => ({
@@ -42,7 +42,7 @@ describe('Authentication API', () => {
     it('should register a new user with valid data', async () => {
       // Mock user not existing
       mockPrisma.user.findUnique.mockResolvedValue(null);
-      
+
       // Mock user creation
       const mockUser = {
         id: 'user_123',
@@ -68,7 +68,7 @@ describe('Authentication API', () => {
 
       // Import the registration handler
       const { POST } = await import('@/app/api/auth/register/route');
-      
+
       const mockRequest = {
         json: () => Promise.resolve(registrationData),
       } as any;
@@ -109,7 +109,7 @@ describe('Authentication API', () => {
       };
 
       const { POST } = await import('@/app/api/auth/register/route');
-      
+
       const mockRequest = {
         json: () => Promise.resolve(registrationData),
       } as any;
@@ -134,7 +134,7 @@ describe('Authentication API', () => {
       };
 
       const { POST } = await import('@/app/api/auth/register/route');
-      
+
       const mockRequest = {
         json: () => Promise.resolve(registrationData),
       } as any;
@@ -152,7 +152,7 @@ describe('Authentication API', () => {
     it('should validate strong passwords', () => {
       const strongPassword = 'StrongPass123!';
       const result = validatePasswordStrength(strongPassword);
-      
+
       expect(result.isValid).toBe(true);
       expect(result.errors).toHaveLength(0);
     });
@@ -160,7 +160,7 @@ describe('Authentication API', () => {
     it('should reject weak passwords', () => {
       const weakPassword = 'weak';
       const result = validatePasswordStrength(weakPassword);
-      
+
       expect(result.isValid).toBe(false);
       expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain('Password must be at least 8 characters long');
@@ -169,7 +169,7 @@ describe('Authentication API', () => {
     it('should reject common passwords', () => {
       const commonPassword = 'password';
       const result = validatePasswordStrength(commonPassword);
-      
+
       expect(result.isValid).toBe(false);
       expect(result.errors).toContain('Password is too common');
     });

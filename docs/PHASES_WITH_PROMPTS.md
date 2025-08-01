@@ -1,10 +1,13 @@
 # Brënda Librave - Development Phases with AI Prompts
 
-Complete development phases broken down into **independently deployable** milestones with comprehensive AI prompts for implementation.
+Complete development phases broken down into **independently deployable**
+milestones with comprehensive AI prompts for implementation.
 
 ## 🚀 **Deployment-Ready Philosophy**
 
-Each phase is designed to be **independently deployable** and **production-ready**:
+Each phase is designed to be **independently deployable** and
+**production-ready**:
+
 - ✅ **Working application** after each phase completion
 - ✅ **All tests pass** with comprehensive coverage
 - ✅ **Production deployment** possible at any phase
@@ -15,14 +18,16 @@ Each phase is designed to be **independently deployable** and **production-ready
 ## 📋 **Phase Overview**
 
 **Total Duration**: ~50-60 days (12 deployable phases × 4-5 days each)
-**Approach**: Mobile-first web application with Albanian Lek currency and Apple Liquid Glass design
-**Deployment**: Each phase ends with a working, deployable application
+**Approach**: Mobile-first web application with Albanian Lek currency and Apple
+Liquid Glass design **Deployment**: Each phase ends with a working, deployable
+application
 
 ---
 
 ## 🎯 **Phase Strategy**
 
 ### **Why Short Phases?**
+
 - **Quick Wins**: See progress every 3-5 days
 - **Reduced Risk**: Smaller scope = easier debugging
 - **Better Testing**: Focus on one feature at a time
@@ -30,7 +35,9 @@ Each phase is designed to be **independently deployable** and **production-ready
 - **Maintainable**: Easier to track and manage
 
 ### **Phase Structure**
+
 Each phase is designed to be completed in **3-5 days** with:
+
 - **Clear deliverables** you can see and test
 - **Specific success criteria** for validation
 - **Complete AI prompts** for implementation
@@ -42,7 +49,9 @@ Each phase is designed to be completed in **3-5 days** with:
 ## 🧪 **Testing & Quality Requirements**
 
 ### **Mandatory Quality Gates**
+
 Every phase must pass these requirements before proceeding:
+
 - ✅ **All tests pass**: Unit, integration, and E2E tests
 - ✅ **Linting passes**: ESLint with security and performance rules
 - ✅ **Type checking passes**: TypeScript compilation without errors
@@ -51,6 +60,7 @@ Every phase must pass these requirements before proceeding:
 - ✅ **Security audit**: No critical vulnerabilities
 
 ### **Testing Stack**
+
 ```bash
 # Testing dependencies for all phases
 npm install --save-dev \
@@ -63,6 +73,7 @@ npm install --save-dev \
 ```
 
 ### **Quality Scripts**
+
 ```json
 {
   "scripts": {
@@ -77,14 +88,17 @@ npm install --save-dev \
   }
 }
 ```
+
 ---
 
 ## 📋 **PHASE 1: Project Foundation & Basic Setup**
+
 **Duration**: 3-4 days | **Goal**: Working Next.js app with database
 
 ### 🎯 **Deliverables & Success Criteria**
 
 #### **Deployable Application Features**
+
 - ✅ **Working homepage** with Albanian/English language switching
 - ✅ **Health check endpoints** for monitoring (`/api/health`)
 - ✅ **Error tracking** with Sentry integration
@@ -94,6 +108,7 @@ npm install --save-dev \
 - ✅ **SEO optimization** with proper meta tags
 
 #### **Technical Implementation**
+
 - ✅ Next.js 14+ project with App Router and TypeScript
 - ✅ Tailwind CSS with Albanian cultural color palette
 - ✅ Prisma ORM with SQLite (dev) and Neon PostgreSQL (production)
@@ -108,6 +123,7 @@ npm install --save-dev \
 - ✅ **Database migrations** applied successfully
 
 #### **Quality Gates (Must Pass to Proceed)**
+
 ```bash
 npm run dev            # Starts without errors
 npm run lint           # ESLint passes with 0 errors
@@ -119,6 +135,7 @@ npm run start          # Production server starts without errors
 ```
 
 #### **Deployment Validation**
+
 ```bash
 # Health check validation
 curl -f http://localhost:3000/api/health || exit 1
@@ -127,7 +144,7 @@ curl -f http://localhost:3000/api/health/detailed || exit 1
 
 ### 🎯 **AI PROMPT FOR PHASE 1:**
 
-```
+````
 Create the foundation for Brënda Librave, an Albanian bookshop web application. This is Phase 1 of a larger project.
 
 CONTEXT:
@@ -211,9 +228,10 @@ npm install --save-dev \
   eslint-import-resolver-typescript
 # Development dependencies
 npm install --save-dev @types/node typescript
-```
+````
 
 TESTING REQUIREMENTS:
+
 1. **Unit Tests**: Test utility functions, hooks, and components
 2. **Integration Tests**: Test API endpoints with supertest
 3. **E2E Tests**: Test critical user flows with Playwright
@@ -221,6 +239,7 @@ TESTING REQUIREMENTS:
 5. **Performance Tests**: Core Web Vitals validation
 
 EXAMPLE TESTS TO CREATE:
+
 ```typescript
 // __tests__/api/health.test.ts
 import { createMocks } from 'node-mocks-http';
@@ -258,7 +277,9 @@ test('health check endpoint works', async ({ page }) => {
   expect(data.status).toBe('healthy');
 });
 ```
+
 SUCCESS CRITERIA:
+
 - [ ] npm run dev starts without errors
 - [ ] /api/health returns 200 status
 - [ ] Database connection works (can run prisma db push)
@@ -273,12 +294,15 @@ SUCCESS CRITERIA:
 - [ ] **Security audit passes** with no critical vulnerabilities
 
 QUALITY GATES:
+
 ```bash
 # Must pass before proceeding to Phase 2
 npm run quality-gate
 # This runs: lint + type-check + test:coverage + test:e2e
 ```
+
 TECHNICAL NOTES:
+
 - Use App Router (not Pages Router)
 - Follow Albanian naming conventions where appropriate
 - Set up for mobile-first responsive design
@@ -286,7 +310,8 @@ TECHNICAL NOTES:
 - Write tests for every function and component
 - Maintain strict TypeScript configuration
 - Follow security-first development practices
-```
+
+````
 
 ---
 
@@ -321,9 +346,10 @@ npm run test:security  # Security tests pass (password hashing, session manageme
 npm run test:e2e:auth  # E2E authentication flows pass
 npm run build          # Production build with auth successful
 npm run start          # Auth system works in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Authentication endpoints validation
 curl -X POST http://localhost:3000/api/auth/register -H "Content-Type: application/json" -d '{"email":"test@example.com","password":"Test123!","name":"Test User"}' || exit 1
@@ -331,6 +357,7 @@ curl -X POST http://localhost:3000/api/auth/signin -H "Content-Type: application
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/auth.test.ts - Password security testing
 // __tests__/api/auth/register.test.ts - Registration endpoint testing
@@ -340,7 +367,7 @@ curl -X POST http://localhost:3000/api/auth/signin -H "Content-Type: application
 
 ### 🎯 **AI PROMPT FOR PHASE 2:**
 
-```
+````
 Implement the authentication system for Brënda Librave. Build on Phase 1 foundation.
 
 CONTEXT FROM PHASE 1:
@@ -392,10 +419,10 @@ model User {
   newsletter      Boolean   @default(false)
   emailVerified   DateTime?
   image           String?
-  
+
   accounts        Account[]
   sessions        Session[]
-  
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -414,9 +441,10 @@ enum Currency {
   ALL  // Albanian Lek
   EUR  // Euro
 }
-```
+````
 
 TESTING REQUIREMENTS:
+
 1. **Unit Tests**: Auth utilities, password hashing, validation schemas
 2. **Integration Tests**: Auth API endpoints, middleware, session handling
 3. **Component Tests**: Auth forms, protected components, user profile
@@ -424,9 +452,17 @@ TESTING REQUIREMENTS:
 5. **Security Tests**: Password strength, session security, CSRF protection
 
 EXAMPLE TESTS TO CREATE:
+
 ```typescript
 // __tests__/lib/auth.test.ts
+// e2e/auth.spec.ts
+import { expect, test } from '@playwright/test';
+// __tests__/api/auth/register.test.ts
+import { createMocks } from 'node-mocks-http';
+
 import { hashPassword, verifyPassword } from '@/lib/auth';
+
+import handler from '@/app/api/auth/register/route';
 
 describe('Password Security', () => {
   it('hashes passwords securely', async () => {
@@ -437,10 +473,6 @@ describe('Password Security', () => {
   });
 });
 
-// __tests__/api/auth/register.test.ts
-import { createMocks } from 'node-mocks-http';
-import handler from '@/app/api/auth/register/route';
-
 describe('/api/auth/register', () => {
   it('creates user with valid data', async () => {
     const { req, res } = createMocks({
@@ -448,8 +480,8 @@ describe('/api/auth/register', () => {
       body: {
         email: 'test@example.com',
         password: 'SecurePass123!',
-        name: 'Test User'
-      }
+        name: 'Test User',
+      },
     });
     await handler(req, res);
     expect(res._getStatusCode()).toBe(201);
@@ -461,16 +493,13 @@ describe('/api/auth/register', () => {
       body: {
         email: 'test@example.com',
         password: '123',
-        name: 'Test User'
-      }
+        name: 'Test User',
+      },
     });
     await handler(req, res);
     expect(res._getStatusCode()).toBe(400);
   });
 });
-
-// e2e/auth.spec.ts
-import { test, expect } from '@playwright/test';
 
 test('user can register and login', async ({ page }) => {
   // Test registration
@@ -479,20 +508,22 @@ test('user can register and login', async ({ page }) => {
   await page.fill('[data-testid=password]', 'SecurePass123!');
   await page.fill('[data-testid=name]', 'Test User');
   await page.click('[data-testid=register-button]');
-  
+
   // Should redirect to login
   await expect(page).toHaveURL('/login');
-  
+
   // Test login
   await page.fill('[data-testid=email]', 'test@example.com');
   await page.fill('[data-testid=password]', 'SecurePass123!');
   await page.click('[data-testid=login-button]');
-  
+
   // Should be logged in
   await expect(page).toHaveURL('/profile');
 });
 ```
+
 SUCCESS CRITERIA:
+
 - [ ] Users can register with email/password
 - [ ] Users can login and logout
 - [ ] Protected routes redirect to login
@@ -510,12 +541,15 @@ SUCCESS CRITERIA:
 - [ ] **Security audit passes** for auth implementation
 
 QUALITY GATES:
+
 ```bash
 # Must pass before proceeding to Phase 3
 npm run quality-gate
 npm run test -- --testPathPattern=auth
 ```
+
 DESIGN REQUIREMENTS:
+
 - Mobile-first responsive forms
 - Apple Liquid Glass card design for auth forms
 - Albanian cultural colors in design
@@ -524,7 +558,8 @@ DESIGN REQUIREMENTS:
 - Accessible forms with proper ARIA labels
 - Error states with clear messaging
 - Loading states during auth operations
-```
+
+````
 
 ---
 
@@ -560,9 +595,10 @@ npm run test:currency  # Currency conversion tests pass
 npm run test:e2e:catalog # E2E catalog browsing tests pass
 npm run build          # Production build with catalog successful
 npm run start          # Catalog system works in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Book catalog endpoints validation
 curl -f http://localhost:3000/api/books || exit 1
@@ -572,6 +608,7 @@ curl -f "http://localhost:3000/api/books/search?q=test" || exit 1
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/currency.test.ts - Currency conversion testing
 // __tests__/api/books.test.ts - Book API endpoint testing
@@ -581,7 +618,7 @@ curl -f "http://localhost:3000/api/books/search?q=test" || exit 1
 
 ### 🎯 **AI PROMPT FOR PHASE 3:**
 
-```
+````
 Create the book catalog system for Brënda Librave. Build on Phases 1-2.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -640,10 +677,10 @@ model Book {
   featured        Boolean   @default(false)
   active          Boolean   @default(true)
   slug            String    @unique
-  
+
   category        Category  @relation(fields: [categoryId], references: [id])
   tags            BookTag[]
-  
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -655,15 +692,16 @@ model Category {
   slug        String  @unique
   description String?
   active      Boolean @default(true)
-  
+
   books       Book[]
-  
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-```
+````
 
 API ENDPOINTS TO CREATE:
+
 - GET /api/books - List books with pagination
 - GET /api/books/[id] - Single book details
 - GET /api/books/search - Search functionality
@@ -672,6 +710,7 @@ API ENDPOINTS TO CREATE:
 - PUT /api/books/[id] - Update book (admin only)
 
 TESTING REQUIREMENTS:
+
 1. **Unit Tests**: Book utilities, currency conversion, search algorithms
 2. **Integration Tests**: All book API endpoints with various scenarios
 3. **Component Tests**: Book cards, book details, search components
@@ -679,9 +718,17 @@ TESTING REQUIREMENTS:
 5. **Performance Tests**: Book listing page load times and rendering
 
 EXAMPLE TESTS TO CREATE:
+
 ```typescript
 // __tests__/lib/currency.test.ts
+// e2e/books.spec.ts
+import { expect, test } from '@playwright/test';
+// __tests__/api/books.test.ts
+import { createMocks } from 'node-mocks-http';
+
 import { convertPrice, formatPrice } from '@/lib/currency';
+
+import handler from '@/app/api/books/route';
 
 describe('Currency Conversion', () => {
   it('converts ALL to EUR correctly', () => {
@@ -698,15 +745,11 @@ describe('Currency Conversion', () => {
   });
 });
 
-// __tests__/api/books.test.ts
-import { createMocks } from 'node-mocks-http';
-import handler from '@/app/api/books/route';
-
 describe('/api/books', () => {
   it('returns paginated books', async () => {
     const { req, res } = createMocks({
       method: 'GET',
-      query: { page: '1', limit: '10' }
+      query: { page: '1', limit: '10' },
     });
     await handler(req, res);
     expect(res._getStatusCode()).toBe(200);
@@ -718,34 +761,35 @@ describe('/api/books', () => {
   it('filters books by category', async () => {
     const { req, res } = createMocks({
       method: 'GET',
-      query: { category: 'literatura-shqiptare' }
+      query: { category: 'literatura-shqiptare' },
     });
     await handler(req, res);
     expect(res._getStatusCode()).toBe(200);
   });
 });
 
-// e2e/books.spec.ts
-import { test, expect } from '@playwright/test';
-
 test('user can browse and search books', async ({ page }) => {
   await page.goto('/books');
-  
+
   // Check books are displayed
-  await expect(page.locator('[data-testid=book-card]')).toHaveCount.greaterThan(0);
-  
+  await expect(page.locator('[data-testid=book-card]')).toHaveCount.greaterThan(
+    0
+  );
+
   // Test search
   await page.fill('[data-testid=search-input]', 'Kadare');
   await page.click('[data-testid=search-button]');
   await expect(page.locator('[data-testid=book-card]')).toContainText('Kadare');
-  
+
   // Test book detail
   await page.click('[data-testid=book-card]').first();
   await expect(page).toHaveURL(/\/books\/[^\/]+$/);
   await expect(page.locator('[data-testid=book-price]')).toBeVisible();
 });
 ```
+
 SUCCESS CRITERIA:
+
 - [ ] Books display in mobile-optimized grid
 - [ ] Prices show in Albanian Lek (primary) and Euro
 - [ ] Category filtering works
@@ -763,13 +807,16 @@ SUCCESS CRITERIA:
 - [ ] **Mobile responsiveness tests pass** on various screen sizes
 
 QUALITY GATES:
+
 ```bash
 # Must pass before proceeding to Phase 4
 npm run quality-gate
 npm run test -- --testPathPattern=books
 npm run test:e2e -- books.spec.ts
 ```
+
 DESIGN REQUIREMENTS:
+
 - Mobile-first book card design
 - Albanian Lek pricing prominently displayed
 - Apple Liquid Glass card effects
@@ -779,7 +826,8 @@ DESIGN REQUIREMENTS:
 - Accessible book cards with proper ARIA labels
 - Loading states for search and filtering
 - Error states for failed book loads
-```
+
+````
 
 ---
 
@@ -815,9 +863,10 @@ npm run test:inventory # Inventory management tests pass
 npm run test:e2e:cart  # E2E cart functionality tests pass
 npm run build          # Production build with cart successful
 npm run start          # Cart system works in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Shopping cart endpoints validation
 curl -f http://localhost:3000/api/cart || exit 1
@@ -825,6 +874,7 @@ curl -X POST http://localhost:3000/api/cart/add -H "Content-Type: application/js
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/cart.test.ts - Cart calculation and validation testing
 // __tests__/context/CartContext.test.tsx - Cart state management testing
@@ -834,7 +884,7 @@ curl -X POST http://localhost:3000/api/cart/add -H "Content-Type: application/js
 
 ### 🎯 **AI PROMPT FOR PHASE 4:**
 
-```
+````
 Implement the shopping cart system for Brënda Librave. Build on Phases 1-3.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -881,18 +931,19 @@ model CartItem {
   quantity Int       @default(1)
   isDigital Boolean  @default(false)
   currency Currency  @default(ALL)
-  
+
   user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
   book     Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@unique([userId, bookId, isDigital])
 }
-```
+````
 
 API ENDPOINTS TO CREATE:
+
 - GET /api/cart - Get user's cart items
 - POST /api/cart/add - Add item to cart
 - PUT /api/cart/update - Update item quantity
@@ -900,6 +951,7 @@ API ENDPOINTS TO CREATE:
 - GET /api/cart/count - Get cart item count
 
 CART CONTEXT STRUCTURE:
+
 ```typescript
 interface CartContextType {
   items: CartItem[];
@@ -913,6 +965,7 @@ interface CartContextType {
 ```
 
 TESTING REQUIREMENTS:
+
 1. **Unit Tests**: Cart utilities, price calculations, quantity validations
 2. **Integration Tests**: All cart API endpoints with edge cases
 3. **Component Tests**: Cart components, cart context, cart state
@@ -920,6 +973,7 @@ TESTING REQUIREMENTS:
 5. **State Tests**: Cart persistence, context state management
 
 EXAMPLE TESTS TO CREATE:
+
 ```typescript
 // __tests__/lib/cart.test.ts
 import { calculateCartTotal, validateQuantity } from '@/lib/cart';
@@ -985,24 +1039,26 @@ test('user can manage cart items', async ({ page }) => {
   await page.goto('/books');
   await page.click('[data-testid=book-card]').first();
   await page.click('[data-testid=add-to-cart]');
-  
+
   // Check cart count
   await expect(page.locator('[data-testid=cart-count]')).toHaveText('1');
-  
+
   // Go to cart
   await page.click('[data-testid=cart-icon]');
   await expect(page).toHaveURL('/cart');
-  
+
   // Update quantity
   await page.fill('[data-testid=quantity-input]', '2');
   await expect(page.locator('[data-testid=cart-count]')).toHaveText('2');
-  
+
   // Remove item
   await page.click('[data-testid=remove-item]');
   await expect(page.locator('[data-testid=empty-cart]')).toBeVisible();
 });
 ```
+
 SUCCESS CRITERIA:
+
 - [ ] Users can add books to cart
 - [ ] Cart persists between sessions
 - [ ] Quantities can be updated
@@ -1020,13 +1076,16 @@ SUCCESS CRITERIA:
 - [ ] **Mobile cart tests pass** on various screen sizes
 
 QUALITY GATES:
+
 ```bash
 # Must pass before proceeding to Phase 5
 npm run quality-gate
 npm run test -- --testPathPattern=cart
 npm run test:e2e -- cart.spec.ts
 ```
+
 DESIGN REQUIREMENTS:
+
 - Mobile-first cart layout
 - Albanian Lek pricing prominently displayed
 - Smooth add-to-cart animations
@@ -1036,7 +1095,8 @@ DESIGN REQUIREMENTS:
 - Accessible cart controls with proper ARIA labels
 - Loading states for cart operations
 - Error states for cart failures
-```
+
+````
 
 ---
 
@@ -1072,9 +1132,10 @@ npm run test:paypal    # PayPal integration tests pass (sandbox)
 npm run test:e2e:order # E2E order placement tests pass
 npm run build          # Production build with checkout successful
 npm run start          # Checkout system works in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Checkout endpoints validation
 curl -f http://localhost:3000/api/orders || exit 1
@@ -1082,6 +1143,7 @@ curl -X POST http://localhost:3000/api/orders -H "Content-Type: application/json
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/payment.test.ts - Payment processing and validation testing
 // __tests__/api/orders.test.ts - Order API endpoint testing
@@ -1091,7 +1153,7 @@ curl -X POST http://localhost:3000/api/orders -H "Content-Type: application/json
 
 ### 🎯 **AI PROMPT FOR PHASE 5:**
 
-```
+````
 Implement the checkout and payment system for Brënda Librave. Build on Phases 1-4.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -1130,7 +1192,7 @@ model Order {
   shippingCost    Decimal     @db.Decimal(10, 2) @default(0)
   currency        Currency    @default(ALL)
   exchangeRate    Decimal?    @db.Decimal(10, 4)
-  
+
   shippingName    String
   shippingEmail   String
   shippingPhone   String
@@ -1138,14 +1200,14 @@ model Order {
   shippingCity    String
   shippingZip     String
   shippingCountry String
-  
+
   paymentMethod   PaymentMethod
   paymentId       String?
   paidAt          DateTime?
-  
+
   user            User        @relation(fields: [userId], references: [id])
   items           OrderItem[]
-  
+
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 }
@@ -1158,10 +1220,10 @@ model OrderItem {
   price     Decimal @db.Decimal(10, 2)
   currency  Currency @default(ALL)
   isDigital Boolean @default(false)
-  
+
   order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
   book      Book  @relation(fields: [bookId], references: [id])
-  
+
   createdAt DateTime @default(now())
 }
 
@@ -1177,14 +1239,16 @@ enum OrderStatus {
 enum PaymentMethod {
   PAYPAL
 }
-```
+````
 
 PAYPAL INTEGRATION:
+
 ```bash
 npm install @paypal/react-paypal-js
 ```
 
 API ENDPOINTS TO CREATE:
+
 - POST /api/orders - Create new order
 - GET /api/orders - Get user orders
 - GET /api/orders/[id] - Get order details
@@ -1192,6 +1256,7 @@ API ENDPOINTS TO CREATE:
 - GET /api/admin/orders - Admin order list
 
 SUCCESS CRITERIA:
+
 - [ ] Checkout form collects shipping info
 - [ ] PayPal payment processes successfully
 - [ ] Orders save with correct Albanian Lek amounts
@@ -1202,13 +1267,15 @@ SUCCESS CRITERIA:
 - [ ] Mobile checkout is user-friendly
 
 DESIGN REQUIREMENTS:
+
 - Mobile-first checkout flow
 - Clear Albanian Lek pricing throughout
 - Secure payment form design
 - Order confirmation with Albanian details
 - Touch-friendly form inputs
 - Progress indicators for checkout steps
-```
+
+````
 
 ---
 
@@ -1244,9 +1311,10 @@ npm run test:moderation # Content moderation tests pass
 npm run test:e2e:blog  # E2E blog functionality tests pass
 npm run build          # Production build with blog successful
 npm run start          # Blog system works in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Blog endpoints validation
 curl -f http://localhost:3000/api/blog/posts || exit 1
@@ -1255,6 +1323,7 @@ curl -X POST http://localhost:3000/api/newsletter/subscribe -H "Content-Type: ap
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/blog.test.ts - Blog utilities and content processing testing
 // __tests__/api/blog.test.ts - Blog API endpoint testing
@@ -1264,7 +1333,7 @@ curl -X POST http://localhost:3000/api/newsletter/subscribe -H "Content-Type: ap
 
 ### 🎯 **AI PROMPT FOR PHASE 6:**
 
-```
+````
 Create a basic blog system for Brënda Librave. Build on Phases 1-5.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -1307,14 +1376,14 @@ model BlogPost {
   publishedAt     DateTime?
   language        Language      @default(SQ)
   views           Int           @default(0)
-  
+
   metaTitle       String?
   metaDescription String?
-  
+
   author          User          @relation(fields: [authorId], references: [id])
   category        BlogCategory? @relation(fields: [categoryId], references: [id])
   tags            BlogPostTag[]
-  
+
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
@@ -1326,20 +1395,22 @@ model BlogCategory {
   slug        String     @unique
   description String?
   active      Boolean    @default(true)
-  
+
   posts       BlogPost[]
-  
+
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
-```
+````
 
 RICH TEXT EDITOR:
+
 ```bash
 npm install @tiptap/react @tiptap/starter-kit @tiptap/extension-image
 ```
 
 API ENDPOINTS TO CREATE:
+
 - GET /api/blog/posts - List blog posts
 - GET /api/blog/posts/[slug] - Get single post
 - POST /api/blog/posts - Create post (admin)
@@ -1347,6 +1418,7 @@ API ENDPOINTS TO CREATE:
 - GET /api/blog/categories - List categories
 
 SUCCESS CRITERIA:
+
 - [ ] Admin can create and edit blog posts
 - [ ] Blog posts display with proper formatting
 - [ ] SEO URLs work (/sq/blog/post-slug)
@@ -1357,13 +1429,15 @@ SUCCESS CRITERIA:
 - [ ] Meta tags generate for SEO
 
 DESIGN REQUIREMENTS:
+
 - Mobile-first blog layout
 - Albanian typography optimization
 - Apple Liquid Glass card design for posts
 - Touch-friendly reading interface
 - Cultural Albanian design elements
 - Clear content hierarchy
-```
+
+````
 
 ---
 
@@ -1399,9 +1473,10 @@ npm run test:analytics # Analytics integration tests pass
 npm run test:e2e:admin # E2E admin workflows tests pass
 npm run build          # Production build with admin successful
 npm run start          # Admin system works in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Admin endpoints validation (requires admin auth)
 curl -f http://localhost:3000/api/admin/stats || exit 1
@@ -1410,6 +1485,7 @@ curl -f http://localhost:3000/api/admin/users || exit 1
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/admin.test.ts - Admin utilities and permissions testing
 // __tests__/api/admin.test.ts - Admin API endpoint testing
@@ -1419,7 +1495,7 @@ curl -f http://localhost:3000/api/admin/users || exit 1
 
 ### 🎯 **AI PROMPT FOR PHASE 7:**
 
-```
+````
 Create a comprehensive admin dashboard for Brënda Librave. Build on Phases 1-6.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -1479,7 +1555,7 @@ model Setting {
   id    String @id @default(cuid())
   key   String @unique
   value String @db.Text
-  
+
   updatedAt DateTime @updatedAt
 }
 
@@ -1489,15 +1565,16 @@ model ExchangeRate {
   toCurrency   Currency
   rate         Decimal  @db.Decimal(10, 4)
   isActive     Boolean  @default(true)
-  
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  
+
   @@unique([fromCurrency, toCurrency])
 }
-```
+````
 
 API ENDPOINTS TO CREATE:
+
 - GET /api/admin/dashboard - Dashboard metrics
 - GET /api/admin/books - Book management
 - GET /api/admin/orders - Order management
@@ -1506,6 +1583,7 @@ API ENDPOINTS TO CREATE:
 - PUT /api/admin/settings/exchange-rate - Update rates
 
 SUCCESS CRITERIA:
+
 - [ ] Admin dashboard shows key metrics
 - [ ] Book CRUD operations work smoothly
 - [ ] Orders can be processed and updated
@@ -1516,13 +1594,15 @@ SUCCESS CRITERIA:
 - [ ] Albanian Lek calculations are accurate
 
 DESIGN REQUIREMENTS:
+
 - Professional admin interface design
 - Mobile-responsive admin layout
 - Clear data visualization
 - Albanian Lek prominently displayed
 - Efficient workflow design
 - Touch-friendly admin controls
-```
+
+````
 
 ---
 
@@ -1558,9 +1638,10 @@ npm run test:notifications # Push notification tests pass
 npm run test:e2e:mobile # E2E mobile experience tests pass
 npm run build          # Production build with PWA successful
 npm run start          # PWA features work in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # PWA and mobile features validation
 curl -f http://localhost:3000/manifest.json || exit 1
@@ -1569,6 +1650,7 @@ curl -f http://localhost:3000/api/wishlist || exit 1
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/pwa.test.ts - PWA functionality testing
 // __tests__/api/notifications.test.ts - Push notification testing
@@ -1578,7 +1660,7 @@ curl -f http://localhost:3000/api/wishlist || exit 1
 
 ### 🎯 **AI PROMPT FOR PHASE 8:**
 
-```
+````
 Implement mobile-like page transitions and final polish for Brënda Librave. Build on Phases 1-7.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -1612,9 +1694,10 @@ ANIMATION DEPENDENCIES:
 npm install framer-motion react-spring @use-gesture/react
 npm install react-transition-group
 npm install next-pwa workbox-webpack-plugin
-```
+````
 
 KEY FEATURES TO IMPLEMENT:
+
 1. **Stack Navigation**:
    - iOS-style slide transitions
    - Page stack management
@@ -1641,12 +1724,14 @@ KEY FEATURES TO IMPLEMENT:
    - Native app behavior
 
 PERFORMANCE TARGETS:
+
 - 60fps animations on mobile devices
 - < 3 second page load times
 - Smooth gesture interactions
 - No animation jank or stuttering
 
 SUCCESS CRITERIA:
+
 - [ ] Page transitions feel native and smooth
 - [ ] Swipe gestures work intuitively
 - [ ] Loading states provide good UX
@@ -1657,13 +1742,15 @@ SUCCESS CRITERIA:
 - [ ] Mobile experience rivals native apps
 
 DESIGN REQUIREMENTS:
+
 - 60fps smooth animations
 - Apple-quality visual polish
 - Albanian cultural design elements
 - Mobile-first interaction design
 - Premium app-like experience
 - Consistent animation language
-```
+
+````
 
 ---
 
@@ -1699,9 +1786,10 @@ npm run test:gifting   # Book gifting tests pass
 npm run test:e2e:community # E2E community features tests pass
 npm run build          # Production build with community successful
 npm run start          # Community features work in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Community features validation
 curl -f http://localhost:3000/api/forum/categories || exit 1
@@ -1710,6 +1798,7 @@ curl -f http://localhost:3000/api/coupons/validate/TESTCODE || exit 1
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/community.test.ts - Community utilities testing
 // __tests__/api/forum.test.ts - Forum API endpoint testing
@@ -1719,7 +1808,7 @@ curl -f http://localhost:3000/api/coupons/validate/TESTCODE || exit 1
 
 ### 🎯 **AI PROMPT FOR PHASE 9:**
 
-```
+````
 Add newsletter and basic community features to Brënda Librave. Build on Phases 1-8.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -1757,7 +1846,7 @@ model NewsletterSubscriber {
   language  Language @default(SQ)
   active    Boolean  @default(true)
   tags      String[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -1769,12 +1858,12 @@ model Comment {
   postId    String
   parentId  String?
   status    CommentStatus @default(PENDING)
-  
+
   author    User      @relation(fields: [authorId], references: [id])
   post      BlogPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
   parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
   replies   Comment[] @relation("CommentReplies")
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -1785,9 +1874,10 @@ enum CommentStatus {
   REJECTED
   SPAM
 }
-```
+````
 
 SUCCESS CRITERIA:
+
 - [ ] Newsletter signup works with GDPR compliance
 - [ ] Users can create blog posts (with moderation)
 - [ ] Comment system allows threaded discussions
@@ -1798,13 +1888,15 @@ SUCCESS CRITERIA:
 - [ ] Albanian content is properly supported
 
 DESIGN REQUIREMENTS:
+
 - GDPR-compliant consent forms
 - User-friendly content creation
 - Clear moderation interface
 - Albanian community guidelines
 - Mobile-optimized social sharing
 - Community-focused design elements
-```
+
+````
 
 ---
 
@@ -1840,9 +1932,10 @@ npm run test:personalization # Personalization tests pass
 npm run test:e2e:ai    # E2E AI features tests pass
 npm run build          # Production build with AI successful
 npm run start          # AI features work in production mode
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # AI features validation
 curl -f http://localhost:3000/api/recommendations/user/test-user-id || exit 1
@@ -1851,6 +1944,7 @@ curl -f "http://localhost:3000/api/search/smart?q=test&userId=test-user-id" || e
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/ai.test.ts - AI recommendation algorithm testing
 // __tests__/api/recommendations.test.ts - Recommendation API testing
@@ -1860,7 +1954,7 @@ curl -f "http://localhost:3000/api/search/smart?q=test&userId=test-user-id" || e
 
 ### 🎯 **AI PROMPT FOR PHASE 10:**
 
-```
+````
 Implement advanced features and prepare for AI recommendations in Brënda Librave. Build on Phases 1-9.
 
 CONTEXT FROM PREVIOUS PHASES:
@@ -1899,13 +1993,13 @@ model ReadingHistory {
   progress  Int      @default(0)
   completed Boolean  @default(false)
   rating    Int?
-  
+
   user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
   book      Book @relation(fields: [bookId], references: [id])
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@unique([userId, bookId])
 }
 
@@ -1915,12 +2009,12 @@ model Wishlist {
   bookId    String
   priority  Int    @default(1)
   notes     String?
-  
+
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   book      Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
-  
+
   @@unique([userId, bookId])
 }
 
@@ -1932,9 +2026,10 @@ model AnalyticsEvent {
   properties Json?
   timestamp  DateTime @default(now())
 }
-```
+````
 
 RECOMMENDATION ALGORITHMS:
+
 1. **Popular Books**: Most purchased/viewed
 2. **Category-Based**: Books in user's preferred categories
 3. **Similar Users**: Collaborative filtering basics
@@ -1942,6 +2037,7 @@ RECOMMENDATION ALGORITHMS:
 5. **Wishlist Patterns**: Books often wishlisted together
 
 SUCCESS CRITERIA:
+
 - [ ] Reading history tracks user behavior
 - [ ] Wishlist allows book saving and organization
 - [ ] Rating system collects user feedback
@@ -1952,13 +2048,15 @@ SUCCESS CRITERIA:
 - [ ] Performance remains smooth with new features
 
 DESIGN REQUIREMENTS:
+
 - Intuitive wishlist management
 - Clear rating and review interface
 - Personalized recommendation sections
 - Advanced search with Albanian support
 - User preference dashboard
 - Data-driven recommendation display
-```
+
+````
 
 ---
 
@@ -1994,9 +2092,10 @@ npm run test:caching   # Caching functionality tests pass
 npm run test:e2e:performance # E2E performance tests pass
 npm run build          # Optimized production build successful
 npm run start          # Optimized app performs within targets
-```
+````
 
 #### **Deployment Validation**
+
 ```bash
 # Performance validation
 npm run lighthouse     # Lighthouse score >90
@@ -2005,6 +2104,7 @@ curl -f http://localhost:3000/api/health/performance || exit 1
 ```
 
 #### **Example Tests to Implement**
+
 ```typescript
 // __tests__/lib/performance.test.ts - Performance utility testing
 // __tests__/api/caching.test.ts - Caching functionality testing
@@ -2084,6 +2184,7 @@ TECHNICAL IMPLEMENTATION:
 ---
 
 ## 📋 **PHASE 12: Final Testing & Deployment**
+
 **Duration**: 3-4 days | **Goal**: Production-ready deployment with monitoring
 
 ### 🎯 **AI PROMPT FOR PHASE 12:**
@@ -2181,25 +2282,32 @@ FINAL VALIDATION:
 ## 🎯 **Phase Completion Strategy**
 
 ### **Daily Progress Tracking**
+
 - **Day 1-2**: Core implementation
 - **Day 3**: Testing and refinement
 - **Day 4**: Polish and validation
 - **Day 5**: Documentation and handoff
 
 ### **Success Validation**
-Each phase must meet **all success criteria** before proceeding to the next phase.
+
+Each phase must meet **all success criteria** before proceeding to the next
+phase.
 
 ### **Quality Gates**
+
 - **Functionality**: All features work as specified
 - **Performance**: Meets mobile performance targets
 - **Design**: Follows Albanian cultural and mobile-first principles
 - **Testing**: Passes all validation criteria
 
 ### **Albanian Market Focus**
+
 Every phase emphasizes:
+
 - **Albanian Lek currency** integration
 - **Albanian language** optimization
 - **Cultural design** elements
 - **Mobile-first** approach for Albanian users
 
-This phased approach ensures **steady progress** with **tangible results** every few days, making the development process manageable and rewarding! 🇦🇱📚
+This phased approach ensures **steady progress** with **tangible results** every
+few days, making the development process manageable and rewarding! 🇦🇱📚
