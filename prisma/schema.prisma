@@ -55,9 +55,9 @@ model User {
   email           String    @unique
   password        String?   // nullable for social auth
   name            String
-  role            String    @default("USER") // USER, ADMIN
-  language        String    @default("SQ")   // SQ (Albanian), EN (English)
-  currency        String    @default("ALL")  // ALL (Albanian Lek), EUR (Euro)
+  role            Role      @default(USER)
+  language        Language  @default(SQ)
+  currency        Currency  @default(ALL)
   newsletter      Boolean   @default(false)
   emailVerified   DateTime?
   image           String?
@@ -68,6 +68,21 @@ model User {
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Language {
+  SQ
+  EN
+}
+
+enum Currency {
+  ALL  // Albanian Lek
+  EUR  // Euro
 }
 
 // Settings for the application
@@ -82,8 +97,8 @@ model Setting {
 // Currency Exchange Rates
 model ExchangeRate {
   id           String   @id @default(cuid())
-  fromCurrency String   // ALL, EUR
-  toCurrency   String   // ALL, EUR
+  fromCurrency Currency
+  toCurrency   Currency
   rate         Float
   isActive     Boolean  @default(true)
   
@@ -91,4 +106,5 @@ model ExchangeRate {
   updatedAt    DateTime @updatedAt
   
   @@unique([fromCurrency, toCurrency])
+  @@index([isActive])
 } 
