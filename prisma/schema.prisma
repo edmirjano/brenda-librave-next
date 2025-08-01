@@ -107,4 +107,81 @@ model ExchangeRate {
   
   @@unique([fromCurrency, toCurrency])
   @@index([isActive])
+}
+
+// Book Catalog Models
+model Book {
+  id              String    @id @default(cuid())
+  title           String
+  author          String
+  description     String
+  isbn            String?   @unique
+  categoryId      String
+  priceALL        Float?    // Albanian Lek (using Float for SQLite compatibility)
+  priceEUR        Float?    // Euro (using Float for SQLite compatibility)
+  digitalPriceALL Float?    // Digital price in Albanian Lek
+  digitalPriceEUR Float?    // Digital price in Euro
+  inventory       Int       @default(0)
+  hasDigital      Boolean   @default(false)
+  coverImage      String?
+  publishedDate   DateTime?
+  language        Language  @default(SQ)
+  featured        Boolean   @default(false)
+  active          Boolean   @default(true)
+  slug            String    @unique
+  
+  category        Category  @relation(fields: [categoryId], references: [id])
+  tags            BookTag[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([active])
+  @@index([featured])
+  @@index([categoryId])
+  @@index([slug])
+}
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String
+  nameEn      String?
+  slug        String  @unique
+  description String?
+  active      Boolean @default(true)
+  
+  books       Book[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([active])
+  @@index([slug])
+}
+
+model Tag {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  nameEn      String?
+  slug        String    @unique
+  color       String?   // hex color for UI
+  
+  books       BookTag[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([slug])
+}
+
+model BookTag {
+  bookId    String
+  tagId     String
+  
+  book      Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  tag       Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  
+  @@id([bookId, tagId])
+  @@index([bookId])
+  @@index([tagId])
 } 
