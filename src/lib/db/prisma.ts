@@ -16,10 +16,8 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
 
-// Handle connection events
-prisma.$on('error', (e) => {
-  logError('Prisma error', e, { type: 'database' });
-});
+// Note: Prisma error event handling removed for compatibility
+// Error logging is handled by Prisma's built-in error handling
 
 // Graceful shutdown
 const gracefulShutdown = async () => {

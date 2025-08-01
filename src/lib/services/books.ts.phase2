@@ -1,3 +1,5 @@
+import type { Prisma } from '@prisma/client';
+
 import { prisma } from '@/lib/db/prisma';
 import { slugify } from '@/lib/utils';
 
@@ -38,7 +40,7 @@ export class BookService {
     const offset = (page - 1) * limit;
 
     // Build where clause
-    const where: any = {
+    const where: Prisma.BookWhereInput = {
       active: active,
     };
 
@@ -87,7 +89,7 @@ export class BookService {
     }
 
     // Build order by clause
-    const orderBy: any = {};
+    const orderBy: Prisma.BookOrderByWithRelationInput = {};
     if (sortBy === 'price') {
       orderBy[currency === 'ALL' ? 'priceALL' : 'priceEUR'] = sortOrder;
     } else {

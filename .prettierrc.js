@@ -1,4 +1,5 @@
 // Prettier configuration for Brënda Librave
+// eslint-disable-next-line no-undef
 module.exports = {
   // Basic formatting
   semi: true,
