@@ -17,7 +17,7 @@ datasource db {
 }
 
 // Note: For production deployment on Netlify, this will be automatically
-// configured to use PostgreSQL via Neon. See NETLIFY_DEPLOYMENT.md for setup.
+// configured to use PostgreSQL via Neon, Railway, or PlanetScale.
 
 // Authentication Models (NextAuth.js compatible)
 model Account {

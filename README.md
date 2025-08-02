@@ -283,9 +283,9 @@ npm run lint -- --ext .ts,.tsx
 
 ### Production Environment
 
-- **Platform**: Netlify with Next.js optimization
-- **Database**: Neon PostgreSQL (serverless)
-- **Storage**: S3-compatible for eBooks
+- **Platform**: Vercel or Netlify with Next.js optimization
+- **Database**: PostgreSQL (Neon, Railway, or PlanetScale)
+- **Storage**: Vercel Blob or S3-compatible for eBooks
 - **CDN**: Global CDN for Albanian diaspora
 - **Monitoring**: Comprehensive health checks
 
