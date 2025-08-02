@@ -118,7 +118,6 @@ describe('CategoryService', () => {
         name: 'New Category',
         nameEn: 'New Category EN',
         slug: 'new-category',
-        description: 'Test description',
         active: true,
       };
 
