@@ -44,14 +44,8 @@
   ],
   "exclude": [
     "node_modules",
-    // Exclude Phase 3+ features - PHASE 2 FOCUSED
-    "src/app/books/**",
+    // Exclude Phase 4+ features - PHASE 3 COMPLETE
     "src/app/admin/**",
-    "src/components/books/**",
-    "src/components/admin/**",
-    "src/app/api/books.phase2/**",
-    "src/app/api/categories.phase2/**",
-    "src/lib/services/**",
-    "prisma/seed.ts"
+    "src/components/admin/**"
   ]
 }

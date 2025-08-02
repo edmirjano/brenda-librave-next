@@ -26,7 +26,7 @@ import { LiquidButton } from '@/components/ui/LiquidButton';
 
 const navigationItems = [
   { name: 'Kryefaqja', href: '/', icon: Home },
-  { name: 'Dyqani', href: '/shop', icon: ShoppingBag },
+  { name: 'Libra', href: '/books', icon: BookOpen },
   { name: 'Dhuro një Libër', href: '/gift', icon: Gift },
   { name: 'Forumi', href: '/forum', icon: MessageSquare },
   { name: 'Rreth Nesh', href: '/about', icon: Info },

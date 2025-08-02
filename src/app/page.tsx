@@ -24,6 +24,7 @@ import {
   Zap,
 } from 'lucide-react';
 
+import { FeaturedBooks } from '@/components/books/FeaturedBooks';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { LiquidButton } from '@/components/ui/LiquidButton';
 
@@ -69,7 +70,7 @@ export default function HomePage() {
                 <Link href="/shop">
                   <LiquidButton variant="albanian" size="lg" className="min-w-[200px]">
                     <Library className="w-5 h-5 mr-2" />
-                    Eksploroni Dyqanin
+                    Eksploroni Librat
                   </LiquidButton>
                 </Link>
 
@@ -324,10 +325,17 @@ export default function HomePage() {
             <Link href="/shop">
               <LiquidButton variant="primary" size="lg">
                 <ArrowRight className="w-5 h-5 mr-2" />
-                Shihni të gjitha kategoritë
+                Shihni të gjithë librat
               </LiquidButton>
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Featured Books Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <FeaturedBooks limit={8} showHeader={true} />
         </div>
       </section>
 
@@ -388,10 +396,10 @@ export default function HomePage() {
                   </LiquidButton>
                 </Link>
 
-                <Link href="/gift">
+                <Link href="/books">
                   <LiquidButton variant="primary" size="lg" className="min-w-[220px]">
-                    <Gift className="w-5 h-5 mr-2" />
-                    Dhuroni një libër
+                    <BookOpen className="w-5 h-5 mr-2" />
+                    Eksploroni librat
                   </LiquidButton>
                 </Link>
               </div>
