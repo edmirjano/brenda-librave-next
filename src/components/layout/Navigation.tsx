@@ -16,7 +16,6 @@ import {
   Mail,
   Menu,
   MessageSquare,
-  ShoppingBag,
   User,
   UserPlus,
   X,

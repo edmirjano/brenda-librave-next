@@ -10,7 +10,6 @@ import {
   CheckCircle,
   CreditCard,
   Download,
-  Gift,
   Globe,
   Heart,
   Library,

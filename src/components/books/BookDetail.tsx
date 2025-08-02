@@ -10,8 +10,6 @@ import {
   Globe,
   Heart,
   Package,
-  Share2,
-  ShoppingCart,
   Star,
   Tag,
 } from 'lucide-react';

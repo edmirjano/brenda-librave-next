@@ -7,7 +7,6 @@ import { AlertCircle, BookOpen } from 'lucide-react';
 
 import { BookCard } from '@/components/books/BookCard';
 import { GlassCard } from '@/components/ui/GlassCard';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Pagination } from '@/components/ui/Pagination';
 
 import type { BookSearchResult } from '@/types/book';

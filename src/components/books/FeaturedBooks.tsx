@@ -10,7 +10,6 @@ import { ArrowRight, BookOpen, Star } from 'lucide-react';
 import { BookCard } from '@/components/books/BookCard';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { LiquidButton } from '@/components/ui/LiquidButton';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 import type { BookListItem } from '@/types/book';
 
