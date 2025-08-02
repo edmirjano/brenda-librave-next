@@ -13,6 +13,7 @@ import {
   ChevronDown,
   ChevronRight,
   CreditCard,
+  FileText,
   Grid3X3,
   Home,
   LogOut,
@@ -39,6 +40,16 @@ const navigationItems = [
       { name: 'Shto libër të ri', href: '/admin/books/new' },
       { name: 'Kategoritë', href: '/admin/categories' },
       { name: 'Etiketat', href: '/admin/tags' },
+    ],
+  },
+  {
+    name: 'Blog',
+    icon: FileText,
+    children: [
+      { name: 'Të gjitha postimet', href: '/admin/blog' },
+      { name: 'Shto postim të ri', href: '/admin/blog/new' },
+      { name: 'Moderimi', href: '/admin/blog/moderation' },
+      { name: 'Kategoritë e blogut', href: '/admin/blog/categories' },
     ],
   },
   {

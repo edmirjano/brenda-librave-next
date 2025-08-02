@@ -112,6 +112,24 @@ phases:
 **Timeline**: 6-8 weeks **Goal**: Launch a functional bookshop with core
 features
 
+### Database Strategy: SQLite → PostgreSQL
+
+**Why SQLite for Development?**
+
+- ✅ **Zero Setup**: No database server installation required
+- ✅ **Fast Development**: Instant startup, no connection overhead
+- ✅ **Portable**: Database file can be easily shared and backed up
+- ✅ **Testing**: Perfect for unit tests and CI/CD pipelines
+- ✅ **Offline Development**: Work without internet connection
+
+**Why PostgreSQL for Production?**
+
+- ✅ **Serverless**: Perfect match for Vercel/Netlify Functions
+- ✅ **Auto-scaling**: Handles traffic spikes automatically
+- ✅ **Global Performance**: Edge regions for Albanian diaspora
+- ✅ **Advanced Features**: Full-text search, JSON support, complex queries
+- ✅ **Backup & Recovery**: Automated backups and point-in-time recovery
+
 ### Week 1-2: Project Foundation & Setup
 
 #### Development Environment Setup

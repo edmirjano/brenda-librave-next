@@ -1,18 +1,18 @@
-# Brënda Librave - Netlify Deployment Guide
+# Brënda Librave - Deployment Guide
 
-Complete deployment strategy for Netlify platform with Next.js optimization,
+Complete deployment strategy for modern platforms with Next.js optimization,
 PostgreSQL integration, and comprehensive security and monitoring setup.
 
-## 🌐 Netlify Deployment Architecture
+## 🌐 Deployment Architecture
 
 ### **Platform Overview**
 
 - **Framework**: Next.js 14+ with App Router
-- **Hosting**: Netlify with automatic deployments
-- **Database**: Neon PostgreSQL (serverless, perfect for Netlify)
-- **CDN**: Netlify's global CDN + Edge Functions
-- **Storage**: Netlify Large Media or external S3-compatible
-- **Analytics**: Netlify Analytics + Google Analytics 4
+- **Hosting**: Vercel or Netlify with automatic deployments
+- **Database**: PostgreSQL (Neon, Railway, or PlanetScale)
+- **CDN**: Platform's global CDN + Edge Functions
+- **Storage**: Vercel Blob or S3-compatible
+- **Analytics**: Platform Analytics + Google Analytics 4
 
 ## 🔐 Enhanced Security & Credential Management
 

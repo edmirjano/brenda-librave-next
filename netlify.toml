@@ -33,7 +33,6 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
 # Environment variables needed for production
-# Set these in Netlify dashboard:
-# DATABASE_URL=postgresql://...
+# Set these in platform dashboard:
+# DATABASE_URL="postgresql://username:password@host:port/database"
 # NEXTAUTH_SECRET=your-production-secret
-# NEXTAUTH_URL=https://your-site.netlify.app

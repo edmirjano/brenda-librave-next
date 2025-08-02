@@ -66,6 +66,10 @@ model User {
   cartItems       CartItem[]
   orders          Order[]
   
+  blogPosts       BlogPost[]
+  comments        Comment[]
+  moderatedPosts  BlogPost[]   @relation("ModeratedPosts")
+  blogPostLikes   BlogPostLike[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -330,4 +334,138 @@ enum CouponType {
   FIXED_AMOUNT
   FREE_SHIPPING
   BUY_ONE_GET_ONE
+}
+
+// Blog System
+model BlogPost {
+  id              String        @id @default(cuid())
+  title           String
+  slug            String        @unique
+  content         String
+  excerpt         String?
+  authorId        String
+  categoryId      String?
+  featuredImage   String?
+  published       Boolean       @default(false)
+  publishedAt     DateTime?
+  language        Language      @default(SQ)
+  type            BlogPostType  @default(ADMIN)
+  status          BlogPostStatus @default(DRAFT)
+  moderatedAt     DateTime?
+  moderatedById   String?
+  rejectionReason String?
+  views           Int           @default(0)
+  likes           Int           @default(0)
+
+  // SEO fields
+  metaTitle       String?
+  metaDescription String?
+
+  // Relations
+  author          User          @relation(fields: [authorId], references: [id])
+  category        BlogCategory? @relation(fields: [categoryId], references: [id])
+  moderatedBy     User?         @relation("ModeratedPosts", fields: [moderatedById], references: [id])
+  tags            BlogPostTag[]
+  comments        Comment[]
+  likes_relation  BlogPostLike[]
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([published])
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([type])
+  @@index([status])
+}
+
+model BlogPostLike {
+  id       String   @id @default(cuid())
+  userId   String
+  postId   String
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post     BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+}
+
+enum BlogPostType {
+  ADMIN     // Official blog posts by admin/staff
+  USER      // User-generated content
+  FEATURED  // Featured user posts
+}
+
+enum BlogPostStatus {
+  DRAFT
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  PUBLISHED
+}
+
+model BlogCategory {
+  id          String     @id @default(cuid())
+  name        String
+  nameEn      String?
+  slug        String     @unique
+  description String?
+  active      Boolean    @default(true)
+
+  posts       BlogPost[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([active])
+}
+
+model BlogTag {
+  id      String        @id @default(cuid())
+  name    String        @unique
+  nameEn  String?
+
+  posts   BlogPostTag[]
+
+  createdAt DateTime @default(now())
+}
+
+model BlogPostTag {
+  postId String
+  tagId  String
+
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+}
+
+model Comment {
+  id        String        @id @default(cuid())
+  content   String
+  authorId  String
+  postId    String
+  parentId  String?       // For threaded comments
+  status    CommentStatus @default(PENDING)
+
+  author    User      @relation(fields: [authorId], references: [id])
+  post      BlogPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId])
+  @@index([status])
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SPAM
 }
