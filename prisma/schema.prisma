@@ -70,6 +70,14 @@ model User {
   comments        Comment[]
   moderatedPosts  BlogPost[]   @relation("ModeratedPosts")
   blogPostLikes   BlogPostLike[]
+  
+  // Community features
+  forumTopics     ForumTopic[]
+  forumPosts      ForumPost[]
+  wishlist        Wishlist[]
+  collections     BookCollection[]
+  readingHistory  ReadingHistory[]
+  
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -138,6 +146,12 @@ model Book {
   tags            BookTag[]
   cartItems       CartItem[]
   orderItems      OrderItem[]
+  
+  // Community features
+  forumTopics     ForumTopic[]
+  wishlistItems   Wishlist[]
+  collectionItems BookCollectionItem[]
+  readingHistory  ReadingHistory[]
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -468,4 +482,175 @@ enum CommentStatus {
   APPROVED
   REJECTED
   SPAM
+}
+
+// Community & Forum Models
+model ForumCategory {
+  id          String  @id @default(cuid())
+  name        String
+  nameEn      String?
+  description String?
+  slug        String  @unique
+  color       String? // Hex color for category
+  sortOrder   Int     @default(0)
+  active      Boolean @default(true)
+
+  topics      ForumTopic[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([active, sortOrder])
+}
+
+model ForumTopic {
+  id          String      @id @default(cuid())
+  title       String
+  slug        String      @unique
+  content     String
+  authorId    String
+  categoryId  String
+  bookId      String?     // Optional: link to specific book
+  pinned      Boolean     @default(false)
+  locked      Boolean     @default(false)
+  status      TopicStatus @default(ACTIVE)
+  views       Int         @default(0)
+
+  author      User         @relation(fields: [authorId], references: [id])
+  category    ForumCategory @relation(fields: [categoryId], references: [id])
+  book        Book?        @relation(fields: [bookId], references: [id])
+  posts       ForumPost[]
+  tags        ForumTopicTag[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([bookId])
+  @@index([status])
+}
+
+model ForumPost {
+  id        String     @id @default(cuid())
+  content   String
+  authorId  String
+  topicId   String
+  parentId  String?    // For threaded replies
+  status    PostStatus @default(ACTIVE)
+
+  author    User       @relation(fields: [authorId], references: [id])
+  topic     ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  parent    ForumPost? @relation("PostReplies", fields: [parentId], references: [id])
+  replies   ForumPost[] @relation("PostReplies")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([topicId])
+  @@index([authorId])
+  @@index([status])
+}
+
+model ForumTag {
+  id      String          @id @default(cuid())
+  name    String          @unique
+  nameEn  String?
+  color   String?         // Hex color for tag
+
+  topics  ForumTopicTag[]
+
+  createdAt DateTime @default(now())
+}
+
+model ForumTopicTag {
+  topicId String
+  tagId   String
+
+  topic   ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  tag     ForumTag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([topicId, tagId])
+}
+
+enum TopicStatus {
+  ACTIVE
+  LOCKED
+  HIDDEN
+  DELETED
+}
+
+enum PostStatus {
+  ACTIVE
+  HIDDEN
+  DELETED
+  FLAGGED
+}
+
+// User Collections & Wishlist
+model Wishlist {
+  id        String @id @default(cuid())
+  userId    String
+  bookId    String
+  priority  Int    @default(1) // 1=low, 2=medium, 3=high
+  notes     String?
+
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book      Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, bookId])
+  @@index([userId])
+}
+
+model BookCollection {
+  id          String               @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  isPublic    Boolean              @default(false)
+
+  user        User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  books       BookCollectionItem[]
+
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  @@index([userId])
+  @@index([isPublic])
+}
+
+model BookCollectionItem {
+  id           String         @id @default(cuid())
+  collectionId String
+  bookId       String
+  sortOrder    Int            @default(0)
+  notes        String?
+
+  collection   BookCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  book         Book           @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([collectionId, bookId])
+  @@index([collectionId])
+}
+
+// Reading History & Progress
+model ReadingHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  startedAt DateTime @default(now())
+  progress  Int      @default(0) // Percentage 0-100
+  completed Boolean  @default(false)
+  rating    Int?     // 1-5 stars
+
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book      Book @relation(fields: [bookId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, bookId])
+  @@index([userId])
 }
