@@ -10,6 +10,7 @@ import {
   BookOpen,
   Gift,
   Gift,
+  Heart,
   Home,
   Info,
   LogIn,
@@ -29,8 +30,8 @@ import { LiquidButton } from '@/components/ui/LiquidButton';
 const navigationItems = [
   { name: 'Kryefaqja', href: '/', icon: Home },
   { name: 'Libra', href: '/books', icon: BookOpen },
-  { name: 'Dhuro një Libër', href: '/gift', icon: Gift },
   { name: 'Forumi', href: '/forum', icon: MessageSquare },
+  { name: 'Dhuro një Libër', href: '/gift', icon: Gift },
   { name: 'Rreth Nesh', href: '/about', icon: Info },
   { name: 'Kontakti', href: '/contact', icon: Mail },
 ];
@@ -87,15 +88,27 @@ export function Navigation() {
           <div className="hidden lg:flex items-center space-x-3">
             {/* Cart Icon */}
             {session && (
-              <Link href="/cart">
-                <motion.div
-                  className="p-2 rounded-xl hover:bg-white/50 transition-all duration-200"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <CartIcon />
-                </motion.div>
-              </Link>
+              <>
+                <Link href="/wishlist">
+                  <motion.div
+                    className="p-2 rounded-xl hover:bg-white/50 transition-all duration-200"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Heart className="h-6 w-6 text-gray-700 hover:text-red-600 transition-colors" />
+                  </motion.div>
+                </Link>
+                
+                <Link href="/cart">
+                  <motion.div
+                    className="p-2 rounded-xl hover:bg-white/50 transition-all duration-200"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <CartIcon />
+                  </motion.div>
+                </Link>
+              </>
             )}
 
             {status === 'loading' ? (
@@ -177,6 +190,14 @@ export function Navigation() {
               <div className="pt-4 border-t border-gray-200/50 space-y-2">
                 {session ? (
                   <>
+                    <Link
+                      href="/wishlist"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-red-600 hover:bg-white/50 transition-all duration-200"
+                    >
+                      <Heart className="h-5 w-5" />
+                      <span className="font-medium">Lista e dëshirave</span>
+                    </Link>
                     <Link
                       href="/cart"
                       onClick={() => setIsOpen(false)}
