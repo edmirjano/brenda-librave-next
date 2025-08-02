@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   BookOpen,
   Gift,
+  Gift,
   Home,
   Info,
   LogIn,
@@ -16,11 +17,13 @@ import {
   Mail,
   Menu,
   MessageSquare,
+  ShoppingCart,
   User,
   UserPlus,
   X,
 } from 'lucide-react';
 
+import { CartIcon } from '@/components/cart/CartIcon';
 import { LiquidButton } from '@/components/ui/LiquidButton';
 
 const navigationItems = [
@@ -82,6 +85,19 @@ export function Navigation() {
 
           {/* Auth Section */}
           <div className="hidden lg:flex items-center space-x-3">
+            {/* Cart Icon */}
+            {session && (
+              <Link href="/cart">
+                <motion.div
+                  className="p-2 rounded-xl hover:bg-white/50 transition-all duration-200"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <CartIcon />
+                </motion.div>
+              </Link>
+            )}
+
             {status === 'loading' ? (
               <div className="animate-pulse">
                 <div className="h-8 w-20 bg-gray-300 rounded-lg"></div>
@@ -161,6 +177,14 @@ export function Navigation() {
               <div className="pt-4 border-t border-gray-200/50 space-y-2">
                 {session ? (
                   <>
+                    <Link
+                      href="/cart"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-red-600 hover:bg-white/50 transition-all duration-200"
+                    >
+                      <ShoppingCart className="h-5 w-5" />
+                      <span className="font-medium">Shporta</span>
+                    </Link>
                     <Link
                       href="/profile"
                       onClick={() => setIsOpen(false)}

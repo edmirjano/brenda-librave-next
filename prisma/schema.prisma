@@ -63,6 +63,8 @@ model User {
   // Relations
   accounts        Account[]
   sessions        Session[]
+  cartItems       CartItem[]
+  orders          Order[]
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -130,6 +132,8 @@ model Book {
   
   category        Category  @relation(fields: [categoryId], references: [id])
   tags            BookTag[]
+  cartItems       CartItem[]
+  orderItems      OrderItem[]
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -182,4 +186,148 @@ model BookTag {
   @@id([bookId, tagId])
   @@index([bookId])
   @@index([tagId])
-} 
+}
+
+// E-commerce Models
+model CartItem {
+  id       String   @id @default(cuid())
+  userId   String
+  bookId   String
+  quantity Int      @default(1)
+  isDigital Boolean @default(false)
+  currency Currency @default(ALL)
+  
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book     Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, bookId, isDigital])
+  @@index([userId])
+  @@index([bookId])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  orderNumber     String      @unique
+  status          OrderStatus @default(PENDING)
+  totalAmount     Float       // Using Float for SQLite compatibility
+  shippingCost    Float       @default(0)
+  currency        Currency    @default(ALL)
+  exchangeRate    Float?      // Exchange rate used at time of order
+  
+  // Shipping information
+  shippingName    String
+  shippingEmail   String
+  shippingPhone   String
+  shippingAddress String
+  shippingCity    String
+  shippingZip     String
+  shippingCountry String
+  
+  // Payment information
+  paymentMethod   PaymentMethod
+  paymentId       String?     // PayPal transaction ID
+  paidAt          DateTime?
+  
+  // Relations
+  user            User        @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+  couponUsage     CouponUsage?
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  bookId    String
+  quantity  Int
+  price     Float   // Price at time of purchase
+  currency  Currency @default(ALL)
+  isDigital Boolean @default(false)
+  
+  order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  book      Book  @relation(fields: [bookId], references: [id])
+  
+  createdAt DateTime @default(now())
+  
+  @@index([orderId])
+  @@index([bookId])
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  PAYPAL
+  STRIPE
+  BANK_TRANSFER
+}
+
+// Coupon System
+model Coupon {
+  id                String      @id @default(cuid())
+  code              String      @unique
+  name              String
+  description       String?
+  type              CouponType
+  value             Float       // Amount or percentage
+  minimumAmount     Float?      // Minimum order amount
+  maximumDiscount   Float?      // Maximum discount amount
+  usageLimit        Int?        // Total usage limit
+  usagePerUser      Int?        @default(1)
+  usedCount         Int         @default(0)
+  isActive          Boolean     @default(true)
+  validFrom         DateTime
+  validUntil        DateTime?
+  applicableToBooks String      @default("[]") // JSON array of book IDs
+  applicableToCategories String @default("[]") // JSON array of category IDs
+  
+  uses              CouponUsage[]
+  
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  
+  @@index([code])
+  @@index([isActive])
+  @@index([validFrom, validUntil])
+}
+
+model CouponUsage {
+  id        String   @id @default(cuid())
+  couponId  String
+  userId    String
+  orderId   String   @unique
+  discount  Float    // Discount amount applied
+  
+  coupon    Coupon   @relation(fields: [couponId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
+  
+  createdAt DateTime @default(now())
+  
+  @@index([couponId])
+  @@index([userId])
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED_AMOUNT
+  FREE_SHIPPING
+  BUY_ONE_GET_ONE
+}
