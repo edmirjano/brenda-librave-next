@@ -99,7 +99,7 @@ export interface CreateBookInput {
   language: 'SQ' | 'EN';
   featured: boolean;
   active: boolean;
-  slug: string;
+  slug?: string;
   tagIds?: string[];
 }
 

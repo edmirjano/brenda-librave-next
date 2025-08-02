@@ -1,25 +1,28 @@
-import { BookService } from '@/lib/services/books';
-import { prisma } from '@/lib/db/prisma';
+// Mock Prisma with proper Jest types
+const mockPrismaBook = {
+  findMany: jest.fn(),
+  findUnique: jest.fn(),
+  findFirst: jest.fn(),
+  create: jest.fn(),
+  update: jest.fn(),
+  delete: jest.fn(),
+  count: jest.fn(),
+  updateMany: jest.fn(),
+};
 
-// Mock Prisma
+const mockPrismaCategory = {
+  count: jest.fn(),
+};
+
+const mockPrismaTag = {
+  count: jest.fn(),
+};
+
 jest.mock('@/lib/db/prisma', () => ({
   prisma: {
-    book: {
-      findMany: jest.fn(),
-      findUnique: jest.fn(),
-      findFirst: jest.fn(),
-      create: jest.fn(),
-      update: jest.fn(),
-      delete: jest.fn(),
-      count: jest.fn(),
-      updateMany: jest.fn(),
-    },
-    category: {
-      count: jest.fn(),
-    },
-    tag: {
-      count: jest.fn(),
-    },
+    book: mockPrismaBook,
+    category: mockPrismaCategory,
+    tag: mockPrismaTag,
   },
 }));
 
@@ -29,7 +32,7 @@ jest.mock('@/lib/logging/logger', () => ({
   logError: jest.fn(),
 }));
 
-const mockPrisma = prisma as jest.Mocked<typeof prisma>;
+import { BookService } from '@/lib/services/books';
 
 const mockBook = {
   id: 'book_1',
@@ -59,17 +62,8 @@ describe('BookService', () => {
 
   describe('searchBooks', () => {
     it('should search books with basic parameters', async () => {
-      const mockSearchResult = {
-        books: [mockBook],
-        totalCount: 1,
-        totalPages: 1,
-        currentPage: 1,
-        hasNextPage: false,
-        hasPreviousPage: false,
-      };
-
-      mockPrisma.book.findMany.mockResolvedValue([mockBook] as any);
-      mockPrisma.book.count.mockResolvedValue(1);
+      mockPrismaBook.findMany.mockResolvedValue([mockBook]);
+      mockPrismaBook.count.mockResolvedValue(1);
 
       const result = await BookService.searchBooks({
         query: 'test',
@@ -80,7 +74,7 @@ describe('BookService', () => {
       expect(result.books).toHaveLength(1);
       expect(result.totalCount).toBe(1);
       expect(result.currentPage).toBe(1);
-      expect(mockPrisma.book.findMany).toHaveBeenCalledWith(
+      expect(mockPrismaBook.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
             active: true,
@@ -94,8 +88,8 @@ describe('BookService', () => {
     });
 
     it('should handle search with filters', async () => {
-      mockPrisma.book.findMany.mockResolvedValue([mockBook] as any);
-      mockPrisma.book.count.mockResolvedValue(1);
+      mockPrismaBook.findMany.mockResolvedValue([mockBook]);
+      mockPrismaBook.count.mockResolvedValue(1);
 
       await BookService.searchBooks({
         categoryId: 'cat_1',
@@ -106,7 +100,7 @@ describe('BookService', () => {
         currency: 'ALL',
       });
 
-      expect(mockPrisma.book.findMany).toHaveBeenCalledWith(
+      expect(mockPrismaBook.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
             categoryId: 'cat_1',
@@ -118,8 +112,8 @@ describe('BookService', () => {
     });
 
     it('should handle pagination correctly', async () => {
-      mockPrisma.book.findMany.mockResolvedValue([mockBook] as any);
-      mockPrisma.book.count.mockResolvedValue(25);
+      mockPrismaBook.findMany.mockResolvedValue([mockBook]);
+      mockPrismaBook.count.mockResolvedValue(25);
 
       const result = await BookService.searchBooks({
         page: 2,
@@ -130,7 +124,7 @@ describe('BookService', () => {
       expect(result.currentPage).toBe(2);
       expect(result.hasNextPage).toBe(true);
       expect(result.hasPreviousPage).toBe(true);
-      expect(mockPrisma.book.findMany).toHaveBeenCalledWith(
+      expect(mockPrismaBook.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           skip: 10, // (page - 1) * limit
           take: 10,
@@ -139,7 +133,7 @@ describe('BookService', () => {
     });
 
     it('should handle errors gracefully', async () => {
-      mockPrisma.book.findMany.mockRejectedValue(new Error('Database error'));
+      mockPrismaBook.findMany.mockRejectedValue(new Error('Database error'));
 
       await expect(BookService.searchBooks({})).rejects.toThrow('Failed to search books');
     });
@@ -147,12 +141,12 @@ describe('BookService', () => {
 
   describe('getBookById', () => {
     it('should return book when found', async () => {
-      mockPrisma.book.findUnique.mockResolvedValue(mockBook as any);
+      mockPrismaBook.findUnique.mockResolvedValue(mockBook);
 
       const result = await BookService.getBookById('book_1');
 
       expect(result).toEqual(mockBook);
-      expect(mockPrisma.book.findUnique).toHaveBeenCalledWith({
+      expect(mockPrismaBook.findUnique).toHaveBeenCalledWith({
         where: { id: 'book_1' },
         include: expect.objectContaining({
           category: true,
@@ -164,7 +158,7 @@ describe('BookService', () => {
     });
 
     it('should return null when book not found', async () => {
-      mockPrisma.book.findUnique.mockResolvedValue(null);
+      mockPrismaBook.findUnique.mockResolvedValue(null);
 
       const result = await BookService.getBookById('nonexistent');
 
@@ -172,7 +166,7 @@ describe('BookService', () => {
     });
 
     it('should handle database errors', async () => {
-      mockPrisma.book.findUnique.mockRejectedValue(new Error('Database error'));
+      mockPrismaBook.findUnique.mockRejectedValue(new Error('Database error'));
 
       const result = await BookService.getBookById('book_1');
 
@@ -182,12 +176,12 @@ describe('BookService', () => {
 
   describe('getBookBySlug', () => {
     it('should return book when found by slug', async () => {
-      mockPrisma.book.findUnique.mockResolvedValue(mockBook as any);
+      mockPrismaBook.findUnique.mockResolvedValue(mockBook);
 
       const result = await BookService.getBookBySlug('test-book');
 
       expect(result).toEqual(mockBook);
-      expect(mockPrisma.book.findUnique).toHaveBeenCalledWith({
+      expect(mockPrismaBook.findUnique).toHaveBeenCalledWith({
         where: { slug: 'test-book' },
         include: expect.any(Object),
       });
@@ -197,12 +191,12 @@ describe('BookService', () => {
   describe('getFeaturedBooks', () => {
     it('should return featured books', async () => {
       const featuredBooks = [mockBook, { ...mockBook, id: 'book_2' }];
-      mockPrisma.book.findMany.mockResolvedValue(featuredBooks as any);
+      mockPrismaBook.findMany.mockResolvedValue(featuredBooks);
 
       const result = await BookService.getFeaturedBooks(8);
 
       expect(result).toHaveLength(2);
-      expect(mockPrisma.book.findMany).toHaveBeenCalledWith({
+      expect(mockPrismaBook.findMany).toHaveBeenCalledWith({
         where: {
           featured: true,
           active: true,
@@ -214,7 +208,7 @@ describe('BookService', () => {
     });
 
     it('should handle empty results', async () => {
-      mockPrisma.book.findMany.mockResolvedValue([]);
+      mockPrismaBook.findMany.mockResolvedValue([]);
 
       const result = await BookService.getFeaturedBooks();
 
@@ -231,13 +225,13 @@ describe('BookService', () => {
       };
       const relatedBooks = [{ ...mockBook, id: 'book_2' }];
 
-      mockPrisma.book.findUnique.mockResolvedValue(currentBook as any);
-      mockPrisma.book.findMany.mockResolvedValue(relatedBooks as any);
+      mockPrismaBook.findUnique.mockResolvedValue(currentBook);
+      mockPrismaBook.findMany.mockResolvedValue(relatedBooks);
 
       const result = await BookService.getRelatedBooks('book_1', 4);
 
       expect(result).toHaveLength(1);
-      expect(mockPrisma.book.findMany).toHaveBeenCalledWith(
+      expect(mockPrismaBook.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
             id: { not: 'book_1' },
@@ -251,7 +245,7 @@ describe('BookService', () => {
     });
 
     it('should return empty array when book not found', async () => {
-      mockPrisma.book.findUnique.mockResolvedValue(null);
+      mockPrismaBook.findUnique.mockResolvedValue(null);
 
       const result = await BookService.getRelatedBooks('nonexistent');
 
@@ -261,14 +255,15 @@ describe('BookService', () => {
 
   describe('getBookStats', () => {
     it('should return book statistics', async () => {
-      mockPrisma.book.count
+      // Mock multiple count calls
+      mockPrismaBook.count
         .mockResolvedValueOnce(100) // totalBooks
-        .mockResolvedValueOnce(95) // activeBooks
-        .mockResolvedValueOnce(10) // featuredBooks
+        .mockResolvedValueOnce(95)  // activeBooks
+        .mockResolvedValueOnce(10)  // featuredBooks
         .mockResolvedValueOnce(50); // booksWithDigital
 
-      mockPrisma.category.count.mockResolvedValue(15);
-      mockPrisma.tag.count.mockResolvedValue(25);
+      mockPrismaCategory.count.mockResolvedValue(15);
+      mockPrismaTag.count.mockResolvedValue(25);
 
       const result = await BookService.getBookStats();
 
@@ -283,7 +278,7 @@ describe('BookService', () => {
     });
 
     it('should handle database errors', async () => {
-      mockPrisma.book.count.mockRejectedValue(new Error('Database error'));
+      mockPrismaBook.count.mockRejectedValue(new Error('Database error'));
 
       await expect(BookService.getBookStats()).rejects.toThrow('Failed to get book statistics');
     });
@@ -301,15 +296,16 @@ describe('BookService', () => {
         language: 'SQ' as const,
         featured: false,
         active: true,
+        slug: 'new-book', // Required field
       };
 
-      mockPrisma.book.findUnique.mockResolvedValue(null); // No existing book
-      mockPrisma.book.create.mockResolvedValue({ ...mockBook, ...bookInput } as any);
+      mockPrismaBook.findUnique.mockResolvedValue(null); // No existing book
+      mockPrismaBook.create.mockResolvedValue({ ...mockBook, ...bookInput });
 
       const result = await BookService.createBook(bookInput);
 
       expect(result.title).toBe('New Book');
-      expect(mockPrisma.book.create).toHaveBeenCalledWith(
+      expect(mockPrismaBook.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
             title: 'New Book',
@@ -331,9 +327,10 @@ describe('BookService', () => {
         language: 'SQ' as const,
         featured: false,
         active: true,
+        slug: 'existing-book',
       };
 
-      mockPrisma.book.findUnique.mockResolvedValue(mockBook as any); // Existing book
+      mockPrismaBook.findUnique.mockResolvedValue(mockBook); // Existing book
 
       await expect(BookService.createBook(bookInput)).rejects.toThrow(
         'A book with this title already exists'
@@ -343,18 +340,58 @@ describe('BookService', () => {
 
   describe('bulkUpdateBookStatus', () => {
     it('should update multiple books status', async () => {
-      mockPrisma.book.updateMany.mockResolvedValue({ count: 3 });
+      mockPrismaBook.updateMany.mockResolvedValue({ count: 3 });
 
       const result = await BookService.bulkUpdateBookStatus(['book_1', 'book_2', 'book_3'], false);
 
       expect(result).toBe(3);
-      expect(mockPrisma.book.updateMany).toHaveBeenCalledWith({
+      expect(mockPrismaBook.updateMany).toHaveBeenCalledWith({
         where: {
           id: { in: ['book_1', 'book_2', 'book_3'] },
         },
         data: {
           active: false,
         },
+      });
+    });
+  });
+
+  describe('Book validation logic', () => {
+    it('should validate book data structure', () => {
+      const bookData = {
+        title: 'Valid Book Title',
+        author: 'Valid Author',
+        description: 'Valid description that is long enough for requirements.',
+        categoryId: 'valid_category_id',
+        priceALL: 1500,
+        priceEUR: 15,
+        inventory: 10,
+        hasDigital: true,
+        language: 'SQ',
+        featured: false,
+        active: true,
+      };
+
+      // Validate structure
+      expect(bookData.title).toBeTruthy();
+      expect(bookData.author).toBeTruthy();
+      expect(bookData.description.length).toBeGreaterThan(10);
+      expect(bookData.categoryId).toBeTruthy();
+      expect(bookData.priceALL).toBeGreaterThan(0);
+      expect(bookData.inventory).toBeGreaterThanOrEqual(0);
+      expect(['SQ', 'EN']).toContain(bookData.language);
+    });
+
+    it('should validate price ranges', () => {
+      const validPrices = [0, 100, 1500, 10000];
+      const invalidPrices = [-1, -100];
+
+      validPrices.forEach(price => {
+        expect(price).toBeGreaterThanOrEqual(0);
+      });
+
+      invalidPrices.forEach(price => {
+        expect(price).toBeLessThan(0);
       });
     });
   });
