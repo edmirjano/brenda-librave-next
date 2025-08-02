@@ -18,7 +18,6 @@ export async function GET(request: NextRequest) {
       currency: (searchParams.get('currency') as 'ALL' | 'EUR') || 'ALL',
       featured: searchParams.get('featured') ? searchParams.get('featured') === 'true' : undefined,
       active: searchParams.get('active') ? searchParams.get('active') === 'true' : true,
-      sortBy: (searchParams.get('sortBy') as any) || 'createdAt',
       sortBy: (searchParams.get('sortBy') as 'title' | 'author' | 'price' | 'featured' | 'createdAt') || 'createdAt',
       sortOrder: (searchParams.get('sortOrder') as 'asc' | 'desc') || 'desc',
       page: searchParams.get('page') ? Number(searchParams.get('page')) : 1,
