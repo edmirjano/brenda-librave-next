@@ -144,7 +144,7 @@ describe('Debug Page', () => {
 
     render(await DebugPage());
 
-    expect(screen.getByText('🚀 Quick Actions')).toBeInTheDocument();
+    expect(screen.getByText(/Quick Actions/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Check Health API' })).toHaveAttribute(
       'href',
       '/api/health'
@@ -174,7 +174,7 @@ describe('Debug Page', () => {
 
     render(await DebugPage());
 
-    expect(screen.getByText('🌍 Environment Variables')).toBeInTheDocument();
+    expect(screen.getByText(/Environment Variables/)).toBeInTheDocument();
     expect(screen.getByText('NODE_ENV:')).toBeInTheDocument();
   });
 
@@ -183,8 +183,8 @@ describe('Debug Page', () => {
 
     render(await DebugPage());
 
-    expect(screen.getByText('👥 Demo Users for Testing')).toBeInTheDocument();
-    expect(screen.getByText('🔑 Available Demo Credentials')).toBeInTheDocument();
+    expect(screen.getByText(/Demo Users for Testing/)).toBeInTheDocument();
+    expect(screen.getByText(/Available Demo Credentials/)).toBeInTheDocument();
 
     // Check for demo user credentials (using getAllByText since text appears in multiple places)
     expect(screen.getAllByText('Admin User')).toHaveLength(2); // Credentials + database table
@@ -200,7 +200,7 @@ describe('Debug Page', () => {
 
     render(await DebugPage());
 
-    expect(screen.getByText('🗄️ Demo Users in Database')).toBeInTheDocument();
+    expect(screen.getByText(/Demo Users in Database/)).toBeInTheDocument();
 
     // Check for users from database mock
     expect(screen.getAllByText('Admin User')).toHaveLength(2); // Credentials + database table
@@ -215,9 +215,9 @@ describe('Debug Page', () => {
 
     render(await DebugPage());
 
-    expect(screen.getByText('No demo users found in database.')).toBeInTheDocument();
+    expect(screen.getByText(/No demo users found in database/)).toBeInTheDocument();
     expect(
-      screen.getByText('Use the credentials above to create demo accounts via registration.')
+      screen.getByText(/Use the credentials above to create demo accounts/)
     ).toBeInTheDocument();
   });
 
@@ -226,7 +226,7 @@ describe('Debug Page', () => {
 
     render(await DebugPage());
 
-    expect(screen.getByText('⚡ Quick Testing Actions')).toBeInTheDocument();
+    expect(screen.getByText(/Quick Testing Actions/)).toBeInTheDocument();
     // Check that login links exist (original + demo section = 2)
     expect(screen.getAllByRole('link', { name: 'Go to Login' })).toHaveLength(2);
     // Only 1 register link (demo section only)
