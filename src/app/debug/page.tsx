@@ -100,8 +100,6 @@ async function getDemoUsers() {
         email: true,
         name: true,
         role: true,
-        language: true,
-        currency: true,
         createdAt: true,
       },
       orderBy: {
@@ -285,20 +283,6 @@ export default async function DebugPage() {
                         <span className="font-medium text-green-800">Role:</span>{' '}
                         {(session.user as { role?: string })?.role || 'USER'}
                       </p>
-                      <div className="flex space-x-4 mt-2">
-                        <span className="inline-flex items-center px-2 py-1 bg-green-100/80 rounded-full text-xs">
-                          <span className="font-medium text-green-800">Lang:</span>
-                          <span className="ml-1 text-green-700">
-                            {(session.user as { language?: string })?.language || 'SQ'}
-                          </span>
-                        </span>
-                        <span className="inline-flex items-center px-2 py-1 bg-green-100/80 rounded-full text-xs">
-                          <span className="font-medium text-green-800">Currency:</span>
-                          <span className="ml-1 text-green-700">
-                            {(session.user as { currency?: string })?.currency || 'ALL'}
-                          </span>
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -497,12 +481,6 @@ export default async function DebugPage() {
                                 {user.role}
                               </span>
                               <div className="flex space-x-2">
-                                <span className="inline-flex items-center px-2 py-1 bg-blue-100/80 rounded-full text-xs font-medium text-blue-800">
-                                  {user.language}
-                                </span>
-                                <span className="inline-flex items-center px-2 py-1 bg-purple-100/80 rounded-full text-xs font-medium text-purple-800">
-                                  {user.currency}
-                                </span>
                               </div>
                               <span className="text-xs text-gray-500">
                                 {new Date(user.createdAt).toLocaleDateString()}

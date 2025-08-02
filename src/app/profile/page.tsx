@@ -31,8 +31,6 @@ export default async function ProfilePage() {
     name: session.user.name || '',
     email: session.user.email || '',
     role: session.user.role || 'USER',
-    language: session.user.language || 'SQ',
-    currency: session.user.currency || 'ALL',
     newsletter: false, // Default value
     emailVerified: null,
     createdAt: new Date(),

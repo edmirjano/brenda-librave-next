@@ -258,14 +258,90 @@ async function main() {
   ]);
 
   // Skip categories, books, and tags - Phase 3+ features
-  console.log('📚 Skipping book categories (Phase 3+ feature)...');
-  const createdCategories: any[] = [];
+  console.log('📚 Creating book categories...');
+  const createdCategories = await Promise.all(
+    categories.map((category) =>
+      prisma.category.create({
+        data: category,
+      })
+    )
+  );
 
-  console.log('🏷️ Skipping tags (Phase 3+ feature)...');
-  const createdTags: any[] = [];
+  console.log('🏷️ Creating tags...');
+  const createdTags = await Promise.all(
+    tags.map((tag) =>
+      prisma.tag.create({
+        data: {
+          ...tag,
+          slug: await createSlug(tag.name),
+        },
+      })
+    )
+  );
 
-  console.log('📖 Skipping Albanian books (Phase 3+ feature)...');
-  const createdBooks: any[] = [];
+  console.log('📖 Creating Albanian books...');
+  const createdBooks = await Promise.all(
+    albanianBooksData.map(async (bookData, index) => {
+      const category = createdCategories.find((cat) => cat.name === bookData.category);
+      if (!category) {
+        throw new Error(`Category not found: ${bookData.category}`);
+      }
+
+      const slug = await createSlug(bookData.title);
+      const coverImage = bookCovers[index % bookCovers.length];
+
+      // Convert price to EUR (approximate)
+      const priceEUR = Math.round((bookData.price / 110) * 100) / 100;
+
+      return prisma.book.create({
+        data: {
+          title: bookData.title,
+          author: bookData.author,
+          description: bookData.description,
+          categoryId: category.id,
+          priceALL: bookData.price,
+          priceEUR: priceEUR,
+          digitalPriceALL: Math.round(bookData.price * 0.7), // 30% discount for digital
+          digitalPriceEUR: Math.round(priceEUR * 0.7 * 100) / 100,
+          inventory: Math.floor(Math.random() * 50) + 10, // Random inventory 10-60
+          hasDigital: Math.random() > 0.3, // 70% chance of having digital version
+          coverImage: coverImage,
+          publishedDate: new Date(
+            2020 + Math.floor(Math.random() * 4),
+            Math.floor(Math.random() * 12),
+            Math.floor(Math.random() * 28) + 1
+          ),
+          language: bookData.language,
+          featured: bookData.featured || false,
+          active: true,
+          slug: slug,
+        },
+      });
+    })
+  );
+
+  // Create book-tag relationships
+  console.log('🔗 Creating book-tag relationships...');
+  const bookTagRelations = [];
+  for (const book of createdBooks) {
+    // Assign 1-3 random tags to each book
+    const numTags = Math.floor(Math.random() * 3) + 1;
+    const shuffledTags = [...createdTags].sort(() => 0.5 - Math.random());
+    const selectedTags = shuffledTags.slice(0, numTags);
+
+    for (const tag of selectedTags) {
+      bookTagRelations.push(
+        prisma.bookTag.create({
+          data: {
+            bookId: book.id,
+            tagId: tag.id,
+          },
+        })
+      );
+    }
+  }
+
+  await Promise.all(bookTagRelations);
 
   // Skip orders for now - will add in Phase 2
   console.log('🛒 Skipping sample orders (Phase 2 feature)...');
@@ -315,14 +391,15 @@ async function main() {
   console.log(`📊 Created:
   - ${1} Admin user (admin@brendalibrave.com / Admin123!)
   - ${testUsers.length} Demo users
+  - ${createdCategories.length} Categories
+  - ${createdTags.length} Tags  
+  - ${createdBooks.length} Albanian books
   - Exchange rates (ALL/EUR)
   - Application settings
-  
-  ⏭️ Skipped (Phase 3+ features):
-  - Categories, Books, Tags (coming in Phase 3)`);
+  - Book-tag relationships`);
 
   console.log(`
-🚀 Ready to test Phase 2 authentication!
+🚀 Ready to test Phase 3 - Full Book Catalog!
 📝 Demo user credentials (matches /debug page):
 
 👑 Admin User:
@@ -335,6 +412,8 @@ async function main() {
    Email: demo@brendalibrave.com  | Password: Demo123!
    
 🔍 Visit http://localhost:3000/debug to see all credentials and test the authentication system!
+📚 Visit http://localhost:3000/books to browse the book catalog!
+🏠 Visit http://localhost:3000 to see featured books on homepage!
 `);
 }
 
