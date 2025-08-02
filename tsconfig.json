@@ -44,8 +44,6 @@
   ],
   "exclude": [
     "node_modules",
-    // Exclude Phase 4+ features - PHASE 3 COMPLETE
-    "src/app/admin/**",
-    "src/components/admin/**"
+    // All phases now included - PHASE 5 COMPLETE
   ]
 }
