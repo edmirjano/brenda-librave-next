@@ -17,9 +17,9 @@ jest.mock('next/server', () => ({
 jest.mock('@/lib/db/prisma', () => ({
   prisma: {
     user: {
-      findUnique: jest.fn().mockResolvedValue(null),
-      create: jest.fn().mockResolvedValue({}),
-      update: jest.fn().mockResolvedValue({}),
+      findUnique: jest.fn(),
+      create: jest.fn(),
+      update: jest.fn(),
     },
   },
 }));
@@ -31,17 +31,16 @@ jest.mock('@/lib/logging/logger', () => ({
   logSecurity: jest.fn(),
 }));
 
-const mockPrisma = prisma as {
-  user: {
-    findUnique: jest.MockedFunction<typeof prisma.user.findUnique>;
-    create: jest.MockedFunction<typeof prisma.user.create>;
-    update: jest.MockedFunction<typeof prisma.user.update>;
-  };
-};
+const mockPrisma = prisma as jest.Mocked<typeof prisma>;
 
 describe('Authentication API', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    
+    // Set up default mock implementations
+    mockPrisma.user.findUnique.mockResolvedValue(null);
+    mockPrisma.user.create.mockResolvedValue({} as any);
+    mockPrisma.user.update.mockResolvedValue({} as any);
   });
 
   describe('User Registration', () => {
@@ -55,8 +54,6 @@ describe('Authentication API', () => {
         name: 'John Doe',
         email: 'john@example.com',
         role: 'USER',
-        language: 'SQ',
-        currency: 'ALL',
         newsletter: false,
         createdAt: new Date(),
       };
@@ -67,8 +64,6 @@ describe('Authentication API', () => {
         email: 'john@example.com',
         password: 'SecurePassword123!',
         confirmPassword: 'SecurePassword123!',
-        language: 'SQ',
-        currency: 'ALL',
         newsletter: false,
       };
 
@@ -89,8 +84,6 @@ describe('Authentication API', () => {
         data: expect.objectContaining({
           name: 'John Doe',
           email: 'john@example.com',
-          language: 'SQ',
-          currency: 'ALL',
           newsletter: false,
         }),
         select: expect.any(Object),
@@ -187,8 +180,6 @@ describe('Authentication API', () => {
       // For now, we'll focus on the validation logic
       const updateData = {
         name: 'Updated Name',
-        language: 'EN',
-        currency: 'EUR',
         newsletter: true,
       };
 
@@ -202,8 +193,7 @@ describe('Authentication API', () => {
 
       // Test would require proper session mocking
       expect(updateData.name).toBe('Updated Name');
-      expect(updateData.language).toBe('EN');
-      expect(updateData.currency).toBe('EUR');
+      expect(updateData.newsletter).toBe(true);
     });
   });
 });
