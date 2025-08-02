@@ -209,112 +209,63 @@ async function main() {
     console.log('Some tables might not exist yet, continuing...');
   }
 
-  // Create admin user
+  // Create demo users that match the debug page credentials
   console.log('👤 Creating admin user...');
-  const hashedPassword = await bcrypt.hash('admin123', 12);
   const adminUser = await prisma.user.create({
     data: {
       email: 'admin@brendalibrave.com',
-      password: hashedPassword,
-      name: 'Administrator',
+      password: await bcrypt.hash('Admin123!', 12), // Matches debug page
+      name: 'Admin User',
       role: Role.ADMIN,
-      language: Language.SQ,
-      currency: Currency.ALL,
       newsletter: true,
       emailVerified: new Date(),
     },
   });
 
-  // Create test users
-  console.log('👥 Creating test users...');
+  // Create demo users that match debug page credentials
+  console.log('👥 Creating demo users...');
   const testUsers = await Promise.all([
     prisma.user.create({
       data: {
-        email: 'test@brendalibrave.com',
-        password: await bcrypt.hash('test123', 12),
-        name: 'Përdorues Test',
+        email: 'user@brendalibrave.com',
+        password: await bcrypt.hash('User123!', 12), // Matches debug page
+        name: 'Regular User',
         role: Role.USER,
-        language: Language.SQ,
-        currency: Currency.ALL,
         newsletter: true,
         emailVerified: new Date(),
       },
     }),
     prisma.user.create({
       data: {
-        email: 'user@brendalibrave.com',
-        password: await bcrypt.hash('user123', 12),
-        name: 'Lexues Shqiptar',
+        email: 'test@brendalibrave.com',
+        password: await bcrypt.hash('Test123!', 12), // Matches debug page
+        name: 'Test User',
         role: Role.USER,
-        language: Language.SQ,
-        currency: Currency.EUR,
         newsletter: false,
+        emailVerified: new Date(),
+      },
+    }),
+    prisma.user.create({
+      data: {
+        email: 'demo@brendalibrave.com',
+        password: await bcrypt.hash('Demo123!', 12), // Matches debug page
+        name: 'Demo User',
+        role: Role.USER,
+        newsletter: true,
         emailVerified: new Date(),
       },
     }),
   ]);
 
-  // Create categories
-  console.log('📚 Creating book categories...');
-  const createdCategories = await Promise.all(
-    categories.map(async (cat) => {
-      return prisma.category.create({
-        data: {
-          name: cat.name,
-          nameEn: cat.nameEn,
-          slug: cat.slug,
-          description: `Koleksion librash për ${cat.name.toLowerCase()}`,
-          active: true,
-        },
-      });
-    })
-  );
+  // Skip categories, books, and tags - Phase 3+ features
+  console.log('📚 Skipping book categories (Phase 3+ feature)...');
+  const createdCategories: any[] = [];
 
-  // Skip tags for now - will add in Phase 2
-  console.log('🏷️ Skipping tags (Phase 2 feature)...');
+  console.log('🏷️ Skipping tags (Phase 3+ feature)...');
   const createdTags: any[] = [];
 
-  // Create books
-  console.log('📖 Creating Albanian books...');
-  const createdBooks = await Promise.all(
-    albanianBooksData.map(async (bookData, index) => {
-      const category = createdCategories.find((cat) => cat.name === bookData.category);
-      const slug = await createSlug(bookData.title);
-
-      const book = await prisma.book.create({
-        data: {
-          title: bookData.title,
-          slug: slug,
-          author: bookData.author,
-          description: bookData.description,
-          priceALL: bookData.price,
-          priceEUR: Math.round(bookData.price * 0.0091 * 100) / 100, // Convert ALL to EUR
-          language: bookData.language,
-          isbn: `978-99943-${String(index + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 100)).padStart(2, '0')}-1`,
-          publishedDate: new Date(
-            2020 + Math.floor(Math.random() * 4),
-            Math.floor(Math.random() * 12),
-            Math.floor(Math.random() * 28) + 1
-          ),
-          inventory: 10 + Math.floor(Math.random() * 50),
-          featured: bookData.featured || false,
-          active: true,
-          coverImage: bookCovers[index % bookCovers.length],
-          categoryId: category?.id,
-          hasDigital: Math.random() > 0.6, // 40% chance of having digital version
-          digitalPriceALL: Math.floor(bookData.price * 0.7), // 30% discount for digital
-          digitalPriceEUR: Math.round(bookData.price * 0.0091 * 0.7 * 100) / 100, // Convert and discount
-        },
-      });
-
-      // Skip tags for now - will add in Phase 2
-      // const randomTags = createdTags
-      //   .sort(() => 0.5 - Math.random())
-      //   .slice(0, Math.floor(Math.random() * 3) + 1);
-
-      return book;
-    })
-  );
+  console.log('📖 Skipping Albanian books (Phase 3+ feature)...');
+  const createdBooks: any[] = [];
 
   // Skip orders for now - will add in Phase 2
   console.log('🛒 Skipping sample orders (Phase 2 feature)...');
@@ -360,26 +311,30 @@ async function main() {
     )
   );
 
-  console.log('✅ Database seeded successfully!');
+  console.log('✅ Database seeded successfully for Phase 2!');
   console.log(`📊 Created:
-  - ${1} Admin user (admin@brendalibrave.com / admin123)
-  - ${testUsers.length} Test users
-  - ${createdCategories.length} Categories
-  - ${createdTags.length} Tags
-  - ${createdBooks.length} Albanian books
-  - ${testUsers.length} Sample orders
+  - ${1} Admin user (admin@brendalibrave.com / Admin123!)
+  - ${testUsers.length} Demo users
   - Exchange rates (ALL/EUR)
-  - Application settings`);
+  - Application settings
+  
+  ⏭️ Skipped (Phase 3+ features):
+  - Categories, Books, Tags (coming in Phase 3)`);
 
   console.log(`
-🚀 Ready to test the app!
-📝 Admin credentials:
-   Email: admin@brendalibrave.com
-   Password: admin123
+🚀 Ready to test Phase 2 authentication!
+📝 Demo user credentials (matches /debug page):
 
-🧪 Test user credentials:
-   Email: test@brendalibrave.com
-   Password: test123
+👑 Admin User:
+   Email: admin@brendalibrave.com
+   Password: Admin123!
+
+👤 Regular Users:
+   Email: user@brendalibrave.com  | Password: User123!
+   Email: test@brendalibrave.com  | Password: Test123!
+   Email: demo@brendalibrave.com  | Password: Demo123!
+   
+🔍 Visit http://localhost:3000/debug to see all credentials and test the authentication system!
 `);
 }
 

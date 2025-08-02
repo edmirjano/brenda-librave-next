@@ -44,19 +44,14 @@
   ],
   "exclude": [
     "node_modules",
-    // Exclude Phase 2+ features for Phase 1 completion
-    "prisma/seed.ts",
+    // Exclude Phase 3+ features - PHASE 2 FOCUSED
     "src/app/books/**",
     "src/app/admin/**",
     "src/components/books/**",
     "src/components/admin/**",
-    "src/lib/auth/middleware.ts",
-    "src/middleware.ts",
-    // Exclude auth tests temporarily for Phase 1
-    "src/__tests__/api/auth.test.ts",
-    // Exclude all .phase2 files
-    "**/*.phase2/**",
-    "**/*.phase2",
-    "**/**.phase2/**"
+    "src/app/api/books.phase2/**",
+    "src/app/api/categories.phase2/**",
+    "src/lib/services/**",
+    "prisma/seed.ts"
   ]
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import { Footer } from '@/components/layout/Footer';
+import { Navigation } from '@/components/layout/Navigation';
 import { SessionProvider } from '@/components/providers/SessionProvider';
 import { ToastProvider } from '@/components/providers/ToastProvider';
 
@@ -64,7 +66,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="sq" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <SessionProvider>
-          {children}
+          <Navigation />
+          <main className="pt-16">{children}</main>
+          <Footer />
           <ToastProvider />
         </SessionProvider>
       </body>

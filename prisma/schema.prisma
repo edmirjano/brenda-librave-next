@@ -56,8 +56,6 @@ model User {
   password        String?   // nullable for social auth
   name            String
   role            Role      @default(USER)
-  language        Language  @default(SQ)
-  currency        Currency  @default(ALL)
   newsletter      Boolean   @default(false)
   emailVerified   DateTime?
   image           String?

@@ -26,18 +26,22 @@ const customJestConfig = {
 
   testEnvironment: 'jest-environment-jsdom',
 
-  // Test coverage configuration - Phase 1 focus
+  // Test coverage configuration - Phase 2 focus
   collectCoverageFrom: [
-    // Core Phase 1 files only
+    // Core Phase 1 & 2 files
     'src/app/page.tsx',
     'src/app/api/health/**/*.{js,jsx,ts,tsx}',
     'src/app/api/auth/**/*.{js,jsx,ts,tsx}',
-    'src/lib/auth/password.ts',
+    'src/app/api/user/**/*.{js,jsx,ts,tsx}',
+    'src/app/profile/**/*.{js,jsx,ts,tsx}',
+    'src/components/auth/**/*.{js,jsx,ts,tsx}',
+    'src/lib/auth/**/*.{js,jsx,ts,tsx}',
     'src/lib/validations/auth.ts',
     'src/lib/logging/**/*.{js,jsx,ts,tsx}',
     'src/lib/db/**/*.{js,jsx,ts,tsx}',
     'src/types/**/*.{js,jsx,ts,tsx}',
-    // Exclude everything else for Phase 1
+    'src/middleware.ts',
+    // Exclude everything else for Phase 2
     '!src/**/*.d.ts',
     '!src/**/*.stories.{js,jsx,ts,tsx}',
     '!src/**/__tests__/**',
@@ -45,13 +49,14 @@ const customJestConfig = {
     '!src/**/node_modules/**',
     '!src/app/globals.css',
     '!src/app/layout.tsx',
-    // Exclude Phase 2+ files
-    '!**/*.phase2/**',
+    // Exclude Phase 3+ features
     '!src/components/books/**',
     '!src/components/admin/**',
     '!src/app/books/**',
     '!src/app/admin/**',
     '!src/lib/services/**',
+    '!src/app/api/books.phase2/**',
+    '!src/app/api/categories.phase2/**',
   ],
 
   coverageThreshold: {

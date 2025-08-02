@@ -1,10 +1,10 @@
 import { withAuth } from 'next-auth/middleware';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { logSecurity } from '@/lib/logging/logger';
 
 export default withAuth(
-  function middleware(request: NextRequest) {
+  function middleware(request) {
     const token = request.nextauth.token;
     const { pathname } = request.nextUrl;
 
@@ -38,6 +38,7 @@ export default withAuth(
           '/auth/error',
           '/books',
           '/blog',
+          '/debug',
         ];
 
         // API routes that don't require authentication

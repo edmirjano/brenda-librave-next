@@ -21,8 +21,6 @@ export async function GET() {
         name: true,
         email: true,
         role: true,
-        language: true,
-        currency: true,
         newsletter: true,
         emailVerified: true,
         image: true,
@@ -63,14 +61,12 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const { name, language, currency, newsletter } = validationResult.data;
+    const { name, newsletter } = validationResult.data;
 
     const updatedUser = await prisma.user.update({
       where: { id: session.user.id },
       data: {
         name,
-        language,
-        currency,
         newsletter,
       },
       select: {
@@ -78,8 +74,6 @@ export async function PUT(request: NextRequest) {
         name: true,
         email: true,
         role: true,
-        language: true,
-        currency: true,
         newsletter: true,
         emailVerified: true,
         image: true,
@@ -89,7 +83,7 @@ export async function PUT(request: NextRequest) {
 
     logInfo('User profile updated', {
       userId: session.user.id,
-      changes: { name, language, currency, newsletter },
+      changes: { name, newsletter },
     });
 
     return NextResponse.json({

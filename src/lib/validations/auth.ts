@@ -43,8 +43,6 @@ export const registerSchema = z
         }
       ),
     confirmPassword: z.string().min(1, 'Please confirm your password'),
-    language: z.enum(['SQ', 'EN']).default('SQ'),
-    currency: z.enum(['ALL', 'EUR']).default('ALL'),
     newsletter: z.boolean().default(false),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -59,8 +57,6 @@ export const updateProfileSchema = z.object({
     .max(50, 'Name must be less than 50 characters')
     .regex(/^[a-zA-ZëÇçĞğŞşÖöÜüÄäÎîÏïÀàÔô\s-']+$/, 'Name contains invalid characters')
     .transform((name) => name.trim()),
-  language: z.enum(['SQ', 'EN']),
-  currency: z.enum(['ALL', 'EUR']),
   newsletter: z.boolean(),
 });
 

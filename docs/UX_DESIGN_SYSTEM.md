@@ -1,7 +1,7 @@
 # Brënda Librave - UX Design System
 
-Complete design system for mobile-like transitions, Albanian Lek currency, and
-Apple Liquid Glass aesthetics.
+Complete design system for mobile-like transitions and Apple Liquid Glass
+aesthetics.
 
 ## 🎨 Design Philosophy
 

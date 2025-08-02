@@ -3,10 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { logSecurity, logWarning } from '@/lib/logging/logger';
 
-export async function authMiddleware(
-  request: NextRequest,
-  _event: NextFetchEvent
-): Promise<Response | undefined> {
+export async function authMiddleware(request: NextRequest): Promise<Response | undefined> {
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
@@ -47,7 +44,7 @@ export async function authMiddleware(
   if ((isProtectedPath || isAdminPath) && !token) {
     logSecurity('Unauthorized access attempt', {
       path: pathname,
-      ip: request.ip,
+      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
       userAgent: request.headers.get('user-agent'),
     });
 
@@ -67,7 +64,7 @@ export async function authMiddleware(
       path: pathname,
       userId: token?.sub,
       role: token?.role,
-      ip: request.ip,
+      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
     });
 
     if (pathname.startsWith('/api/')) {
@@ -106,7 +103,7 @@ export function withAuth(
     if (!token) {
       logSecurity('API access without authentication', {
         path: request.nextUrl.pathname,
-        ip: request.ip,
+        ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
       });
 
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
@@ -140,7 +137,8 @@ export function withRateLimit(
   }
 ) {
   return async (request: NextRequest) => {
-    const ip = request.ip || 'unknown';
+    const ip =
+      request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const now = Date.now();
     const windowMs = options.windowMs;
 
