@@ -269,7 +269,7 @@ async function main() {
 
   console.log('🏷️ Creating tags...');
   const createdTags = await Promise.all(
-    tags.map((tag) =>
+    tags.map(async (tag) =>
       prisma.tag.create({
         data: {
           ...tag,

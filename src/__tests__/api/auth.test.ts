@@ -17,9 +17,9 @@ jest.mock('next/server', () => ({
 jest.mock('@/lib/db/prisma', () => ({
   prisma: {
     user: {
-      findUnique: jest.fn(),
-      create: jest.fn(),
-      update: jest.fn(),
+      findUnique: jest.fn().mockResolvedValue(null),
+      create: jest.fn().mockResolvedValue({}),
+      update: jest.fn().mockResolvedValue({}),
     },
   },
 }));
@@ -31,7 +31,13 @@ jest.mock('@/lib/logging/logger', () => ({
   logSecurity: jest.fn(),
 }));
 
-const mockPrisma = prisma as jest.Mocked<typeof prisma>;
+const mockPrisma = prisma as {
+  user: {
+    findUnique: jest.MockedFunction<typeof prisma.user.findUnique>;
+    create: jest.MockedFunction<typeof prisma.user.create>;
+    update: jest.MockedFunction<typeof prisma.user.update>;
+  };
+};
 
 describe('Authentication API', () => {
   beforeEach(() => {
