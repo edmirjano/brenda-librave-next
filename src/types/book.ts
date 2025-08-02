@@ -111,7 +111,7 @@ export interface UpdateBookInput extends Partial<CreateBookInput> {
 export interface CreateCategoryInput {
   name: string;
   nameEn?: string;
-  slug: string;
+  slug?: string;
   description?: string;
   active: boolean;
 }
@@ -124,7 +124,7 @@ export interface UpdateCategoryInput extends Partial<CreateCategoryInput> {
 export interface CreateTagInput {
   name: string;
   nameEn?: string;
-  slug: string;
+  slug?: string;
   color?: string;
 }
 

@@ -46,7 +46,7 @@ describe('CategoryService', () => {
       const result = await CategoryService.getActiveCategories();
 
       expect(result).toHaveLength(1);
-      expect(result[0].name).toBe('Literatura Shqiptare');
+      expect(result[0]?.name).toBe('Literatura Shqiptare');
       expect(mockPrisma.category.findMany).toHaveBeenCalledWith({
         where: { active: true },
         orderBy: { name: 'asc' },
@@ -74,7 +74,7 @@ describe('CategoryService', () => {
       const result = await CategoryService.getCategoriesWithCounts();
 
       expect(result).toHaveLength(1);
-      expect(result[0].bookCount).toBe(5);
+      expect(result[0]?.bookCount).toBe(5);
     });
   });
 
@@ -117,6 +117,7 @@ describe('CategoryService', () => {
       const input = {
         name: 'New Category',
         nameEn: 'New Category EN',
+        slug: 'new-category',
         description: 'Test description',
         active: true,
       };
@@ -137,6 +138,7 @@ describe('CategoryService', () => {
 
       const input = {
         name: 'Existing Category',
+        slug: 'existing-category',
         active: true,
       };
 
@@ -168,7 +170,8 @@ describe('CategoryService', () => {
 
   describe('deleteCategory', () => {
     it('should delete category when no books exist', async () => {
-      mockPrisma.book = { count: jest.fn().mockResolvedValue(0) };
+      const mockBookCount = jest.fn().mockResolvedValue(0);
+      (mockPrisma as any).book = { count: mockBookCount };
       mockPrisma.category.findUnique.mockResolvedValue(mockCategory);
       mockPrisma.category.delete.mockResolvedValue(mockCategory);
 
@@ -180,7 +183,8 @@ describe('CategoryService', () => {
     });
 
     it('should reject deletion when category has books', async () => {
-      mockPrisma.book = { count: jest.fn().mockResolvedValue(5) };
+      const mockBookCount = jest.fn().mockResolvedValue(5);
+      (mockPrisma as any).book = { count: mockBookCount };
 
       await expect(CategoryService.deleteCategory('cat_1')).rejects.toThrow(
         'Cannot delete category that contains books'
