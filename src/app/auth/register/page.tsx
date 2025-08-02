@@ -34,7 +34,7 @@ export default async function RegisterPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20"></div>
       </div>
 
-      <div className="relative mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
+      <div className="relative sm:mx-auto sm:w-full sm:max-w-lg">
         <GlassCard hover={false} className="p-2">
           <Suspense
             fallback={

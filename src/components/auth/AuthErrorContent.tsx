@@ -24,7 +24,7 @@ export function AuthErrorContent({ error, errorData }: AuthErrorContentProps) {
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-orange-100/20 to-yellow-100/20"></div>
       </div>
 
-      <div className="relative mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
