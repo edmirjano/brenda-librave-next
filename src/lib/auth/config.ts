@@ -63,8 +63,6 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name,
             role: user.role,
-            language: user.language,
-            currency: user.currency,
             image: user.image,
           };
         } catch (error) {
@@ -88,8 +86,6 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
-        token.language = user.language;
-        token.currency = user.currency;
       }
       return token;
     },
@@ -97,8 +93,6 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user.id = token.sub!;
         session.user.role = token.role as string;
-        session.user.language = token.language as string;
-        session.user.currency = token.currency as string;
       }
       return session;
     },
