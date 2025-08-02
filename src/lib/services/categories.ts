@@ -328,9 +328,9 @@ export class CategoryService {
       const categories = await prisma.category.findMany({
         where: {
           OR: [
-            { name: { contains: query, mode: 'insensitive' } },
-            { nameEn: { contains: query, mode: 'insensitive' } },
-            { description: { contains: query, mode: 'insensitive' } },
+            { name: { contains: query } },
+            { nameEn: { contains: query } },
+            { description: { contains: query } },
           ],
         },
         orderBy: { name: 'asc' },

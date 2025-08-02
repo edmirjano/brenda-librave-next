@@ -154,7 +154,7 @@ export function BookDetail({ book }: BookDetailProps) {
               </div>
               <PriceDisplay
                 priceALL={book.priceALL || 0}
-                priceEUR={book.priceEUR}
+                priceEUR={book.priceEUR || undefined}
                 showBoth
                 size="md"
               />
@@ -179,7 +179,7 @@ export function BookDetail({ book }: BookDetailProps) {
                 </div>
                 <PriceDisplay
                   priceALL={book.digitalPriceALL || 0}
-                  priceEUR={book.digitalPriceEUR}
+                  priceEUR={book.digitalPriceEUR || undefined}
                   showBoth
                   size="md"
                 />

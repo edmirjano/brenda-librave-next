@@ -244,8 +244,8 @@ export class TagService {
       const tags = await prisma.tag.findMany({
         where: {
           OR: [
-            { name: { contains: query, mode: 'insensitive' } },
-            { nameEn: { contains: query, mode: 'insensitive' } },
+            { name: { contains: query } },
+            { nameEn: { contains: query } },
           ],
         },
         orderBy: { name: 'asc' },

@@ -140,7 +140,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
             <div className="flex items-center justify-between pt-2">
               <PriceDisplay
                 priceALL={book.priceALL || 0}
-                priceEUR={book.priceEUR}
+                priceEUR={book.priceEUR || undefined}
                 size="sm"
                 variant="accent"
               />

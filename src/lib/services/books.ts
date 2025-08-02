@@ -49,10 +49,10 @@ export class BookService {
         ...(language && { language }),
         ...(query && {
           OR: [
-            { title: { contains: query, mode: 'insensitive' } },
-            { author: { contains: query, mode: 'insensitive' } },
-            { description: { contains: query, mode: 'insensitive' } },
-            { isbn: { contains: query, mode: 'insensitive' } },
+            { title: { contains: query } },
+            { author: { contains: query } },
+            { description: { contains: query } },
+            { isbn: { contains: query } },
           ],
         }),
         ...(tags && tags.length > 0 && {
