@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Google Fonts - Brënda Librave Typography */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Outfit:wght@100..900&display=swap');
+
 /* Albanian-inspired color theme for Tailwind CSS 4.0 */
 @theme {
   --color-albanian-red: #e41e20;

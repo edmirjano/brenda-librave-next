@@ -25,6 +25,7 @@ import {
 
 import { CartIcon } from '@/components/cart/CartIcon';
 import { LiquidButton } from '@/components/ui/LiquidButton';
+import { LogoWithText } from '@/components/ui/Logo';
 
 const navigationItems = [
   { name: 'Kryefaqja', href: '/', icon: Home },
@@ -55,16 +56,12 @@ export function Navigation() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <motion.div
-              className="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg"
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            >
-              <BookOpen className="h-6 w-6 text-white" />
-            </motion.div>
-            <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800 group-hover:from-red-700 group-hover:to-red-900 transition-all duration-200">
-              Brënda Librave
-            </span>
+            <LogoWithText 
+              variant="default" 
+              size="md" 
+              textColor="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800 group-hover:from-red-700 group-hover:to-red-900 transition-all duration-200"
+              animated={true}
+            />
           </Link>
 
           {/* Desktop Navigation */}

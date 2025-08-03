@@ -20,6 +20,7 @@ import {
 
 import { GlassCard } from '@/components/ui/GlassCard';
 import { LiquidButton } from '@/components/ui/LiquidButton';
+import { Logo } from '@/components/ui/Logo';
 
 export const metadata: Metadata = {
   title: 'Rreth Nesh | Brënda Librave',
@@ -43,13 +44,7 @@ export default function AboutPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <motion.div
-            className="w-24 h-24 mx-auto bg-gradient-to-r from-red-500 to-red-600 rounded-3xl flex items-center justify-center shadow-2xl mb-6"
-            whileHover={{ scale: 1.05, rotate: 5 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          >
-            <Heart className="h-12 w-12 text-white" />
-          </motion.div>
+          <Logo variant="default" size="xl" animated={true} />
 
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Rreth{' '}

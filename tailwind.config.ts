@@ -10,7 +10,12 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        // Literary font for book content, titles, elegant sections
+        serif: ['Crimson Pro', 'Georgia', 'serif'],
+        // Interface font for navigation, buttons, modern UI
+        sans: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
+        // Keep legacy support
+        inter: ['Inter', 'system-ui', 'sans-serif'],
       },
     },
   },

@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import { motion } from 'framer-motion';
 import {
-  BookOpen,
   Cookie,
   Eye,
   Facebook,
@@ -21,6 +20,7 @@ import {
 } from 'lucide-react';
 
 import { GlassCard } from '@/components/ui/GlassCard';
+import { LogoWithText } from '@/components/ui/Logo';
 
 const socialLinks = [
   {
@@ -95,19 +95,13 @@ export function Footer() {
             className="lg:col-span-1"
           >
             <GlassCard className="p-6 h-full">
-              <div className="flex items-center space-x-3 mb-4">
-                <motion.div
-                  className="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg"
-                  whileHover={{ scale: 1.05, rotate: 5 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                >
-                  <BookOpen className="h-7 w-7 text-white" />
-                </motion.div>
-                <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">
-                  Brënda Librave
-                </h3>
-              </div>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <LogoWithText 
+                variant="default" 
+                size="lg" 
+                textColor="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800"
+                animated={true}
+              />
+              <p className="text-gray-600 mb-6 leading-relaxed mt-4">
                 Libraria juaj shqiptare online për libra fizikë dhe dixhitalë. Zbuloni botën e
                 librave me çmime të favorshme dhe shërbim të shkëlqyer.
               </p>

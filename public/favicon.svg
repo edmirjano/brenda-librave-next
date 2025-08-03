@@ -1,0 +1,82 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bookSpineFav" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c2d12" />
+      <stop offset="50%" stop-color="#92400e" />
+      <stop offset="100%" stop-color="#a16207" />
+    </linearGradient>
+    <linearGradient id="pageFav" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Book base shadow -->
+  <ellipse cx="16" cy="28" rx="14" ry="2" fill="#000000" opacity="0.1"/>
+  
+  <!-- Book spine/binding -->
+  <rect x="15" y="6" width="2" height="16" fill="url(#bookSpineFav)" />
+  
+  <!-- Left page -->
+  <path
+    d="M 5 8 Q 3 9, 5 11 Q 6 14, 8 18 Q 11 21, 15 22 L 15 7 Q 11 6, 8 7 Q 6 7, 5 8 Z"
+    fill="url(#pageFav)"
+    stroke="#e5e7eb"
+    stroke-width="0.3"
+  />
+  
+  <!-- Right page -->
+  <path
+    d="M 27 8 Q 29 9, 27 11 Q 26 14, 24 18 Q 21 21, 17 22 L 17 7 Q 21 6, 24 7 Q 26 7, 27 8 Z"
+    fill="url(#pageFav)"
+    stroke="#e5e7eb"
+    stroke-width="0.3"
+  />
+  
+  <!-- Page curl effects -->
+  <path d="M 15 7 Q 11 5, 8 6 Q 6 6, 5 7" stroke="#d1d5db" stroke-width="0.3" fill="none" opacity="0.8"/>
+  <path d="M 17 7 Q 21 5, 24 6 Q 26 6, 27 7" stroke="#d1d5db" stroke-width="0.3" fill="none" opacity="0.8"/>
+  
+  <!-- Text lines on left page -->
+  <g opacity="0.3">
+    <path d="M 7 11 Q 10 11, 13 11" stroke="#6b7280" stroke-width="0.2" fill="none"/>
+    <path d="M 8 13 Q 10 13, 12 13" stroke="#6b7280" stroke-width="0.2" fill="none"/>
+    <path d="M 7 15 Q 9 15, 11 15" stroke="#6b7280" stroke-width="0.2" fill="none"/>
+  </g>
+  
+  <!-- Text lines on right page -->
+  <g opacity="0.3">
+    <path d="M 19 11 Q 22 11, 25 11" stroke="#6b7280" stroke-width="0.2" fill="none"/>
+    <path d="M 20 13 Q 22 13, 24 13" stroke="#6b7280" stroke-width="0.2" fill="none"/>
+    <path d="M 21 15 Q 23 15, 25 15" stroke="#6b7280" stroke-width="0.2" fill="none"/>
+  </g>
+  
+  <!-- Large B in the center - "Inside the Book" -->
+  <text
+    x="16"
+    y="16"
+    font-size="14"
+    font-family="Georgia, serif"
+    font-weight="700"
+    fill="#dc2626"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >
+    B
+  </text>
+  
+  <!-- Subtle highlight on the B -->
+  <text
+    x="15.5"
+    y="15.5"
+    font-size="14"
+    font-family="Georgia, serif"
+    font-weight="700"
+    fill="#ffffff"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    opacity="0.3"
+  >
+    B
+  </text>
+</svg>
