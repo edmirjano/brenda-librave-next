@@ -42,7 +42,14 @@ export default withAuth(
         ];
 
         // API routes that don't require authentication
-        const publicApiPaths = ['/api/auth', '/api/health'];
+        const publicApiPaths = [
+          '/api/auth',
+          '/api/health',
+          '/api/books',
+          '/api/categories',
+          '/api/blog',
+          '/api/exchange-rate',
+        ];
 
         const isPublicPath = publicPaths.some(
           (path) => pathname === path || pathname.startsWith(path + '/')

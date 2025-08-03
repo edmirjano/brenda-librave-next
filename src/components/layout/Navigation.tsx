@@ -9,7 +9,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   BookOpen,
   Gift,
-  Gift,
   Heart,
   Home,
   Info,
@@ -98,7 +97,7 @@ export function Navigation() {
                     <Heart className="h-6 w-6 text-gray-700 hover:text-red-600 transition-colors" />
                   </motion.div>
                 </Link>
-                
+
                 <Link href="/cart">
                   <motion.div
                     className="p-2 rounded-xl hover:bg-white/50 transition-all duration-200"
