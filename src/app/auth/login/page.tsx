@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
+import { BackToHomeButton } from '@/components/auth/BackToHomeButton';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { GlassCard } from '@/components/ui/GlassCard';
 
@@ -31,6 +32,11 @@ export default async function LoginPage() {
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20"></div>
+      </div>
+
+      {/* Back to Home Button */}
+      <div className="absolute top-6 left-6 z-10">
+        <BackToHomeButton />
       </div>
 
       <div className="relative sm:mx-auto sm:w-full sm:max-w-md">

@@ -1347,9 +1347,9 @@ export const LogoWithText = ({
     <div className="flex items-center space-x-3">
       <Logo {...logoProps} />
       {showText && (
-        <div className={`${textColor}`}>
-          <h1 className="text-xl font-bold">Brënda</h1>
-          <p className="text-sm opacity-80">Librave</p>
+        <div>
+          <h1 className={`text-xl font-bold ${textColor}`}>Brënda</h1>
+          <p className={`text-sm opacity-90 ${textColor}`}>Librave</p>
         </div>
       )}
     </div>

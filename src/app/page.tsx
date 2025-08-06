@@ -26,10 +26,40 @@ import {
 import { FeaturedBooks } from '@/components/books/FeaturedBooks';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { LiquidButton } from '@/components/ui/LiquidButton';
+import { LiquidBackground, LiquidBlob } from '@/components/ui/LiquidBlob';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50">
+    <LiquidBackground 
+      blobCount={6} 
+      className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50"
+    >
+      {/* Additional decorative blobs */}
+      <LiquidBlob 
+        position={{ x: 15, y: 20 }} 
+        size="lg" 
+        color="red" 
+        opacity={0.3}
+        floating={true}
+        morphing={true}
+      />
+      <LiquidBlob 
+        position={{ x: 85, y: 60 }} 
+        size="md" 
+        color="blue" 
+        opacity={0.4}
+        floating={true}
+        morphing={true}
+      />
+      <LiquidBlob 
+        position={{ x: 20, y: 80 }} 
+        size="xl" 
+        color="purple" 
+        opacity={0.2}
+        floating={true}
+        morphing={true}
+      />
+
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20"></div>
@@ -44,7 +74,12 @@ export default function HomePage() {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="text-center"
           >
-            <GlassCard className="p-8 md:p-16 max-w-5xl mx-auto">
+            <GlassCard 
+              variant="crystal" 
+              morphing={true} 
+              glowEffect={true} 
+              className="p-8 md:p-16 max-w-5xl mx-auto"
+            >
               <motion.div
                 className="w-24 h-24 mx-auto bg-gradient-to-r from-red-500 to-red-600 rounded-3xl flex items-center justify-center shadow-2xl mb-8"
                 whileHover={{ scale: 1.05, rotate: 5 }}
@@ -53,28 +88,40 @@ export default function HomePage() {
                 <BookOpen className="h-12 w-12 text-white" />
               </motion.div>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
+              <h1 className="font-serif text-5xl md:text-7xl font-bold text-gray-900 mb-6">
                 Zbuloni botën e{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">
                   librave shqiptarë
                 </span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-3xl mx-auto">
+              <p className="font-serif text-xl md:text-2xl text-gray-700 mb-12 max-w-3xl mx-auto">
                 Nga klasikët e literaturës shqiptare deri tek autorët bashkëkohorë, gjeni librin
                 tuaj të radhës në koleksionin tonë të gjerë dixhital dhe fizik.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
                 <Link href="/shop">
-                  <LiquidButton variant="albanian" size="lg" className="min-w-[200px]">
+                  <LiquidButton 
+                    variant="albanian" 
+                    size="lg" 
+                    className="min-w-[200px]"
+                    morphing={true}
+                    glowEffect={true}
+                  >
                     <Library className="w-5 h-5 mr-2" />
                     Eksploroni Librat
                   </LiquidButton>
                 </Link>
 
                 <Link href="/auth/register">
-                  <LiquidButton variant="primary" size="lg" className="min-w-[200px]">
+                  <LiquidButton 
+                    variant="liquid" 
+                    size="lg" 
+                    className="min-w-[200px]"
+                    morphing={true}
+                    glowEffect={true}
+                  >
                     <ArrowRight className="w-5 h-5 mr-2" />
                     Filloni Tani
                   </LiquidButton>
@@ -88,18 +135,23 @@ export default function HomePage() {
                   { number: '1,200+', label: 'Lexues të kënaqur', icon: Users },
                   { number: '24/7', label: 'Mbështetje aktive', icon: Shield },
                 ].map((stat, index) => (
-                  <motion.div
+                  <GlassCard
                     key={index}
-                    className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
+                    variant="frosted"
+                    morphing={false}
+                    glowEffect={false}
+                    className="p-6"
                   >
-                    <stat.icon className="h-8 w-8 text-red-600 mx-auto mb-3" />
-                    <div className="text-2xl font-bold text-gray-900 mb-1">{stat.number}</div>
-                    <div className="text-gray-600 text-sm">{stat.label}</div>
-                  </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + index * 0.1 }}
+                    >
+                      <stat.icon className="h-8 w-8 text-red-600 mx-auto mb-3" />
+                      <div className="font-sans text-2xl font-bold text-gray-900 mb-1">{stat.number}</div>
+                      <div className="text-gray-600 text-sm">{stat.label}</div>
+                    </motion.div>
+                  </GlassCard>
                 ))}
               </div>
             </GlassCard>
@@ -117,7 +169,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Përse të zgjidhni{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">
                 Brënda Librave?
@@ -174,9 +226,14 @@ export default function HomePage() {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <GlassCard className="p-8 h-full hover:scale-105 transition-transform duration-300">
+                <GlassCard 
+                  variant="bubble" 
+                  morphing={false} 
+                  glowEffect={false} 
+                  className="p-8 h-full"
+                >
                   <feature.icon className={`h-12 w-12 ${feature.color} mb-6`} />
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+                                        <h3 className="font-sans text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
                   <p className="text-gray-700">{feature.description}</p>
                 </GlassCard>
               </motion.div>
@@ -195,7 +252,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Si funksionon?</h2>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">Si funksionon?</h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Vetëm tre hapa të thjeshtë për të gjetur librin tuaj të radhës
             </p>
@@ -233,14 +290,19 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <GlassCard className="p-8 text-center">
+                <GlassCard 
+                  variant="crystal" 
+                  morphing={true} 
+                  glowEffect={true} 
+                  className="p-8 text-center"
+                >
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
                       {step.step}
                     </div>
                   </div>
                   <step.icon className="h-16 w-16 text-red-600 mx-auto mb-6 mt-4" />
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
+                  <h3 className="font-serif text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
                   <p className="text-gray-700">{step.description}</p>
                 </GlassCard>
               </motion.div>
@@ -259,10 +321,10 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Kategoritë më të populluara
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p className="font-serif text-xl text-gray-700 max-w-3xl mx-auto">
               Zbuloni libra nga kategoritë që preferohen më shumë nga lexuesit tanë
             </p>
           </motion.div>
@@ -301,13 +363,18 @@ export default function HomePage() {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <GlassCard className="p-6 text-center group hover:scale-105 transition-transform duration-300 cursor-pointer">
+                <GlassCard 
+                  variant="frosted" 
+                  morphing={false} 
+                  glowEffect={false} 
+                  className="p-6 text-center cursor-pointer"
+                >
                   <div
                     className={`w-16 h-16 mx-auto bg-gradient-to-r ${category.gradient} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
                   >
                     <category.icon className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{category.name}</h3>
+                                      <h3 className="font-serif text-lg font-bold text-gray-900 mb-2">{category.name}</h3>
                   <p className="text-gray-600 text-sm">{category.count}</p>
                 </GlassCard>
               </motion.div>
@@ -322,7 +389,12 @@ export default function HomePage() {
             className="text-center mt-12"
           >
             <Link href="/shop">
-              <LiquidButton variant="primary" size="lg">
+              <LiquidButton 
+                variant="liquid" 
+                size="lg"
+                morphing={true}
+                glowEffect={true}
+              >
                 <ArrowRight className="w-5 h-5 mr-2" />
                 Shihni të gjithë librat
               </LiquidButton>
@@ -347,18 +419,29 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <GlassCard className="p-12 text-center">
+            <GlassCard 
+              variant="crystal" 
+              morphing={true} 
+              glowEffect={true} 
+              className="p-12 text-center"
+            >
               <Mail className="h-16 w-16 text-red-600 mx-auto mb-6" />
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 Mos humbisni asnjë risi!
               </h2>
-              <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+              <p className="font-serif text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
                 Regjistrohuni në newsletter-in tonë për të marrë informacione për libra të rinj,
                 oferta speciale dhe ngjarje letrare.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
                 <Link href="/newsletter" className="flex-1">
-                  <LiquidButton variant="albanian" size="lg" className="w-full">
+                  <LiquidButton 
+                    variant="albanian" 
+                    size="lg" 
+                    className="w-full"
+                    morphing={true}
+                    glowEffect={true}
+                  >
                     <Mail className="w-5 h-5 mr-2" />
                     Abonohuni
                   </LiquidButton>
@@ -378,25 +461,42 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <GlassCard className="p-12 md:p-16 text-center bg-gradient-to-r from-red-500/10 to-red-600/10">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <GlassCard 
+              variant="crystal" 
+              morphing={true} 
+              glowEffect={true} 
+              className="p-12 md:p-16 text-center bg-gradient-to-r from-red-500/10 to-red-600/10"
+            >
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 Gati për të filluar udhëtimin tuaj letar?
               </h2>
-              <p className="text-xl text-gray-700 mb-10 max-w-3xl mx-auto">
+              <p className="font-serif text-xl text-gray-700 mb-10 max-w-3xl mx-auto">
                 Bashkohuni me mijëra lexues që kanë zbuluar tashmë pasionin e tyre për leximin
                 përmes Brënda Librave.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
                 <Link href="/auth/register">
-                  <LiquidButton variant="albanian" size="lg" className="min-w-[220px]">
+                  <LiquidButton 
+                    variant="albanian" 
+                    size="lg" 
+                    className="min-w-[220px]"
+                    morphing={true}
+                    glowEffect={true}
+                  >
                     <ArrowRight className="w-5 h-5 mr-2" />
                     Krijoni llogarinë tuaj
                   </LiquidButton>
                 </Link>
 
                 <Link href="/books">
-                  <LiquidButton variant="primary" size="lg" className="min-w-[220px]">
+                  <LiquidButton 
+                    variant="liquid" 
+                    size="lg" 
+                    className="min-w-[220px]"
+                    morphing={true}
+                    glowEffect={true}
+                  >
                     <BookOpen className="w-5 h-5 mr-2" />
                     Eksploroni librat
                   </LiquidButton>
@@ -421,6 +521,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-    </div>
+    </LiquidBackground>
   );
 }

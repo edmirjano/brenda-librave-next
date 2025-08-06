@@ -26,6 +26,8 @@ import {
 import { CartIcon } from '@/components/cart/CartIcon';
 import { LiquidButton } from '@/components/ui/LiquidButton';
 import { LogoWithText } from '@/components/ui/Logo';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
+import { PerformantAnimations, getResponsiveTransition } from '@/lib/animations/performance';
 
 const navigationItems = [
   { name: 'Kryefaqja', href: '/', icon: Home },
@@ -39,18 +41,29 @@ const navigationItems = [
 export function Navigation() {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const { scrollDirection, isScrolling, isAtTop } = useScrollDirection({
+    threshold: 10,
+    debounceMs: 150
+  });
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     setIsOpen(false);
   };
 
+  // Determine if header should be visible
+  const shouldShowHeader = isAtTop || scrollDirection === 'up' || !isScrolling || isOpen;
+
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-white/90 via-white/95 to-white/90 backdrop-blur-xl border-b border-white/20 shadow-lg"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-white/20 shadow-lg transition-all duration-200 ${
+        isAtTop 
+          ? 'bg-gradient-to-r from-white/90 via-white/95 to-white/90' 
+          : 'bg-gradient-to-r from-white/95 via-white/98 to-white/95'
+      }`}
+      initial={PerformantAnimations.header.initial}
+      animate={shouldShowHeader ? PerformantAnimations.header.visible : PerformantAnimations.header.hidden}
+      transition={getResponsiveTransition(PerformantAnimations.header.transition)}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -70,8 +83,11 @@ export function Navigation() {
               <Link key={item.name} href={item.href} className="group">
                 <motion.div
                   className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-red-600 transition-all duration-200"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  variants={PerformantAnimations.buttonPress}
+                  initial="rest"
+                  whileHover="hover"
+                  whileTap="tap"
+                  transition={getResponsiveTransition(PerformantAnimations.buttonPress.transition)}
                 >
                   <item.icon className="h-4 w-4" />
                   <span className="font-medium">{item.name}</span>
@@ -88,8 +104,11 @@ export function Navigation() {
                 <Link href="/wishlist">
                   <motion.div
                     className="p-2 rounded-xl hover:bg-white/50 transition-all duration-200"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    variants={PerformantAnimations.buttonPress}
+                    initial="rest"
+                    whileHover="hover"
+                    whileTap="tap"
+                    transition={getResponsiveTransition(PerformantAnimations.buttonPress.transition)}
                   >
                     <Heart className="h-6 w-6 text-gray-700 hover:text-red-600 transition-colors" />
                   </motion.div>
@@ -98,8 +117,11 @@ export function Navigation() {
                 <Link href="/cart">
                   <motion.div
                     className="p-2 rounded-xl hover:bg-white/50 transition-all duration-200"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    variants={PerformantAnimations.buttonPress}
+                    initial="rest"
+                    whileHover="hover"
+                    whileTap="tap"
+                    transition={getResponsiveTransition(PerformantAnimations.buttonPress.transition)}
                   >
                     <CartIcon />
                   </motion.div>
@@ -146,8 +168,11 @@ export function Navigation() {
           <motion.button
             className="lg:hidden p-2 rounded-xl text-gray-700 hover:text-red-600 hover:bg-white/50 transition-all duration-200"
             onClick={() => setIsOpen(!isOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            variants={PerformantAnimations.buttonPress}
+            initial="rest"
+            whileHover="hover"
+            whileTap="tap"
+            transition={getResponsiveTransition(PerformantAnimations.buttonPress.transition)}
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </motion.button>

@@ -1,6 +1,9 @@
 import { NextAuthOptions } from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import FacebookProvider from 'next-auth/providers/facebook';
+import AppleProvider from 'next-auth/providers/apple';
 
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { compare } from 'bcryptjs';
@@ -11,6 +14,18 @@ import { logError, logInfo, logSecurity } from '@/lib/logging/logger';
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+    }),
+    AppleProvider({
+      clientId: process.env.APPLE_ID!,
+      clientSecret: process.env.APPLE_SECRET!,
+    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -83,9 +98,58 @@ export const authOptions: NextAuthOptions = {
     error: '/auth/error',
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user, account, profile }) {
+      // Allow credentials sign in
+      if (account?.provider === 'credentials') {
+        return true;
+      }
+
+      // Handle social sign in - ensure user has USER role
+      if (account?.provider && ['google', 'facebook', 'apple'].includes(account.provider)) {
+        try {
+          // Check if user already exists
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email! },
+          });
+
+          if (!existingUser) {
+            // User will be created by the adapter, but we need to ensure the role is set
+            // The adapter will handle user creation, we'll update the role in the jwt callback
+            return true;
+          }
+
+          return true;
+        } catch (error) {
+          logError('Social sign in error', error, {
+            provider: account.provider,
+            email: user.email,
+          });
+          return false;
+        }
+      }
+
+      return true;
+    },
+    async jwt({ token, user, account }) {
       if (user) {
         token.role = user.role;
+        
+        // For new social auth users, ensure they have USER role
+        if (account?.provider && ['google', 'facebook', 'apple'].includes(account.provider) && !user.role) {
+          try {
+            await prisma.user.update({
+              where: { id: user.id },
+              data: { role: 'USER' },
+            });
+            token.role = 'USER';
+          } catch (error) {
+            logError('Failed to set USER role for social auth user', error, {
+              userId: user.id,
+              provider: account.provider,
+            });
+            token.role = 'USER'; // Default fallback
+          }
+        }
       }
       return token;
     },

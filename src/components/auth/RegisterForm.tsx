@@ -13,6 +13,7 @@ import { toast } from 'react-hot-toast';
 
 import { LiquidButton } from '@/components/ui/LiquidButton';
 import { GlassFormField } from '@/components/ui/form/GlassFormField';
+import { SocialAuthButtons } from './SocialAuthButtons';
 
 import { type RegisterFormData, registerSchema } from '@/lib/validations/auth';
 
@@ -240,10 +241,19 @@ export function RegisterForm() {
       </motion.form>
 
       <motion.div
-        className="mt-8 text-center"
+        className="mt-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.3 }}
+      >
+        <SocialAuthButtons mode="register" />
+      </motion.div>
+
+      <motion.div
+        className="mt-8 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.3 }}
       >
         <p className="text-sm text-gray-700">
           Keni një llogari?{' '}
