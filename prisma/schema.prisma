@@ -77,6 +77,16 @@ model User {
   wishlist        Wishlist[]
   collections     BookCollection[]
   readingHistory  ReadingHistory[]
+  couponUsages    CouponUsage[]
+  rentals         EbookRental[]
+  accessLogs      EbookAccessLog[]
+  hardcopyRentals HardcopyRental[]
+  hardcopyLogs    HardcopyRentalLog[]
+  userSubscriptions UserSubscription[]
+  subscriptionAccessLogs SubscriptionAccessLog[]
+  audioBookRentals AudioBookRental[]
+  audioBookAccessLogs AudioBookAccessLog[]
+  userTermsAcceptances UserTermsAcceptance[]
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -90,6 +100,11 @@ enum Role {
 enum Language {
   SQ
   EN
+  IT
+  DE
+  FR
+  TR
+  MK
 }
 
 enum Currency {
@@ -99,11 +114,60 @@ enum Currency {
 
 // Settings for the application
 model Setting {
-  id    String @id @default(cuid())
-  key   String @unique
-  value String
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?  // Description for admin UI
+  category    String   @default("general") // Category for grouping settings
   
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([category])
+}
+
+// Supported Languages (Dynamic)
+model SupportedLanguage {
+  id          String   @id @default(cuid())
+  code        String   @unique // ISO 639-1 code (sq, en, it, de, etc.)
+  name        String   // Language name in English
+  nativeName  String   // Language name in native script
+  direction   String   @default("ltr") // "ltr" or "rtl"
+  isActive    Boolean  @default(true)
+  isDefault   Boolean  @default(false)
+  
+  // SEO and cultural settings
+  currency    Currency? // Preferred currency for this language
+  timeZone    String?   // Default timezone
+  dateFormat  String?   // Preferred date format
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([isActive])
+  @@index([isDefault])
+}
+
+// Generic Translation System
+model Translation {
+  id          String   @id @default(cuid())
+  namespace   String   // e.g., "book", "category", "ui", "metadata"
+  key         String   // e.g., "title", "description", "name"
+  language    String   // Language code (sq, en, it, etc.)
+  value       String   // Translated text
+  context     String?  // Additional context for translators
+  
+  // Reference to the original content
+  entityType  String   // "Book", "Category", "Tag", "BlogPost", etc.
+  entityId    String   // ID of the entity being translated
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([namespace, key, language, entityType, entityId])
+  @@index([entityType, entityId])
+  @@index([language])
+  @@index([namespace])
 }
 
 // Currency Exchange Rates
@@ -124,24 +188,26 @@ model ExchangeRate {
 // Book Catalog Models
 model Book {
   id              String    @id @default(cuid())
-  title           String
-  author          String
-  description     String
-  isbn            String?   @unique
-  categoryId      String
-  priceALL        Float?    // Albanian Lek (using Float for SQLite compatibility)
-  priceEUR        Float?    // Euro (using Float for SQLite compatibility)
-  digitalPriceALL Float?    // Digital price in Albanian Lek
-  digitalPriceEUR Float?    // Digital price in Euro
-  inventory       Int       @default(0)
-  hasDigital      Boolean   @default(false)
-  coverImage      String?
-  publishedDate   DateTime?
-  language        Language  @default(SQ)
-  featured        Boolean   @default(false)
-  active          Boolean   @default(true)
   slug            String    @unique
   
+  // Core data (language-neutral)
+  isbn            String?   @unique
+  categoryId      String
+  price           Float?    // Base price in Albanian Lek (for hardcopy)
+  digitalPrice    Float?    // Digital price in Albanian Lek (for ebook)
+  baseCurrency    Currency  @default(ALL) // Base currency for this book
+  inventory       Int       @default(0) // Physical inventory for hardcopy
+  hasDigital      Boolean   @default(false) // Has ebook version
+  hasHardcopy     Boolean   @default(true)  // Has physical version
+  digitalFileUrl  String?   // URL to the EPUB file (S3 or similar)
+  digitalFileSize Int?      // File size in bytes
+  coverImage      String?
+  publishedDate   DateTime?
+  baseLanguage    Language  @default(SQ) // Original language of the book
+  featured        Boolean   @default(false)
+  active          Boolean   @default(true)
+  
+  // Relations
   category        Category  @relation(fields: [categoryId], references: [id])
   tags            BookTag[]
   cartItems       CartItem[]
@@ -152,6 +218,13 @@ model Book {
   wishlistItems   Wishlist[]
   collectionItems BookCollectionItem[]
   readingHistory  ReadingHistory[]
+  rentals         EbookRental[]
+  accessLogs      EbookAccessLog[]
+  hardcopyRentals HardcopyRental[]
+  hardcopyLogs    HardcopyRentalLog[]
+  subscriptionBooks SubscriptionBook[]
+  subscriptionAccessLogs SubscriptionAccessLog[]
+  audioBooks AudioBook[]
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -163,33 +236,30 @@ model Book {
 }
 
 model Category {
-  id          String  @id @default(cuid())
-  name        String
-  nameEn      String?
-  slug        String  @unique
-  description String?
-  active      Boolean @default(true)
+  id            String  @id @default(cuid())
+  slug          String  @unique
+  active        Boolean @default(true)
   
-  books       Book[]
+  // Relations
+  books         Book[]
   
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   
   @@index([active])
   @@index([slug])
 }
 
 model Tag {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  nameEn      String?
-  slug        String    @unique
-  color       String?   // hex color for UI
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  color         String?   // hex color for UI
   
-  books       BookTag[]
+  // Relations
+  books         BookTag[]
   
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   
   @@index([slug])
 }
@@ -271,9 +341,13 @@ model OrderItem {
   price     Float   // Price at time of purchase
   currency  Currency @default(ALL)
   isDigital Boolean @default(false)
+  isRental  Boolean @default(false) // New field for rental purchases
   
   order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
   book      Book  @relation(fields: [bookId], references: [id])
+  rentals   EbookRental[] // Relation to rentals
+  hardcopyRentals HardcopyRental[] // Relation to hardcopy rentals
+  audioBookRentals AudioBookRental[] // Relation to audio book rentals
   
   createdAt DateTime @default(now())
   
@@ -637,20 +711,535 @@ model BookCollectionItem {
 
 // Reading History & Progress
 model ReadingHistory {
-  id        String   @id @default(cuid())
-  userId    String
-  bookId    String
-  startedAt DateTime @default(now())
-  progress  Int      @default(0) // Percentage 0-100
-  completed Boolean  @default(false)
-  rating    Int?     // 1-5 stars
+  id           String   @id @default(cuid())
+  userId       String
+  bookId       String
+  startedAt    DateTime @default(now())
+  progress     Int      @default(0) // Percentage 0-100
+  completed    Boolean  @default(false)
+  rating       Int?     // 1-5 stars
+  
+  // EPUB Reader specific fields
+  currentCfi   String?  // Current reading position (EPUB CFI)
+  lastReadAt   DateTime @default(now())
+  readingTime  Int      @default(0) // Total reading time in minutes
+  bookmarks    Json?    // JSON array of bookmarks with CFI positions
+  highlights   Json?    // JSON array of highlighted text with CFI positions
 
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  book      Book @relation(fields: [bookId], references: [id])
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book         Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@unique([userId, bookId])
   @@index([userId])
+  @@index([lastReadAt])
+}
+
+// New Rental System Models
+model EbookRental {
+  id              String    @id @default(cuid())
+  userId          String
+  bookId          String
+  orderItemId     String    // Reference to the purchase
+  rentalType      RentalType
+  rentalPrice     Float     // Price paid for rental
+  currency        Currency  @default(ALL)
+  startDate       DateTime  @default(now())
+  endDate         DateTime  // When rental expires
+  isActive        Boolean   @default(true)
+  accessCount     Int       @default(0) // Number of times accessed
+  lastAccessAt    DateTime?
+  securityToken   String    @unique // Unique token for secure access
+  watermarkData   Json?     // User-specific watermark data
+  
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book            Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  orderItem       OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  accessLogs      EbookAccessLog[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([bookId])
+  @@index([securityToken])
+  @@index([isActive])
+  @@index([endDate])
+}
+
+model EbookAccessLog {
+  id              String    @id @default(cuid())
+  rentalId        String
+  userId          String
+  bookId          String
+  accessType      AccessType
+  ipAddress       String?
+  userAgent       String?
+  sessionId       String?
+  deviceFingerprint String? // Browser/device fingerprint
+  suspiciousActivity Boolean @default(false)
+  securityFlags   Json?     // Any security violations detected
+  
+  rental          EbookRental @relation(fields: [rentalId], references: [id], onDelete: Cascade)
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book            Book        @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime   @default(now())
+  
+  @@index([rentalId])
+  @@index([userId])
+  @@index([bookId])
+  @@index([accessType])
+  @@index([suspiciousActivity])
+}
+
+enum RentalType {
+  SINGLE_READ     // One-time access (like movie rental)
+  TIME_LIMITED    // 24h, 48h, 7 days access
+  UNLIMITED_READS // Unlimited reads within time period
+}
+
+enum AccessType {
+  RENTAL_START
+  RENTAL_READ
+  RENTAL_END
+  SECURITY_VIOLATION
+  SUSPICIOUS_ACTIVITY
+}
+
+// Hardcopy Rental System Models
+model HardcopyRental {
+  id              String    @id @default(cuid())
+  userId          String
+  bookId          String
+  orderItemId     String    // Reference to the purchase
+  rentalType      HardcopyRentalType
+  rentalPrice     Float     // Price paid for rental (e.g., 20 EUR)
+  guaranteeAmount Float     // Guarantee/deposit amount (e.g., 200 EUR)
+  currency        Currency  @default(ALL)
+  startDate       DateTime  @default(now())
+  endDate         DateTime  // When rental expires
+  returnDate      DateTime? // Actual return date
+  isActive        Boolean   @default(true)
+  isReturned      Boolean   @default(false)
+  isDamaged       Boolean   @default(false)
+  damageNotes     String?   // Notes about any damage
+  guaranteeRefunded Boolean @default(false)
+  refundAmount    Float?    // Amount refunded (may be less than guarantee if damaged)
+  
+  // Book condition tracking
+  initialCondition BookCondition @default(EXCELLENT)
+  returnCondition  BookCondition?
+  conditionNotes   String?   // Detailed condition notes
+  
+  // Shipping information
+  shippingAddress String    // Delivery address
+  trackingNumber  String?   // Shipping tracking number
+  returnTracking  String?   // Return shipping tracking
+  
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book            Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  orderItem       OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  rentalLogs      HardcopyRentalLog[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([bookId])
+  @@index([isActive])
+  @@index([isReturned])
+  @@index([endDate])
+}
+
+model HardcopyRentalLog {
+  id              String    @id @default(cuid())
+  rentalId        String
+  userId          String
+  bookId          String
+  logType         HardcopyRentalLogType
+  description     String
+  amount          Float?    // For financial transactions
+  currency        Currency  @default(ALL)
+  
+  rental          HardcopyRental @relation(fields: [rentalId], references: [id], onDelete: Cascade)
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book            Book        @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime   @default(now())
+  
+  @@index([rentalId])
+  @@index([userId])
+  @@index([bookId])
+  @@index([logType])
+}
+
+enum HardcopyRentalType {
+  SHORT_TERM      // 7 days
+  MEDIUM_TERM     // 14 days
+  LONG_TERM       // 30 days
+  EXTENDED_TERM   // 60 days
+}
+
+enum HardcopyRentalLogType {
+  RENTAL_CREATED
+  BOOK_SHIPPED
+  BOOK_DELIVERED
+  RENTAL_EXTENDED
+  RETURN_REQUESTED
+  BOOK_RETURNED
+  GUARANTEE_CHARGED
+  GUARANTEE_REFUNDED
+  DAMAGE_ASSESSED
+  LATE_FEE_CHARGED
+  RENTAL_COMPLETED
+}
+
+enum BookCondition {
+  EXCELLENT    // Like new
+  VERY_GOOD    // Minor wear
+  GOOD         // Some wear but readable
+  FAIR         // Significant wear
+  POOR         // Damaged but usable
+  DAMAGED      // Unusable
+}
+
+// Subscription System Models
+model Subscription {
+  id              String    @id @default(cuid())
+  name            String    // e.g., "Premium Reader", "Student Plan"
+  description     String?
+  price           Float     // Monthly price
+  currency        Currency  @default(ALL)
+  duration        Int       // Duration in days (30, 90, 365)
+  maxConcurrent   Int       @default(3) // Max books user can read simultaneously
+  isActive        Boolean   @default(true)
+  featured        Boolean   @default(false)
+  
+  // Subscription features
+  includesEbooks  Boolean   @default(true)
+  includesHardcopy Boolean  @default(false)
+  unlimitedReads  Boolean   @default(true)
+  prioritySupport Boolean   @default(false)
+  
+  // Book collection
+  books           SubscriptionBook[]
+  audioBooks      AudioBookSubscriptionBook[]
+  
+  // User subscriptions
+  userSubscriptions UserSubscription[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([isActive])
+  @@index([featured])
+}
+
+model SubscriptionBook {
+  id             String    @id @default(cuid())
+  subscriptionId String
+  bookId         String
+  addedAt        DateTime  @default(now())
+  
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  book           Book         @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  
+  @@unique([subscriptionId, bookId])
+  @@index([subscriptionId])
+  @@index([bookId])
+}
+
+model UserSubscription {
+  id             String    @id @default(cuid())
+  userId         String
+  subscriptionId String
+  startDate      DateTime  @default(now())
+  endDate        DateTime  // When subscription expires
+  isActive       Boolean   @default(true)
+  autoRenew      Boolean   @default(true)
+  paymentMethod  String?   // Payment method reference
+  
+  // Usage tracking
+  totalReads     Int       @default(0)
+  currentReads   Int       @default(0) // Books currently being read
+  
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  accessLogs     SubscriptionAccessLog[]
+  audioBookAccessLogs AudioBookAccessLog[]
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([subscriptionId])
+  @@index([isActive])
+  @@index([endDate])
+}
+
+model SubscriptionAccessLog {
+  id                String    @id @default(cuid())
+  userSubscriptionId String
+  userId            String
+  bookId            String
+  accessType        SubscriptionAccessType
+  sessionDuration   Int?      // Duration in minutes
+  deviceInfo        String?   // Device/browser info
+  ipAddress         String?
+  
+  userSubscription  UserSubscription @relation(fields: [userSubscriptionId], references: [id], onDelete: Cascade)
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book              Book            @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  
+  createdAt         DateTime  @default(now())
+  
+  @@index([userSubscriptionId])
+  @@index([userId])
+  @@index([bookId])
+  @@index([accessType])
+}
+
+enum SubscriptionAccessType {
+  BOOK_ACCESS_START
+  BOOK_ACCESS_END
+  READING_SESSION
+  SECURITY_VIOLATION
+  SUSPICIOUS_ACTIVITY
+}
+
+// Audio Book System Models
+model AudioBook {
+  id              String    @id @default(cuid())
+  bookId          String    // Reference to the original book
+  title           String
+  author          String
+  narrator        String    // Audio book narrator
+  duration        Int       // Duration in seconds
+  fileSize        Int       // File size in bytes
+  audioFileUrl    String?   // URL to the audio file (S3 or similar)
+  audioFileFormat String    @default("MP3") // MP3, AAC, etc.
+  sampleUrl       String?   // Sample audio file URL
+  price           Float?    // Audio book price
+  digitalPrice    Float?    // Digital audio book price
+  baseCurrency    Currency  @default(ALL)
+  inventory       Int       @default(0) // For physical audio CDs
+  hasDigital      Boolean   @default(true)
+  hasPhysical     Boolean   @default(false)
+  active          Boolean   @default(true)
+  featured        Boolean   @default(false)
+  
+  // Audio book specific fields
+  language        Language  @default(SQ)
+  quality         AudioQuality @default(STANDARD)
+  chapters        Int?      // Number of chapters
+  chapterList     Json?     // Chapter timestamps and titles
+  
+  // Relations
+  book            Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  rentals         AudioBookRental[]
+  accessLogs      AudioBookAccessLog[]
+  subscriptionBooks AudioBookSubscriptionBook[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([bookId])
+  @@index([active])
+  @@index([featured])
+  @@index([language])
+}
+
+model AudioBookRental {
+  id              String    @id @default(cuid())
+  userId          String
+  audioBookId     String
+  orderItemId     String
+  rentalType      AudioBookRentalType
+  rentalPrice     Float
+  guaranteeAmount Float?    // For physical audio CDs
+  currency        Currency  @default(ALL)
+  startDate       DateTime  @default(now())
+  endDate         DateTime
+  returnDate      DateTime? // For physical rentals
+  isActive        Boolean   @default(true)
+  isReturned      Boolean   @default(false)
+  isDamaged       Boolean   @default(false)
+  damageNotes     String?
+  guaranteeRefunded Boolean @default(false)
+  refundAmount    Float?
+  
+  // Audio book specific tracking
+  totalPlayTime   Int       @default(0) // Total seconds played
+  lastPlayedAt    DateTime?
+  playCount       Int       @default(0) // Number of times started
+  completed       Boolean   @default(false) // Finished listening
+  
+  // Physical audio book tracking
+  initialCondition AudioBookCondition @default(EXCELLENT)
+  returnCondition  AudioBookCondition?
+  conditionNotes   String?
+  shippingAddress String?
+  trackingNumber  String?
+  returnTracking  String?
+  
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  audioBook       AudioBook @relation(fields: [audioBookId], references: [id], onDelete: Cascade)
+  orderItem       OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  accessLogs      AudioBookAccessLog[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([audioBookId])
+  @@index([isActive])
+  @@index([isReturned])
+  @@index([endDate])
+}
+
+model AudioBookAccessLog {
+  id              String    @id @default(cuid())
+  rentalId        String?
+  userSubscriptionId String?
+  userId          String
+  audioBookId     String
+  accessType      AudioBookAccessType
+  playTime        Int?      // Seconds played in this session
+  sessionDuration Int?      // Total session duration in seconds
+  deviceInfo      String?
+  ipAddress       String?
+  userAgent       String?
+  suspiciousActivity Boolean @default(false)
+  securityFlags   Json?
+  
+  rental          AudioBookRental? @relation(fields: [rentalId], references: [id], onDelete: Cascade)
+  userSubscription UserSubscription? @relation(fields: [userSubscriptionId], references: [id], onDelete: Cascade)
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  audioBook       AudioBook   @relation(fields: [audioBookId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime   @default(now())
+  
+  @@index([rentalId])
+  @@index([userSubscriptionId])
+  @@index([userId])
+  @@index([audioBookId])
+  @@index([accessType])
+  @@index([suspiciousActivity])
+}
+
+model AudioBookSubscriptionBook {
+  id             String    @id @default(cuid())
+  subscriptionId String
+  audioBookId    String
+  addedAt        DateTime  @default(now())
+  
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  audioBook      AudioBook    @relation(fields: [audioBookId], references: [id], onDelete: Cascade)
+  
+  @@unique([subscriptionId, audioBookId])
+  @@index([subscriptionId])
+  @@index([audioBookId])
+}
+
+enum AudioBookRentalType {
+  SINGLE_LISTEN    // One-time listen
+  TIME_LIMITED     // 7 days access
+  UNLIMITED_LISTENS // 30 days unlimited
+}
+
+enum AudioBookAccessType {
+  RENTAL_START
+  RENTAL_LISTEN
+  RENTAL_END
+  SUBSCRIPTION_ACCESS
+  SECURITY_VIOLATION
+  SUSPICIOUS_ACTIVITY
+  PLAY_SESSION
+  PAUSE_SESSION
+  COMPLETE_LISTEN
+}
+
+enum AudioQuality {
+  LOW        // 64kbps
+  STANDARD   // 128kbps
+  HIGH       // 256kbps
+  ULTRA      // 320kbps
+}
+
+enum AudioBookCondition {
+  EXCELLENT    // Like new
+  VERY_GOOD    // Minor wear
+  GOOD         // Some wear but playable
+  FAIR         // Significant wear
+  POOR         // Damaged but usable
+  DAMAGED      // Unplayable
+}
+
+// Terms and Conditions System
+model TermsAndConditions {
+  id              String    @id @default(cuid())
+  title           String    // e.g., "Ebook Rental Terms", "Audio Book Terms"
+  version         String    // e.g., "1.0", "2.1"
+  content         String    // Full terms and conditions text
+  type            TermsType // Type of terms (rental, subscription, etc.)
+  isActive        Boolean   @default(true)
+  effectiveDate   DateTime  @default(now())
+  expiryDate      DateTime? // When these terms expire
+  
+  // User acceptances
+  userAcceptances UserTermsAcceptance[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([type])
+  @@index([isActive])
+  @@index([effectiveDate])
+}
+
+model UserTermsAcceptance {
+  id                    String    @id @default(cuid())
+  userId                String
+  termsId               String
+  acceptedAt            DateTime  @default(now())
+  ipAddress             String?   // IP address when accepted
+  userAgent             String?   // Browser/device info
+  sessionId             String?   // Session identifier
+  
+  // Related to specific rental/subscription
+  rentalType            RentalType? // For ebook rentals
+  hardcopyRentalType   HardcopyRentalType? // For hardcopy rentals
+  audioBookRentalType  AudioBookRentalType? // For audio book rentals
+  subscriptionType      String?   // For subscriptions
+  
+  // Acceptance details
+  readTime              Int?      // Time spent reading in seconds
+  scrollDepth           Int?      // Percentage of terms scrolled
+  confirmedRead         Boolean   @default(false) // User confirmed they read
+  confirmedUnderstand   Boolean   @default(false) // User confirmed they understand
+  
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  terms                 TermsAndConditions @relation(fields: [termsId], references: [id], onDelete: Cascade)
+  
+  createdAt             DateTime  @default(now())
+  
+  @@index([userId])
+  @@index([termsId])
+  @@index([acceptedAt])
+  @@index([rentalType])
+  @@index([hardcopyRentalType])
+  @@index([audioBookRentalType])
+}
+
+enum TermsType {
+  EBOOK_RENTAL
+  HARDCOPY_RENTAL
+  AUDIO_BOOK_RENTAL
+  SUBSCRIPTION
+  GENERAL_RENTAL
+  PRIVACY_POLICY
+  DATA_PROTECTION
 }

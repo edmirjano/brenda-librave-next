@@ -23,13 +23,13 @@ export const metadata: Metadata = {
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
 
-  // Redirect if not authenticated or not admin
-  if (!session || session.user.role !== 'ADMIN') {
+  // Redirect if not authenticated or not admin/transporter
+  if (!session || (session.user.role !== 'ADMIN' && session.user.role !== 'TRANSPORTER')) {
     redirect('/auth/login?callbackUrl=/admin');
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-amber-50/30 to-orange-50/30">
       <SessionProvider>
         <div className="flex">
           <AdminSidebar />

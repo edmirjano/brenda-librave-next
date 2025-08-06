@@ -88,12 +88,13 @@ export interface CreateBookInput {
   description: string;
   isbn?: string;
   categoryId: string;
-  priceALL?: number;
-  priceEUR?: number;
-  digitalPriceALL?: number;
-  digitalPriceEUR?: number;
+  price?: number;
+  digitalPrice?: number;
+  baseCurrency: 'ALL' | 'EUR';
   inventory: number;
   hasDigital: boolean;
+  digitalFileUrl?: string;
+  digitalFileSize?: number;
   coverImage?: string;
   publishedDate?: Date;
   language: 'SQ' | 'EN';
@@ -194,21 +195,32 @@ export interface BookFilters {
 
 // Price-related types
 export interface BookPrice {
-  priceALL?: number;
-  priceEUR?: number;
-  digitalPriceALL?: number;
-  digitalPriceEUR?: number;
+  price?: number;
+  digitalPrice?: number;
+  baseCurrency: 'ALL' | 'EUR';
 }
 
 export interface FormattedBookPrice {
   physical: {
     primary: string;
     secondary: string;
+    baseAmount: number;
+    baseCurrency: 'ALL' | 'EUR';
   };
   digital?: {
     primary: string;
     secondary: string;
+    baseAmount: number;
+    baseCurrency: 'ALL' | 'EUR';
   };
+}
+
+// Legacy price interface for backward compatibility
+export interface LegacyBookPrice {
+  priceALL?: number;
+  priceEUR?: number;
+  digitalPriceALL?: number;
+  digitalPriceEUR?: number;
 }
 
 // Pagination helpers

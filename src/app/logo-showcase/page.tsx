@@ -110,7 +110,7 @@ const DownloadButton = ({ logoVariant, size }: { logoVariant: string; size: stri
 
 export default function LogoShowcase() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50 p-8">
+          <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 p-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-4 text-gray-900">
           Brënda Librave - Logo Variations

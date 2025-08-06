@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { motion } from 'framer-motion';
 import {
@@ -23,6 +24,7 @@ import { PriceDisplay } from '@/components/ui/PriceDisplay';
 import type { BusinessMetrics } from '@/lib/analytics/business-intelligence';
 
 export function BusinessDashboard() {
+  const t = useTranslations('analytics');
   const [metrics, setMetrics] = useState<BusinessMetrics | null>(null);
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +59,7 @@ export function BusinessDashboard() {
     return (
       <div className="flex items-center justify-center h-64">
         <LoadingSpinner size="lg" />
-        <span className="ml-3 text-gray-700">Duke ngarkuar analizat e biznesit...</span>
+        <span className="ml-3 text-gray-700">{t('loading')}</span>
       </div>
     );
   }
@@ -66,13 +68,13 @@ export function BusinessDashboard() {
     return (
       <GlassCard className="p-8 text-center">
         <AlertTriangle className="h-12 w-12 text-red-600 mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Gabim në ngarkim</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('error.title')}</h3>
         <p className="text-gray-600 mb-4">{error}</p>
         <button
           onClick={() => window.location.reload()}
           className="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors"
         >
-          Provo përsëri
+          {t('error.retry')}
         </button>
       </GlassCard>
     );
@@ -81,14 +83,14 @@ export function BusinessDashboard() {
   if (!metrics) {
     return (
       <GlassCard className="p-8 text-center">
-        <p className="text-gray-600">Nuk ka të dhëna të disponueshme</p>
+        <p className="text-gray-600">{t('noData')}</p>
       </GlassCard>
     );
   }
 
   const kpiCards = [
     {
-      title: 'Të Ardhurat Totale',
+      title: t('metrics.totalRevenue'),
       value: metrics.revenue.total,
       growth: metrics.revenue.growth,
       icon: DollarSign,
@@ -96,14 +98,14 @@ export function BusinessDashboard() {
       isPrice: true,
     },
     {
-      title: 'Klientë Aktivë',
+      title: t('metrics.activeCustomers'),
       value: metrics.customers.total,
       growth: ((metrics.customers.new / metrics.customers.total) * 100),
       icon: Users,
       color: 'blue',
     },
     {
-      title: 'Shkalla e Konvertimit',
+      title: t('metrics.conversionRate'),
       value: metrics.performance.conversion_rate,
       growth: 5.2,
       icon: Target,
@@ -111,7 +113,7 @@ export function BusinessDashboard() {
       isPercentage: true,
     },
     {
-      title: 'Vlera Mesatare e Porosisë',
+      title: t('metrics.avgOrderValue'),
       value: metrics.performance.avg_order_value,
       growth: 8.1,
       icon: ShoppingCart,
@@ -197,7 +199,7 @@ export function BusinessDashboard() {
       {/* Revenue Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <GlassCard className="p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Të Ardhurat sipas Kategorive</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6">{t('revenueByCategory.title')}</h2>
           <div className="space-y-4">
             {metrics.revenue.byCategory.map((category, index) => (
               <motion.div
@@ -213,7 +215,7 @@ export function BusinessDashboard() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">{category.name}</h3>
-                    <p className="text-sm text-gray-600">{category.bookCount} libra</p>
+                    <p className="text-sm text-gray-600">{category.bookCount} {t('revenueByCategory.books')}</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -228,25 +230,25 @@ export function BusinessDashboard() {
         </GlassCard>
 
         <GlassCard className="p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Performanca e Faqes</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6">{t('pagePerformance.title')}</h2>
           <div className="space-y-6">
             {[
               {
-                label: 'Shkalla e Konvertimit',
+                label: t('pagePerformance.conversionRate.label'),
                 value: `${metrics.performance.conversion_rate.toFixed(2)}%`,
-                target: '3.5%',
+                target: t('pagePerformance.conversionRate.target'),
                 progress: (metrics.performance.conversion_rate / 3.5) * 100,
               },
               {
-                label: 'Braktisja e Shportës',
+                label: t('pagePerformance.cartAbandonment.label'),
                 value: `${metrics.performance.cart_abandonment.toFixed(1)}%`,
-                target: '65%',
+                target: t('pagePerformance.cartAbandonment.target'),
                 progress: 100 - (metrics.performance.cart_abandonment / 65) * 100,
               },
               {
-                label: 'Shpejtësia e Ngarkimit',
+                label: t('pagePerformance.loadSpeed.label'),
                 value: `${metrics.performance.page_load_speed.toFixed(1)}s`,
-                target: '2.0s',
+                target: t('pagePerformance.loadSpeed.target'),
                 progress: (2.0 / metrics.performance.page_load_speed) * 100,
               },
             ].map((metric, index) => (
@@ -271,8 +273,8 @@ export function BusinessDashboard() {
                   />
                 </div>
                 <div className="flex justify-between text-xs text-gray-500">
-                  <span>Target: {metric.target}</span>
-                  <span>{metric.progress.toFixed(0)}% of target</span>
+                  <span>{t('pagePerformance.target')}: {metric.target}</span>
+                  <span>{metric.progress.toFixed(0)}% {t('pagePerformance.ofTarget')}</span>
                 </div>
               </motion.div>
             ))}
@@ -282,14 +284,14 @@ export function BusinessDashboard() {
 
       {/* Inventory Intelligence */}
       <GlassCard className="p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Inteligjenca e Inventarit</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">{t('inventory.title')}</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Bestsellers */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-              <TrendingUp className="h-5 w-5 mr-2 text-green-600" />
-              Bestsellers
-            </h3>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <TrendingUp className="h-5 w-5 mr-2 text-green-600" />
+                {t('inventory.bestsellers.title')}
+              </h3>
             <div className="space-y-3">
               {metrics.inventory.bestsellers.slice(0, 5).map((book, index) => (
                 <motion.div

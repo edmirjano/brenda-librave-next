@@ -36,10 +36,11 @@
     "@prisma/client": "^6.13.0",
     "@sentry/nextjs": "^8.46.0",
     "@tailwindcss/postcss": "^4.1.11",
+    "@tensorflow/tfjs": "^4.0.0",
     "@types/bcryptjs": "^2.4.6",
     "@use-gesture/react": "^10.3.1",
     "bcryptjs": "^2.4.3",
-    "brain.js": "^2.0.0",
+    "brain.js": "^1.6.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
     "jsonwebtoken": "^9.0.2",
@@ -55,8 +56,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.4.1",
+    "react-reader": "^2.0.13",
     "tailwind-merge": "^2.5.5",
-    "@tensorflow/tfjs": "^4.0.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {

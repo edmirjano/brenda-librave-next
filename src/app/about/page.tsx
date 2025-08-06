@@ -1,26 +1,6 @@
 import { Metadata } from 'next';
-
-import { motion } from 'framer-motion';
-import {
-  ArrowRight,
-  Award,
-  BookOpen,
-  Heart,
-  Lightbulb,
-  Mail,
-  MapPin,
-  MessageSquare,
-  Phone,
-  Shield,
-  Star,
-  Target,
-  Truck,
-  Users,
-} from 'lucide-react';
-
-import { GlassCard } from '@/components/ui/GlassCard';
-import { LiquidButton } from '@/components/ui/LiquidButton';
-import { Logo } from '@/components/ui/Logo';
+import { getTranslations } from 'next-intl/server';
+import { AboutPageClient } from '@/components/pages/AboutPageClient';
 
 export const metadata: Metadata = {
   title: 'Rreth Nesh | Brënda Librave',
@@ -28,9 +8,13 @@ export const metadata: Metadata = {
     'Mësoni më shumë për Brënda Librave, misionin tonë dhe ekipin që bën të mundur këtë platformë.',
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const t = await getTranslations('about');
+  
+  return <AboutPageClient translations={t} />;
+}
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50">
+          <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20"></div>

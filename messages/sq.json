@@ -1,0 +1,1163 @@
+{
+  "metadata": {
+    "siteName": "Brënda Librave",
+    "siteDescription": "Dyqani më i mirë për libra shqipë online - zbulo, blej dhe lexo libra të cilësisë së lartë",
+    "keywords": "libra shqip, librari online, libra dixhitalë, literatura shqiptare"
+  },
+  "navigation": {
+    "home": "Kryefaqja",
+    "books": "Libra", 
+    "blog": "Blog",
+    "forum": "Forumi",
+    "cart": "Shporta",
+    "profile": "Profili",
+    "admin": "Admin",
+    "gift": "Dhuro një Libër",
+    "about": "Rreth Nesh",
+    "contact": "Kontakti",
+    "login": "Hyr",
+    "register": "Regjistrohu",
+    "logout": "Dil",
+    "wishlist": "Lista e Dëshirave"
+  },
+  "common": {
+    "loading": "Duke u ngarkuar...",
+    "error": "Ka ndodhur një gabim",
+    "success": "Sukses!",
+    "save": "Ruaj",
+    "cancel": "Anulo",
+    "delete": "Fshi",
+    "edit": "Ndrysho",
+    "view": "Shiko",
+    "search": "Kërko",
+    "filter": "Filtro",
+    "sort": "Rendit",
+    "next": "Tjetër",
+    "previous": "Mëparshëm",
+    "close": "Mbyll",
+    "open": "Hap",
+    "yes": "Po",
+    "no": "Jo",
+    "ok": "Në rregull",
+    "clear": "Pastro",
+    "reset": "Rivendos",
+    "back": "Prapa",
+    "continue": "Vazhdo",
+    "submit": "Dërgo",
+    "language": "Gjuha",
+    "comingSoon": "Së shpejti"
+  },
+  "auth": {
+    "login": {
+      "title": "Hyr në Llogari",
+      "email": "Email",
+      "password": "Fjalëkalimi",
+      "emailPlaceholder": "Shkruaj email-in tënd",
+      "passwordPlaceholder": "Shkruaj fjalëkalimin",
+      "loginButton": "Hyr",
+      "forgotPassword": "Harrove fjalëkalimin?",
+      "noAccount": "Nuk ke llogari?",
+      "createAccount": "Krijo një llogari",
+      "error": "Email ose fjalëkalim i gabuar"
+    },
+    "register": {
+      "title": "Krijo Llogari",
+      "name": "Emri",
+      "email": "Email",
+      "password": "Fjalëkalimi",
+      "confirmPassword": "Konfirmo Fjalëkalimin",
+      "namePlaceholder": "Shkruaj emrin tënd",
+      "emailPlaceholder": "Shkruaj email-in tënd",
+      "passwordPlaceholder": "Shkruaj fjalëkalimin",
+      "confirmPasswordPlaceholder": "Konfirmo fjalëkalimin",
+      "registerButton": "Regjistrohu",
+      "haveAccount": "Ke tashmë llogari?",
+      "signIn": "Hyr në llogari",
+      "newsletter": "Dua të marr newsletter",
+      "terms": "Pranoj kushtet dhe rregullat"
+    }
+  },
+  "books": {
+    "title": "Libra",
+    "searchPlaceholder": "Kërko libra...",
+    "noResults": "Nuk u gjetën libra",
+    "categories": {
+      "all": "Të gjitha",
+      "fiction": "Letërsi",
+      "nonfiction": "Jo-letërsi", 
+      "children": "Fëmijë",
+      "poetry": "Poezi",
+      "drama": "Dramë",
+      "history": "Histori",
+      "biography": "Biografi"
+    },
+    "actions": {
+      "addToCart": "Shto në shportë",
+      "addToWishlist": "Shto në listën e dëshirave",
+      "viewDetails": "Shiko detajet",
+      "buyNow": "Bli tani",
+      "readSample": "Lexo shembull",
+      "downloadSample": "Shkarko shembull"
+    },
+    "price": {
+      "from": "Nga {price}",
+      "digitalVersion": "Versioni dixhital",
+      "physicalVersion": "Versioni fizik",
+      "free": "Falas",
+      "currency": {
+        "ALL": "Lekë",
+        "EUR": "Euro"
+      }
+    },
+    "details": {
+      "author": "Autori",
+      "isbn": "ISBN",
+      "pages": "Faqe",
+      "language": "Gjuha",
+      "publisher": "Botues",
+      "publishedDate": "Data e botimit",
+      "category": "Kategoria",
+      "tags": "Etiketat",
+      "description": "Përshkrimi",
+      "reviews": "Vlerësimet",
+      "rating": "Vlerësimi"
+    },
+    "metadata": {
+      "title": "{bookTitle} - Brënda Librave",
+      "description": "Zbulo {bookTitle} nga {author}. {description}",
+      "keywords": "libra shqip, {bookTitle}, {author}, Brënda Librave"
+    }
+  },
+  "cart": {
+    "title": "Shporta",
+    "empty": "Shporta është e zbrazët",
+    "item": "artikull",
+    "items": "artikuj",
+    "subtotal": "Nëntotali",
+    "total": "Totali",
+    "shipping": "Transporti",
+    "tax": "Tatimi",
+    "discount": "Zbritja",
+    "checkout": "Përfundo blerjen",
+    "remove": "Hiq",
+    "updateQuantity": "Ndrysho sasinë",
+    "quantity": "Sasia",
+    "continueShopping": "Vazhdo të blesh"
+  },
+  "currency": {
+    "switchTo": "Ndrysho në {currency}",
+    "converting": "Duke konvertuar...",
+    "conversionRate": "Kursi i këmbimit: 1 {from} = {rate} {to}",
+    "lastUpdated": "Përditësuar më: {date}",
+    "symbols": {
+      "ALL": "L",
+      "EUR": "€"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Lexo më shumë",
+    "readTime": "{minutes} min lexim",
+    "publishedOn": "Botuar më {date}",
+    "author": "Nga {author}",
+    "tags": "Etiketat",
+    "relatedPosts": "Postime të ngjashme",
+    "comments": "Komentet",
+    "sharePost": "Ndaj postimin"
+  },
+  "forum": {
+    "title": "Forumi",
+    "newTopic": "Temë e re",
+    "reply": "Përgjigju",
+    "topics": "Temat",
+    "posts": "Postime",
+    "lastPost": "Postimi i fundit",
+    "views": "Shikime",
+    "author": "Autori"
+  },
+  "profile": {
+    "title": "Profili Im",
+    "personalInfo": "Informacionet Personale",
+    "orders": "Porositë",
+    "wishlist": "Lista e Dëshirave",
+    "settings": "Cilësimet",
+    "logout": "Dil nga llogaria"
+  },
+  "notifications": {
+    "newBook": "Libër i ri: {title}",
+    "orderShipped": "Porosia juaj është dërguar",
+    "welcomeMessage": "Mirë se vini në Brënda Librave!",
+    "settings": {
+      "title": "Njoftimet",
+      "newBooks": "Libra të rinj",
+      "orderUpdates": "Përditësime porositë",
+      "newsletter": "Newsletter",
+      "marketing": "Ofertat e marketingut"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Faqja nuk u gjet",
+      "description": "Faqja që kërkoni nuk ekziston ose është zhvendosur",
+      "backHome": "Kthehu në kryefaqe"
+    },
+    "500": {
+      "title": "Gabim i serverit",
+      "description": "Ka ndodhur një gabim i brendshëm. Ju lutem provoni më vonë",
+      "retry": "Provo përsëri"
+    },
+    "network": "Gabim rrjeti. Kontrolloni lidhjen tuaj të internetit",
+    "validation": {
+      "required": "Kjo fushë është e detyrueshme",
+      "email": "Shkruani një email të vlefshëm",
+      "minLength": "Duhet të ketë të paktën {min} karaktere",
+      "maxLength": "Duhet të ketë maksimum {max} karaktere",
+      "passwordMatch": "Fjalëkalimet nuk përputhen"
+    }
+  },
+  "admin": {
+    "title": "Paneli i Administrimit",
+    "dashboard": "Dashboard",
+    "books": "Menaxhimi i Librave",
+    "users": "Menaxhimi i Përdoruesve",
+    "orders": "Menaxhimi i Porosive",
+    "blog": "Menaxhimi i Blog-ut",
+    "currency": "Menaxhimi i Monedhave",
+    "translations": "Menaxhimi i Përkthimeve",
+    "analytics": "Analitikët",
+    "settings": "Cilësimet"
+  },
+  "pwa": {
+    "name": "Brënda Librave",
+    "shortName": "Brënda Librave",
+    "description": "Dyqani më i mirë për libra shqipë online",
+    "shortcuts": {
+      "books": "Shfletoni Librat",
+      "booksShort": "Libra",
+      "booksDescription": "Zbuloni libra të rinj shqipë",
+      "cart": "Shporta",
+      "cartShort": "Shporta",
+      "cartDescription": "Shikoni artikujt në shportë"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Zbuloni botën e librave shqiptarë",
+      "subtitle": "Nga klasikët e literaturës shqiptare deri tek autorët bashkëkohorë, gjeni librin tuaj të radhës në koleksionin tonë të gjerë dixhital dhe fizik.",
+      "cta": "Eksploroni librat"
+    },
+    "features": {
+      "title": "Përse të zgjidhni Brënda Librave?",
+      "subtitle": "Ofrojmë përvojën më të mirë të leximit për komunitetin shqiptar"
+    },
+    "cta": {
+      "title": "Gati për të filluar udhëtimin tuaj letar?",
+      "subtitle": "Bashkohuni me mijëra lexues që kanë zbuluar tashmë pasionin e tyre për leximin përmes Brënda Librave.",
+      "createAccount": "Krijoni llogarinë tuaj",
+      "exploreBooks": "Eksploroni librat"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Rreth Nesh",
+      "subtitle": "Zbuloni historinë dhe misionin e Brënda Librave"
+    },
+    "mission": {
+      "title": "Misioni Ynë",
+      "description": "Të bëjmë librat shqiptarë të aksesueshëm për të gjithë, duke promovuar leximin dhe duke mbajtur gjallë kulturën tonë të pasur. Ne besojmë se çdo person ka të drejtë të ketë akses në libra të cilësisë së lartë, pavarësisht nga vendndodhja apo mundësitë financiare.",
+      "stats": {
+        "books": "Libra në koleksion",
+        "customers": "Klientë të kënaqur",
+        "service": "Shërbim i përsosur"
+      }
+    },
+    "cta": {
+      "title": "Bashkohuni me ne!",
+      "subtitle": "Zbuloni botën e mrekullueshme të librave shqiptarë dhe bashkohuni me komunitetin tonë",
+      "viewBooks": "Shiko librat",
+      "contactUs": "Na kontaktoni"
+    }
+  },
+  "careers": {
+    "hero": {
+      "title": "Bashkohu me Ekipin Tonë",
+      "subtitle": "Ndihmonani të ndërtojmë të ardhmen e librave në Shqipëri dhe të krijojmë një komunitet të pasur leximi",
+      "cta": "Shiko Pozicionet",
+      "contact": "Na Kontaktoni"
+    },
+    "benefits": {
+      "title": "Përfitimet e Punës",
+      "subtitle": "Ofrojmë një mjedis pune të shkëlqyer dhe përfitime të tërheqëse",
+      "competitiveSalary": {
+        "title": "Paga Konkurruese",
+        "description": "Ofrojmë paga të shkëlqyera dhe bonus performancë"
+      },
+      "flexibleHours": {
+        "title": "Orar Fleksibël",
+        "description": "Punë nga shtëpia dhe orar i ndryshueshëm"
+      },
+      "professionalDevelopment": {
+        "title": "Zhvillim Profesional",
+        "description": "Kurse falas dhe konferenca në fushën tuaj"
+      },
+      "healthInsurance": {
+        "title": "Sigurime Shëndetësore",
+        "description": "Sigurime të plota për ju dhe familjen"
+      },
+      "extraVacation": {
+        "title": "Pushime Shtesë",
+        "description": "25 ditë pushim plus ditë të veçanta"
+      },
+      "freeBooks": {
+        "title": "Libra Falas",
+        "description": "Akses i pakufizuar në koleksionin tonë"
+      }
+    },
+    "positions": {
+      "title": "Pozicionet e Hapura",
+      "subtitle": "Zbuloni mundësitë e punës në Brënda Librave",
+      "requirements": "Kërkesat",
+      "skills": "Aftësitë e Nevojshme",
+      "apply": "Apliko Tani",
+      "urgent": "URGJENT",
+      "fullstack": {
+        "title": "Zhvillues Full-Stack",
+        "department": "Teknologji",
+        "type": "Kohë e plotë",
+        "location": "Tiranë / Remote",
+        "description": "Kerkojmë një zhvillues të talentuar për të ndërtuar platformat tona të ardhshme.",
+        "requirements": [
+          "Përvojë 3+ vjet me React/Next.js",
+          "Njohuri të mira të Node.js",
+          "Përvojë me databaza (PostgreSQL)",
+          "Anglisht i shkëlqyer"
+        ],
+        "skills": ["React", "Node.js", "TypeScript", "PostgreSQL", "AWS"]
+      },
+      "marketing": {
+        "title": "Menaxher Marketingu Digjital",
+        "department": "Marketing",
+        "type": "Kohë e plotë",
+        "location": "Tiranë",
+        "description": "Udhëheqja e strategjisë sonë të marketingut digjital dhe rritja e pranisë online.",
+        "requirements": [
+          "Përvojë 5+ vjet në marketing digjital",
+          "Njohuri të Google Ads dhe Facebook Ads",
+          "Analizë të të dhënave",
+          "Kreativitet dhe inovacion"
+        ],
+        "skills": ["Google Analytics", "SEO/SEM", "Social Media", "Email Marketing"]
+      },
+      "customerService": {
+        "title": "Koordinator Shërbimi Klientit",
+        "department": "Shërbim Klientit",
+        "type": "Kohë e plotë",
+        "location": "Tiranë",
+        "description": "Sigurimi i përvojës së shkëlqyer për klientët tanë dhe zgjidhja e çështjeve.",
+        "requirements": [
+          "Përvojë 2+ vjet në shërbim klientit",
+          "Aftësi komunikimi të shkëlqyera",
+          "Durim dhe empati",
+          "Aftësi për të punuar në grup"
+        ],
+        "skills": ["Komunikim", "Zgjidhja e problemeve", "CRM", "Multitasking"]
+      }
+    },
+    "cta": {
+      "title": "Gati për të filluar?",
+      "subtitle": "Bashkohuni me ekipin tonë të apasionuar dhe ndihmonani të krijojmë diçka të mrekullueshme së bashku",
+      "contact": "Na Kontaktoni",
+      "learnMore": "Mëso Më Shumë"
+    }
+  },
+  "newsletter": {
+    "title": "Pajtohuni me Newsletter-in",
+    "subtitle": "Merrni përditësime për librat e rinj, ofertat speciale dhe ngjarjet tona",
+    "email": "Email",
+    "name": "Emri (Opsional)",
+    "namePlaceholder": "Emri juaj",
+    "emailPlaceholder": "email@example.com",
+    "language": "Gjuha e preferuar",
+    "languages": {
+      "sq": "Shqip",
+      "en": "English"
+    },
+    "subscribe": "Pajtohu",
+    "success": "Pajtimi u krye me sukses!",
+    "error": "Gabim në pajtim. Provoni përsëri."
+  },
+  "ai": {
+    "recommendations": {
+      "title": "Rekomandime AI për Ju",
+      "loginPrompt": {
+        "title": "Rekomandime të Personalizuara",
+        "description": "Kyçuni për të marrë rekomandime librash të personalizuara nga AI-ja jonë",
+        "cta": "Kyçuni për Rekomandime AI"
+      },
+      "models": {
+        "hybrid": {
+          "label": "AI i Kombinuar",
+          "description": "Kombinon të gjitha metodat për rekomandime më të sakta"
+        },
+        "content": {
+          "label": "Bazuar në Përmbajtje",
+          "description": "Bazuar në karakteristikat e librave që keni lexuar"
+        },
+        "collaborative": {
+          "label": "Bazuar në Komunitet",
+          "description": "Bazuar në lexuesit me shije të ngjashme"
+        },
+        "trending": {
+          "label": "Në Trend",
+          "description": "Librat më të popullarizuar në komunitet"
+        }
+      },
+      "howItWorks": "Si funksionon:"
+    }
+  },
+  "analytics": {
+    "loading": "Duke ngarkuar analizat e biznesit...",
+    "error": {
+      "title": "Gabim në ngarkim",
+      "retry": "Provo përsëri"
+    },
+    "noData": "Nuk ka të dhëna të disponueshme",
+    "metrics": {
+      "totalRevenue": "Të Ardhurat Totale",
+      "activeCustomers": "Klientë Aktivë",
+      "conversionRate": "Shkalla e Konvertimit",
+      "avgOrderValue": "Vlera Mesatare e Porosisë"
+    },
+    "revenueByCategory": {
+      "title": "Të Ardhurat sipas Kategorive",
+      "books": "libra"
+    },
+    "pagePerformance": {
+      "title": "Performanca e Faqes",
+      "conversionRate": {
+        "label": "Shkalla e Konvertimit",
+        "target": "3.5%"
+      },
+      "cartAbandonment": {
+        "label": "Braktisja e Shportës",
+        "target": "65%"
+      },
+      "loadSpeed": {
+        "label": "Shpejtësia e Ngarkimit",
+        "target": "2.0s"
+      },
+      "target": "Target",
+      "ofTarget": "of target"
+    },
+    "inventory": {
+      "title": "Inteligjenca e Inventarit",
+      "bestsellers": {
+        "title": "Bestsellers"
+      },
+      "lowSales": {
+        "title": "Libra me Shitje të Ulëta"
+      }
+    }
+  },
+  "debug": {
+    "title": "Debug Dashboard",
+    "description": "Development debugging dashboard for Brënda Librave",
+    "environment": {
+      "title": "Environment Variables"
+    },
+    "database": {
+      "title": "Database Status",
+      "status": "Status",
+      "userCount": "User Count",
+      "error": "Error"
+    },
+    "session": {
+      "title": "Session Information",
+      "email": "Email",
+      "role": "Role",
+      "id": "User ID",
+      "notAuthenticated": "Not authenticated"
+    },
+    "demoUsers": {
+      "title": "Demo Users",
+      "role": "Role",
+      "id": "ID"
+    },
+    "footer": {
+      "description": "This debug dashboard is only available in development mode",
+      "generatedAt": "Generated at",
+      "phase": "Phase 2: Authentication System"
+    }
+  },
+  "wishlist": {
+    "hero": {
+      "title": "Lista e Dëshirave",
+      "subtitle": "Librat që dëshironi të blini në të ardhmen"
+    },
+    "loading": "Duke ngarkuar listën e dëshirave...",
+    "title": "Lista e Dëshirave",
+    "subtitle": "Shikoni dhe menaxhoni librat që dëshironi të blini në të ardhmen",
+    "empty": "Lista juaj e dëshirave është bosh",
+    "addToCart": "Shto në Shportë",
+    "remove": "Hiq nga Lista"
+  },
+  "contact": {
+    "hero": {
+      "title": "Na Kontaktoni",
+      "subtitle": "Na kontaktoni për çdo pyetje ose sugjerim. Ekipi ynë është gjithmonë gati për të ju ndihmuar."
+    },
+    "form": {
+      "title": "Forma e Kontaktit",
+      "name": "Emri",
+      "namePlaceholder": "Emri juaj",
+      "email": "Email",
+      "emailPlaceholder": "email@example.com",
+      "subject": "Subjekti",
+      "subjectPlaceholder": "Subjekti i mesazhit",
+      "message": "Mesazhi",
+      "messagePlaceholder": "Shkruani mesazhin tuaj këtu...",
+      "submit": "Dërgo Mesazhin"
+    },
+    "contactInfo": {
+      "title": "Informacionet e Kontaktit",
+      "address": {
+        "title": "Adresa",
+        "content": "Rr. Myslym Shyri, Nr. 23, Tiranë, Shqipëri"
+      },
+      "email": {
+        "title": "Email",
+        "content": "info@brendalibrave.al"
+      },
+      "phone": {
+        "title": "Telefon",
+        "content": "+355 4 123 4567"
+      },
+      "hours": {
+        "title": "Orari i Punës",
+        "content": "E Hënë - E Premte: 9:00 - 18:00\nE Shtunë: 9:00 - 14:00"
+      }
+    },
+    "quickActions": {
+      "title": "Veprime të Shpejta",
+      "faq": {
+        "title": "FAQ",
+        "description": "Pyetje të shpeshta"
+      },
+      "support": {
+        "title": "Mbështetje",
+        "description": "Ndihmë teknike"
+      },
+      "about": {
+        "title": "Rreth Nesh",
+        "description": "Më shumë për ne"
+      }
+    }
+  },
+  "blog": {
+    "hero": {
+      "title": "Blog Letrar",
+      "subtitle": "Zbuloni artikuj të fundit për libra, autorë dhe kulturën shqiptare"
+    },
+    "loading": {
+      "featured": "Duke ngarkuar postimet e veçanta...",
+      "search": "Duke ngarkuar kërkimin..."
+    },
+    "featured": {
+      "title": "Postime të Veçanta",
+      "subtitle": "Artikujt më të mirë të zgjedhur nga ne",
+      "hero": {
+        "title": "Postime të Veçanta",
+        "subtitle": "Artikujt më të mirë të zgjedhur nga ne"
+      },
+      "error": {
+        "title": "Gabim në ngarkim",
+        "retry": "Provo përsëri"
+      },
+      "empty": {
+        "title": "Nuk ka postime të veçanta",
+        "description": "Aktualisht nuk ka postime të shënuara si të veçanta."
+      },
+      "cta": {
+        "viewAll": "Shiko të gjitha postimet e veçanta"
+      }
+    }
+  },
+  "forum": {
+    "hero": {
+      "title": "Forum i Lexuesve",
+      "subtitle": "Bashkohuni me komunitetin tonë të lexuesve, ndani mendimet tuaja dhe zbuloni libra të rinj"
+    },
+    "categories": {
+      "title": "Kategoritë",
+      "posts": "postime",
+      "items": [
+        { "name": "Literatura Shqiptare", "icon": "BookOpen", "count": "1,250", "color": "red" },
+        { "name": "Rekomandime", "icon": "Star", "count": "890", "color": "yellow" },
+        { "name": "Kritika", "icon": "MessageCircle", "count": "650", "color": "blue" },
+        { "name": "Autorët", "icon": "User", "count": "420", "color": "green" },
+        { "name": "Klasikët", "icon": "Award", "count": "380", "color": "purple" },
+        { "name": "Poezi", "icon": "Heart", "count": "290", "color": "pink" }
+      ]
+    },
+    "stats": {
+      "title": "Statistikat e Komunitetit",
+      "items": [
+        { "label": "Përdorues Aktivë", "value": "2,847", "icon": "Users", "color": "blue" },
+        { "label": "Diskutime", "value": "15,234", "icon": "MessageSquare", "color": "green" },
+        { "label": "Përgjigje", "value": "89,456", "icon": "MessageCircle", "color": "purple" },
+        { "label": "Pëlqime", "value": "234,567", "icon": "Heart", "color": "red" }
+      ]
+    },
+    "cta": {
+      "title": "Bashkohuni me komunitetin tonë!",
+      "subtitle": "Ndani mendimet tuaja, bëni pyetje dhe zbuloni libra të rinj nga lexues të tjerë",
+      "createTopic": "Krijo Diskutim të Ri"
+    }
+  },
+  "cart": {
+    "hero": {
+      "title": "Shporta Juaj",
+      "subtitle": "Shikoni dhe menaxhoni librat që dëshironi të blini"
+    },
+    "loading": "Duke ngarkuar shportën..."
+  },
+  "profile": {
+    "title": "Profili im",
+    "subtitle": "Menaxho të dhënat e profilit tuaj dhe preferencat e llogarisë."
+  },
+  "privacy": {
+    "hero": {
+      "title": "Politika e Privatësisë",
+      "subtitle": "Ne respektojmë privatësinë tuaj dhe jemi të angazhuar për të mbrojtur të dhënat tuaja personale"
+    },
+    "lastUpdated": "Përditësuar më: 1 Janar 2024",
+    "introduction": {
+      "title": "Hyrje",
+      "paragraph1": "Brënda Librave (\"ne\", \"na\", \"tonë\") respekton privatësinë tuaj dhe është e angazhuar për të mbrojtur të dhënat tuaja personale. Kjo Politikë e Privatësisë shpjegon se si mbledhim, përdorim, ruajmë dhe mbrojmë informacionet tuaja kur vizitoni faqen tonë të internetit dhe përdorni shërbimet tona.",
+      "paragraph2": "Duke përdorur shërbimet tona, ju pajtoheni me praktikat e përshkruara në këtë politikë. Nëse nuk pajtoheni me këtë politikë, ju lutemi mos përdorni shërbimet tona."
+    },
+    "sections": [
+      {
+        "title": "1. Informacionet që Mbledhim",
+        "icon": "User",
+        "content": [
+          {
+            "subtitle": "Informacione Personale",
+            "text": "Mbledhim informacione si emri, adresa email, numri i telefonit, dhe adresa e dërgimit kur krijoni një llogari ose bëni një porosi."
+          },
+          {
+            "subtitle": "Informacione të Pagesës",
+            "text": "Të dhënat e kartës së kreditit dhe informacionet e faturimit ruhen në mënyrë të sigurt përmes partnerëve tanë të pagesës të çertifikuar."
+          },
+          {
+            "subtitle": "Informacione të Përdorimit",
+            "text": "Mbledhim informacione për mënyrën se si përdorni faqen tonë, duke përfshirë faqet e vizituara, kohën e qëndrimit, dhe preferencat."
+          }
+        ]
+      },
+      {
+        "title": "2. Si i Përdorim Informacionet",
+        "icon": "Eye",
+        "content": [
+          {
+            "subtitle": "Përmbushja e Porosive",
+            "text": "Përdorim informacionet tuaja për të përmbushur porositë, për t'ju kontaktuar rreth porosisë, dhe për të siguruar dërgimin."
+          },
+          {
+            "subtitle": "Përmirësimi i Shërbimit",
+            "text": "Analizojmë të dhënat për të përmirësuar përvojën tuaj, për të personalizuar rekomandime, dhe për të optimizuar faqen tonë."
+          },
+          {
+            "subtitle": "Komunikimi",
+            "text": "Do t'ju dërgojmë emaile rreth porosive tuaja, azhurnimeve të produkteve, dhe ofertave speciale (nëse jeni abonuar)."
+          }
+        ]
+      },
+      {
+        "title": "3. Ndarja e Informacioneve",
+        "icon": "Users",
+        "content": [
+          {
+            "subtitle": "Partnerët e Dërgimit",
+            "text": "Ndajmë informacionet e dërgimit me kompanitë e dërgimit për të mundësuar dorëzimin e porosive tuaja."
+          },
+          {
+            "subtitle": "Ofruesit e Shërbimeve",
+            "text": "Bashkëpunojmë me ofrues të besueshmë për pagesa, analizë, dhe mbështetje teknike, të gjithë të lidhur me marrëveshje konfidencialiteti."
+          },
+          {
+            "subtitle": "Kërkesat Ligjore",
+            "text": "Mund të ndajmë informacione nëse kërkohet nga ligji ose për të mbrojtur të drejtat tona dhe sigurinë e përdoruesve."
+          }
+        ]
+      },
+      {
+        "title": "4. Siguria e të Dhënave",
+        "icon": "Shield",
+        "content": [
+          {
+            "subtitle": "Enkriptimi",
+            "text": "Të gjitha të dhënat transmutohen përmes enkriptimit SSL/TLS dhe ruhen në servera të sigurt."
+          },
+          {
+            "subtitle": "Aksesi i Kufizuar",
+            "text": "Vetëm personeli i autorizuar ka akses në të dhënat personale, dhe të gjithë nënshkruajnë marrëveshje konfidencialiteti."
+          },
+          {
+            "subtitle": "Monitorimi",
+            "text": "Monitorojmë vazhdimisht sistemet tona për të identifikuar dhe parandaluar çdo aktivitet të dyshimtë."
+          }
+        ]
+      },
+      {
+        "title": "5. Të Drejtat Tuaja",
+        "icon": "CheckCircle",
+        "content": [
+          {
+            "subtitle": "Aksesi dhe Korrigjimi",
+            "text": "Keni të drejtë të shihni dhe korrigjoni informacionet personale që kemi për ju në çdo kohë."
+          },
+          {
+            "subtitle": "Fshirja e të Dhënave",
+            "text": "Mund të kërkoni fshirjen e të dhënave tuaja personale, me përjashtim të atyre që janë të nevojshme për qëllime ligjore."
+          },
+          {
+            "subtitle": "Portabiliteti",
+            "text": "Mund të kërkoni një kopje të të dhënave tuaja personale në formatin që preferoni."
+          }
+        ]
+      }
+    ],
+    "cookies": {
+      "title": "6. Cookies dhe Teknologji të Ngjashme",
+      "description": "Përdorim cookies dhe teknologji të ngjashme për të përmirësuar përvojën tuaj në faqen tonë. Cookies janë fajllë të vegjël teksti që ruhen në pajisjen tuaj kur vizitoni faqen tonë.",
+      "necessary": {
+        "title": "Cookies të Nevojshëm",
+        "description": "Të nevojshëm për funksionimin bazë të faqes, si ruajtja e shportës së blerjeve."
+      },
+      "analytics": {
+        "title": "Cookies Analitik",
+        "description": "Përdoren për të analizuar trafikun dhe përmirësuar përvojën e përdoruesit."
+      }
+    },
+    "contact": {
+      "title": "Keni pyetje rreth privatësisë?",
+      "subtitle": "Na kontaktoni",
+      "description": "Nëse keni pyetje rreth kësaj politike ose dëshironi të ushtroni të drejtat tuaja, ju lutemi na kontaktoni."
+    }
+  },
+  "faq": {
+    "hero": {
+      "title": "Pyetje të Shpeshta (FAQ)",
+      "subtitle": "Gjeni përgjigje për pyetjet më të shpeshta rreth shërbimeve tona"
+    },
+    "search": {
+      "placeholder": "Kërkoni në FAQ..."
+    },
+    "categories": [
+      {
+        "title": "Porositë dhe Dërgimi",
+        "questions": [
+          {
+            "question": "Sa kohë merr dërgimi i librave?",
+            "answer": "Dërgimi në Tiranë bëhet brenda 24 orësh, ndërsa në qytetet e tjera të Shqipërisë brenda 48-72 orësh. Për porositë e bëra të premten pas orës 16:00 ose fundjavave, dërgimi fillon ditën e hënë."
+          },
+          {
+            "question": "A ka kosto për dërgimin?",
+            "answer": "Dërgimi është falas për porositë mbi 2,000 ALL. Për porositë nën këtë shumë, kostoja e dërgimit është 300 ALL në Tiranë dhe 500 ALL në qytetet e tjera."
+          },
+          {
+            "question": "Si mund të gjurmoj porosinë time?",
+            "answer": "Pas konfirmimit të porosisë, do të merrni një email me kodin e gjurmimit. Mund ta përdorni këtë kod në seksionin \"Gjurmo Porosinë\" ose në profilin tuaj."
+          },
+          {
+            "question": "A mund të anuloj porosinë pas konfirmimit?",
+            "answer": "Po, porositë mund të anulohen deri në 2 orë pas konfirmimit, nëse ende nuk janë përgatitur për dërgim. Pas kësaj kohe, duhet të kontaktoni shërbimin e klientit."
+          }
+        ]
+      },
+      {
+        "title": "Pagesa dhe Çmimet",
+        "questions": [
+          {
+            "question": "Çfarë mënyrash pagese pranoni?",
+            "answer": "Pranojmë pagesa me karta debiti/krediti (Visa, Mastercard), PayPal, dhe pagesë në dorëzim (vetëm në Tiranë). Gjithashtu pranojmë transferta bankare."
+          },
+          {
+            "question": "A janë çmimet përfundimtare?",
+            "answer": "Po, të gjitha çmimet e shfaqura në faqen tonë përfshijnë TVSH-në. Nuk ka kosto të fshehura, përveç kostos së dërgimit nëse nuk kualifikoheni për dërgim falas."
+          },
+          {
+            "question": "A ofrojë zbritje për blerje të shumëta?",
+            "answer": "Po, ofrojmë zbritje 5% për porositë mbi 5,000 ALL, 10% për porositë mbi 10,000 ALL, dhe 15% për porositë mbi 20,000 ALL. Zbritjet aplikohen automatikisht."
+          }
+        ]
+      },
+      {
+        "title": "Llogaritë dhe Anëtarësimi",
+        "questions": [
+          {
+            "question": "A duhet të krijoj llogari për të bërë porosi?",
+            "answer": "Jo, mund të bëni porosi si vizitor. Megjithatë, krijimi i llogarisë ju lejon të gjurmoni porositë, ruani adresat, dhe të merrni rekomandime të personalizuara."
+          },
+          {
+            "question": "Si mund të ndryshoj fjalëkalimin tim?",
+            "answer": "Shkoni në \"Profili\" > \"Cilësimet\" > \"Ndrysho Fjalëkalimin\". Do t'ju duhet të fusni fjalëkalimin aktual dhe atë të ri. Do të merrni një email konfirmimi."
+          },
+          {
+            "question": "Si mund të fshij llogarinë time?",
+            "answer": "Mund të fshini llogarinë tuaj duke na kontaktuar në info@brendalibrave.al. Të dhënat tuaja do të fshihen brenda 30 ditëve, në përputhje me GDPR."
+          }
+        ]
+      },
+      {
+        "title": "Librat dhe Produktet",
+        "questions": [
+          {
+            "question": "A janë të gjitha librat origjinalë?",
+            "answer": "Po, të gjitha librat që shesin janë origjinalë dhe të reja. Punojmë direkt me botuesit dhe shpërndarësit e autorizuar për të siguruar cilësinë."
+          },
+          {
+            "question": "Si mund të rekomandoj një libër?",
+            "answer": "Mund të na dërgoni sugjerime për libra të rinj në seksionin \"Kontakti\" ose përmes email-it. Gjithashtu mund të përfshiheni në forumin tonë të lexuesve."
+          }
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Nuk gjetët përgjigjen që kërkoni?",
+      "subtitle": "Na kontaktoni dhe do t'ju ndihmojmë",
+      "methods": [
+        {
+          "title": "Email",
+          "description": "info@brendalibrave.al",
+          "icon": "Mail"
+        },
+        {
+          "title": "Telefon",
+          "description": "+355 4 123 4567",
+          "icon": "Phone"
+        },
+        {
+          "title": "Chat",
+          "description": "Chat i gjallë",
+          "icon": "MessageCircle"
+        }
+      ],
+      "cta": "Na Kontaktoni"
+    }
+  },
+  "help": {
+    "hero": {
+      "title": "Qendra e Ndihmës",
+      "subtitle": "Jemi këtu për t'ju ndihmuar. Gjeni përgjigje për pyetjet tuaja ose kontaktoni ekipin tonë"
+    },
+    "search": {
+      "placeholder": "Kërkoni për ndihmë...",
+      "button": "Kërko"
+    },
+    "quickActions": {
+      "title": "Veprime të Shpejta",
+      "items": [
+        {
+          "title": "FAQ",
+          "description": "Pyetje të shpeshta",
+          "icon": "HelpCircle",
+          "color": "bg-blue-500",
+          "href": "/faq"
+        },
+        {
+          "title": "Kontakti",
+          "description": "Flisni direkt me ekipin tonë",
+          "icon": "MessageCircle",
+          "color": "bg-green-500",
+          "href": "/contact"
+        },
+        {
+          "title": "Statusi i Porosisë",
+          "description": "Gjurmoni porosinë tuaj",
+          "icon": "Truck",
+          "color": "bg-purple-500",
+          "href": "/profile/orders"
+        }
+      ]
+    },
+    "categories": {
+      "title": "Kategoritë e Ndihmës",
+      "items": [
+        {
+          "title": "Llogaritë dhe Anëtarësimi",
+          "description": "Krijimi dhe menaxhimi i llogarisë",
+          "icon": "User",
+          "color": "blue",
+          "href": "/faq",
+          "topics": [
+            "Krijimi i llogarisë",
+            "Ndryshimi i fjalëkalimit",
+            "Përditësimi i profilit",
+            "Fshirja e llogarisë"
+          ]
+        },
+        {
+          "title": "Porositë dhe Dërgimi",
+          "description": "Informacione rreth porosive dhe dërgimit",
+          "icon": "ShoppingCart",
+          "color": "green",
+          "href": "/faq",
+          "topics": [
+            "Gjurmoni porosinë",
+            "Kohët e dërgimit",
+            "Kostot e dërgimit",
+            "Anulimi i porosive"
+          ]
+        },
+        {
+          "title": "Pagesa dhe Çmimet",
+          "description": "Informacione rreth pagesave dhe çmimeve",
+          "icon": "CreditCard",
+          "color": "purple",
+          "href": "/faq",
+          "topics": [
+            "Mënyrat e pagesës",
+            "Çmimet përfundimtare",
+            "Zbritjet dhe ofertat",
+            "TVSH dhe taksat"
+          ]
+        },
+        {
+          "title": "Librat dhe Produktet",
+          "description": "Informacione rreth librave dhe produkteve",
+          "icon": "BookOpen",
+          "color": "red",
+          "href": "/faq",
+          "topics": [
+            "Cilësia e librave",
+            "Rekomandimet",
+            "Katalogu i produkteve",
+            "Kërkimet"
+          ]
+        },
+        {
+          "title": "Cilësimet dhe Preferencat",
+          "description": "Personalizimi i përvojës suaj",
+          "icon": "Settings",
+          "color": "yellow",
+          "href": "/profile/settings",
+          "topics": [
+            "Preferencat e gjuhës",
+            "Njoftimet",
+            "Privatësia",
+            "Siguria"
+          ]
+        },
+        {
+          "title": "Mbështetje Teknike",
+          "description": "Ndihmë për probleme teknike",
+          "icon": "HelpCircle",
+          "color": "indigo",
+          "href": "/contact",
+          "topics": [
+            "Probleme me faqen",
+            "Gabime teknike",
+            "Përditësimet",
+            "Kompatibiliteti"
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "title": "Nuk gjetët ndihmën që kërkoni?",
+      "subtitle": "Na kontaktoni dhe do t'ju ndihmojmë personalisht",
+      "methods": [
+        {
+          "title": "Email",
+          "description": "info@brendalibrave.al",
+          "icon": "Mail"
+        },
+        {
+          "title": "Telefon",
+          "description": "+355 4 123 4567",
+          "icon": "Phone"
+        },
+        {
+          "title": "Chat",
+          "description": "Chat i gjallë",
+          "icon": "MessageCircle"
+        }
+      ],
+      "cta": "Na Kontaktoni"
+    }
+  },
+  "terms": {
+    "hero": {
+      "title": "Termat dhe Kushtet",
+      "subtitle": "Lexoni termat dhe kushtet për përdorimin e shërbimeve tona"
+    },
+    "lastUpdated": "Përditësuar së fundmi",
+    "sections": {
+      "acceptance": {
+        "title": "1. Pranimi i Termave",
+        "content": [
+          "Duke përdorur shërbimet e Brënda Librave, ju pranoni të përmbaheni nga këto terma dhe kushte.",
+          "Nëse nuk pajtoheni me këto terma, ju lutemi mos përdorni shërbimet tona.",
+          "Ne rezervojmë të drejtën të ndryshojmë këto terma në çdo kohë pa njoftim paraprak."
+        ]
+      },
+      "definitions": {
+        "title": "2. Përkufizimet",
+        "content": [
+          "\"Kompania\", \"ne\", \"na\", \"tonë\" referohet në Brënda Librave.",
+          "\"Përdoruesi\", \"ju\", \"tuaj\" referohet në personin që përdor shërbimet tona.",
+          "\"Shërbimet\" përfshijnë faqen tonë të internetit dhe të gjitha shërbimet e ofruara.",
+          "\"Produktet\" përfshijnë të gjitha librat dhe artikujt e tjerë të shitur përmes faqes sonë."
+        ]
+      },
+      "usage": {
+        "title": "3. Përdorimi i Shërbimeve",
+        "content": [
+          "Duhet të jeni të paktën 18 vjeç ose të keni pëlqimin e prindërve për të përdorur shërbimet.",
+          "Jeni përgjegjës për të gjitha aktivitetet që bëhen nën llogarinë tuaj.",
+          "Nuk mund të përdorni shërbimet për qëllime të paligjshme ose të dëmshme.",
+          "Ne rezervojmë të drejtën të pezullojmë ose mbyllim llogarinë tuaj për shkak të shkeljes së termave."
+        ]
+      },
+      "orders": {
+        "title": "4. Porositë dhe Pagesa",
+        "content": [
+          "Të gjitha porositë janë subjekt i disponueshmërisë së produkteve.",
+          "Çmimet mund të ndryshojnë pa njoftim paraprak.",
+          "Pagesat duhet të kryhen në momentin e porosisë ose sipas termave të rënë dakord.",
+          "Ne rezervojmë të drejtën të anulojmë porositë për arsye të ndryshme."
+        ]
+      },
+      "shipping": {
+        "title": "5. Dërgimi dhe Dorëzimi",
+        "content": [
+          "Kohët e dërgimit janë vlerësime dhe mund të ndryshojnë.",
+          "Rreziku i humbjes kalon tek ju pasi produkti të jetë dorëzuar.",
+          "Jeni përgjegjës për sigurimin e adresës së saktë të dërgimit.",
+          "Kostot e dërgimit janë në përputhje me politikën tonë të çmimeve."
+        ]
+      },
+      "returns": {
+        "title": "6. Kthimi dhe Rimbursimet",
+        "content": [
+          "Produktet mund të kthehen brenda 14 ditëve nga data e dorëzimit.",
+          "Produktet duhet të jenë në gjendje origjinale për t'u kthyer.",
+          "Kostoja e kthimit mbulohet nga klienti, përveç rasteve të gabimeve tona.",
+          "Rimbursimet bëhen brenda 7-14 ditëve punë pas pranimit të kthimit."
+        ]
+      },
+      "intellectualProperty": {
+        "title": "7. Pronësia Intelektuale",
+        "content": [
+          "Të gjitha përmbajtjet e faqes sonë janë të mbrojtura nga ligjet e pronësisë intelektuale.",
+          "Nuk mund të kopjoni, shpërndani ose përdorni përmbajtjet tona pa leje.",
+          "Emrat tregtarë dhe logot janë pronë e pronarëve përkatës.",
+          "Ju jepni të drejtën që të përdorim përmbajtjet që postoni në faqen tonë."
+        ]
+      },
+      "liability": {
+        "title": "8. Kufizimi i Përgjegjësisë",
+        "content": [
+          "Shërbimet tona ofrohen \"siç janë\" pa garanci të veçanta.",
+          "Nuk jemi përgjegjës për dëmet e tërthorta ose pasojore.",
+          "Përgjegjësia jonë është e kufizuar në vlerën e porosisë që keni bërë.",
+          "Disa juridiksione nuk lejojnë kufizime të përgjegjësisë, kështu që këto kufizime mund të mos aplikohen për ju."
+        ]
+      }
+    },
+    "contact": {
+      "title": "Na Kontaktoni",
+      "description": "Nëse keni pyetje rreth termave dhe kushteve tona, ju lutemi na kontaktoni",
+      "email": {
+        "title": "Email Ligjor"
+      },
+      "support": {
+        "title": "Mbështetje"
+      },
+      "cta": "Na Kontaktoni",
+      "privacy": "Politika e Privatësisë"
+    }
+  },
+  "typography": {
+    "hero": {
+      "title": "Brënda Librave - Typography Demo",
+      "subtitle": "Showcase of our dual-font system with Albanian content"
+    },
+    "literarySection": {
+      "title": "Literary Content (Crimson Pro)"
+    },
+    "book": {
+      "title": "Gjuha Shqipe në Letërsinë Bashkëkohore",
+      "subtitle": "Një studim i thellë mbi evolucionin e gjuhës",
+      "description": "Ky libër eksploron zhvillimin e gjuhës shqipe në letërsinë e shekullit të 21-të, duke analizuar ndikimin e teknologjisë dhe globalizimit në shprehjen letrare. Autorja na prezanton një perspektivë të re mbi ruajtjen e identitetit kulturor përmes gjuhës së shkruar.",
+      "quote": "\"Gjuha është pasuria më e madhe e një kombi, dhe letërsia është tempulli ku kjo pasuri ruhet dhe përtërihet.\" - Naim Frashëri",
+      "features": {
+        "title": "Karakteristikat",
+        "items": [
+          "Analiza e thellë gjuhësore",
+          "Shembuj nga autorë të njohur",
+          "Perspektiva moderne",
+          "350 faqe përmbajtje"
+        ]
+      },
+      "details": {
+        "title": "Detaje Teknike",
+        "firstEdition": "Botimi i parë: 2024",
+        "publisher": "Shtëpia botuese: Librat Shqiptarë",
+        "isbn": "ISBN: 978-9928-000-000-0",
+        "price": "2,500 L",
+        "inStock": "Në stok"
+      }
+    },
+    "interfaceSection": {
+      "title": "Interface Elements (Outfit)"
+    },
+    "interface": {
+      "navigation": {
+        "title": "Navigation",
+        "items": [
+          "Kryefaqja",
+          "Librat",
+          "Kategorite",
+          "Rreth Nesh"
+        ]
+      },
+      "buttons": {
+        "title": "Buttons",
+        "items": [
+          { "text": "Blej Tani", "variant": "primary" },
+          { "text": "Shto në Shportë", "variant": "secondary" },
+          { "text": "Lista e Dëshirave", "variant": "text" }
+        ]
+      },
+      "typography": {
+        "title": "Typography Scale",
+        "h1": "Heading 1 - Tituj i Madh",
+        "h2": "Heading 2 - Tituj i Mesëm",
+        "h3": "Heading 3 - Tituj i Vogël",
+        "body": "Body text - Tekst i zakonshëm për lexim",
+        "caption": "Caption - Tekst i vogël për shpjegime"
+      }
+    },
+    "usageExample": {
+      "title": "Real Usage Example",
+      "article": {
+        "title": "Historia e Gjuhës Shqipe",
+        "subtitle": "Një udhëtim nëpër kohë dhe kulturë",
+        "content": "Gjuha shqipe është një nga gjuhët më të vjetra të Evropës, me rrënjë që shtrihen mijëra vjet prapa. Ajo ka ruajtur karakteristikat e saj të veçanta përgjatë shekujve, pavarësisht ndikimeve të shumta të jashtme.",
+        "blockquote": "\"Gjuha jonë na bën të jemi ajo që jemi, dhe ajo që jemi na bën të kemi gjuhën tonë.\""
+      },
+      "features": {
+        "title": "Karakteristikat Kryesore",
+        "items": [
+          "Sistemi vokalor me 7 zanore",
+          "Alfabeti prej 36 shkronjash",
+          "Struktura gramatikore e kompleksuar",
+          "Fjalor i pasur me rrënjë autoktone"
+        ]
+      }
+    }
+  }
+}

@@ -43,6 +43,8 @@ const mockBook: BookListItem = {
   digitalPriceEUR: 10,
   inventory: 25,
   hasDigital: true,
+  digitalFileUrl: 'https://example.com/book.epub',
+  digitalFileSize: 2048576,
   coverImage: 'https://example.com/cover.jpg',
   publishedDate: new Date('2023-01-01'),
   language: 'SQ',

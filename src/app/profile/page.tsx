@@ -1,9 +1,8 @@
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-
-import { ChangePasswordForm } from '@/components/auth/ChangePasswordForm';
-import { ProfileForm } from '@/components/auth/ProfileForm';
+import { getTranslations } from 'next-intl/server';
+import { ProfilePageClient } from '@/components/pages/ProfilePageClient';
 
 import { authOptions } from '@/lib/auth/config';
 
@@ -15,8 +14,6 @@ export const metadata: Metadata = {
     follow: true,
   },
 };
-
-// getUserProfile function removed - using session data directly for now
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -36,19 +33,7 @@ export default async function ProfilePage() {
     createdAt: new Date(),
   };
 
-  return (
-    <div className="max-w-4xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Profili im</h1>
-        <p className="mt-2 text-gray-600">
-          Menaxho të dhënat e profilit tuaj dhe preferencat e llogarisë.
-        </p>
-      </div>
+  const t = await getTranslations('profile');
 
-      <div className="space-y-8">
-        <ProfileForm user={user} />
-        <ChangePasswordForm />
-      </div>
-    </div>
-  );
+  return <ProfilePageClient translations={t} user={user} />;
 }

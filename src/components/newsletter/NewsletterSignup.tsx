@@ -42,6 +42,7 @@ const interestOptions = [
 ];
 
 export function NewsletterSignup() {
+  const t = useTranslations('newsletter');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -167,13 +168,10 @@ export function NewsletterSignup() {
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Newsletter{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">
-              Brënda Librave
-            </span>
+            {t('title')}
           </h1>
           <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-            Regjistrohuni për të marrë lajme të reja, oferta speciale dhe rekomandime librash
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -237,18 +235,18 @@ export function NewsletterSignup() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <GlassFormField
-              label="Email"
+              label={t('email')}
               type="email"
-              placeholder="email@example.com"
+              placeholder={t('emailPlaceholder')}
               icon={<Mail className="h-5 w-5" />}
               error={errors.email?.message}
               {...register('email')}
             />
 
             <GlassFormField
-              label="Emri (Opsional)"
+              label={t('name')}
               type="text"
-              placeholder="Emri juaj"
+              placeholder={t('namePlaceholder')}
               icon={<Star className="h-5 w-5" />}
               error={errors.name?.message}
               {...register('name')}
@@ -258,12 +256,12 @@ export function NewsletterSignup() {
           {/* Language Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-800 mb-3">
-              Gjuha e preferuar
+              {t('language')}
             </label>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { value: 'SQ', label: 'Shqip', flag: '🇦🇱' },
-                { value: 'EN', label: 'English', flag: '🇬🇧' },
+                { value: 'SQ', label: t('languages.sq'), flag: '🇦🇱' },
+                { value: 'EN', label: t('languages.en'), flag: '🇬🇧' },
               ].map((lang) => (
                 <label
                   key={lang.value}
@@ -327,7 +325,7 @@ export function NewsletterSignup() {
               className="w-full md:w-auto min-w-[250px]"
             >
               <Send className="w-5 h-5 mr-2" />
-              {isSubmitting ? 'Duke u regjistruar...' : 'Regjistrohuni në Newsletter'}
+              {isSubmitting ? 'Duke u regjistruar...' : t('subscribe')}
             </LiquidButton>
 
             <p className="text-sm text-gray-600 mt-4">

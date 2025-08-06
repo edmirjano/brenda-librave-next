@@ -142,56 +142,26 @@ const phaseRoutes = {
   ],
 };
 
+import { getTranslations } from 'next-intl/server';
+import { DebugPageClient } from '@/components/pages/DebugPageClient';
+
 export default async function DebugPage() {
+  const t = await getTranslations('debug');
   const session = await getServerSession(authOptions);
   const envVars = getSafeEnvVars();
   const dbStatus = await getDatabaseStatus();
   const demoUsers = await getDemoUsers();
 
-  const systemInfo = {
-    timestamp: new Date().toISOString(),
-    nodeVersion: process.version,
-    platform: process.platform,
-    uptime: Math.floor(process.uptime()),
-    memoryUsage: process.memoryUsage(),
-    currentPhase: 'Phase 2: Authentication System',
-    buildTimestamp: process.env.BUILD_TIME || 'Unknown',
+  const debugData = {
+    envVars,
+    dbStatus,
+    demoUsers,
+    session,
   };
 
-  // Demo user credentials for testing
-  const demoCredentials = [
-    {
-      email: 'admin@brendalibrave.com',
-      password: 'Admin123!',
-      role: 'ADMIN',
-      name: 'Admin User',
-      description: 'Full admin access to all features',
-    },
-    {
-      email: 'user@brendalibrave.com',
-      password: 'User123!',
-      role: 'USER',
-      name: 'Regular User',
-      description: 'Standard user with basic access',
-    },
-    {
-      email: 'test@brendalibrave.com',
-      password: 'Test123!',
-      role: 'USER',
-      name: 'Test User',
-      description: 'User for general testing purposes',
-    },
-    {
-      email: 'demo@brendalibrave.com',
-      password: 'Demo123!',
-      role: 'USER',
-      name: 'Demo User',
-      description: 'Demo account for showcasing features',
-    },
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50">
+  return <DebugPageClient translations={t} debugData={debugData} />;
+}
+          <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20"></div>

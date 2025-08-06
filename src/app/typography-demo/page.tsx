@@ -1,10 +1,11 @@
-import {
-  BookTitle, BookSubtitle, BookDescription, Quote,
-  PageTitle, SectionTitle, CardTitle, BodyText, Caption,
-  NavText, ButtonText, PriceText, AlbanianText
-} from '@/components/ui/Typography';
+import { getTranslations } from 'next-intl/server';
+import { TypographyDemoPageClient } from '@/components/pages/TypographyDemoPageClient';
 
-export default function TypographyDemo() {
+export default async function TypographyDemo() {
+  const t = await getTranslations('typography');
+  
+  return <TypographyDemoPageClient translations={t} />;
+}
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 p-6">
       <div className="max-w-4xl mx-auto space-y-12">

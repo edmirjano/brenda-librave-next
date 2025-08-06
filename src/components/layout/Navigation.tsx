@@ -3,7 +3,8 @@
 import { useState } from 'react';
 
 import { signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
+import { useTranslations } from '@/hooks/useTranslations';
+import { Link } from '@/navigation';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -26,21 +27,23 @@ import {
 import { CartIcon } from '@/components/cart/CartIcon';
 import { LiquidButton } from '@/components/ui/LiquidButton';
 import { LogoWithText } from '@/components/ui/Logo';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { PerformantAnimations, getResponsiveTransition } from '@/lib/animations/performance';
-
-const navigationItems = [
-  { name: 'Kryefaqja', href: '/', icon: Home },
-  { name: 'Libra', href: '/books', icon: BookOpen },
-  { name: 'Forumi', href: '/forum', icon: MessageSquare },
-  { name: 'Dhuro një Libër', href: '/gift', icon: Gift },
-  { name: 'Rreth Nesh', href: '/about', icon: Info },
-  { name: 'Kontakti', href: '/contact', icon: Mail },
-];
 
 export function Navigation() {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations('navigation');
+  
+  const navigationItems = [
+    { name: t('home'), href: '/', icon: Home },
+    { name: t('books'), href: '/books', icon: BookOpen },
+    { name: t('forum'), href: '/forum', icon: MessageSquare },
+    { name: t('gift'), href: '/gift', icon: Gift },
+    { name: t('about'), href: '/about', icon: Info },
+    { name: t('contact'), href: '/contact', icon: Mail },
+  ];
   const { scrollDirection, isScrolling, isAtTop } = useScrollDirection({
     threshold: 10,
     debounceMs: 150
@@ -98,6 +101,8 @@ export function Navigation() {
 
           {/* Auth Section */}
           <div className="hidden lg:flex items-center space-x-3">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
             {/* Cart Icon */}
             {session && (
               <>
@@ -138,12 +143,12 @@ export function Navigation() {
                 <Link href="/profile">
                   <LiquidButton variant="ghost" size="sm">
                     <User className="h-4 w-4 mr-2" />
-                    Profili
+                    {t('profile')}
                   </LiquidButton>
                 </Link>
                 <LiquidButton variant="ghost" size="sm" onClick={handleSignOut}>
                   <LogOut className="h-4 w-4 mr-2" />
-                  Dil
+                  {t('logout')}
                 </LiquidButton>
               </div>
             ) : (
@@ -151,13 +156,13 @@ export function Navigation() {
                 <Link href="/auth/login">
                   <LiquidButton variant="ghost" size="sm">
                     <LogIn className="h-4 w-4 mr-2" />
-                    Hyr
+                    {t('login')}
                   </LiquidButton>
                 </Link>
                 <Link href="/auth/register">
                   <LiquidButton variant="albanian" size="sm">
                     <UserPlus className="h-4 w-4 mr-2" />
-                    Regjistrohu
+                    {t('register')}
                   </LiquidButton>
                 </Link>
               </div>

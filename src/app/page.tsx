@@ -1,38 +1,15 @@
-'use client';
+import { getTranslations } from 'next-intl/server';
+import { HomePageClient } from '@/components/pages/HomePageClient';
 
-import Link from 'next/link';
-
-import { motion } from 'framer-motion';
-import {
-  ArrowRight,
-  Award,
-  BookOpen,
-  CheckCircle,
-  CreditCard,
-  Download,
-  Globe,
-  Heart,
-  Library,
-  Mail,
-  MessageSquare,
-  Shield,
-  Smartphone,
-  Star,
-  Truck,
-  Users,
-  Zap,
-} from 'lucide-react';
-
-import { FeaturedBooks } from '@/components/books/FeaturedBooks';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { LiquidButton } from '@/components/ui/LiquidButton';
-import { LiquidBackground, LiquidBlob } from '@/components/ui/LiquidBlob';
-
-export default function HomePage() {
+export default async function HomePage() {
+  const t = await getTranslations('home');
+  
+  return <HomePageClient translations={t} />;
+}
   return (
     <LiquidBackground 
       blobCount={6} 
-      className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50"
+              className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50"
     >
       {/* Additional decorative blobs */}
       <LiquidBlob 

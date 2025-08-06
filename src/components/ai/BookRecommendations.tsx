@@ -26,6 +26,7 @@ export function BookRecommendations({
   showModelSelector = true,
   className = '',
 }: BookRecommendationsProps) {
+  const t = useTranslations('ai.recommendations');
   const { data: session } = useSession();
   const [recommendations, setRecommendations] = useState<BookRecommendation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -72,30 +73,30 @@ export function BookRecommendations({
   const modelOptions = [
     {
       value: 'hybrid' as const,
-      label: 'AI i Kombinuar',
+      label: t('models.hybrid.label'),
       icon: Brain,
-      description: 'Kombinon të gjitha metodat për rekomandime më të sakta',
+      description: t('models.hybrid.description'),
       color: 'purple',
     },
     {
       value: 'content' as const,
-      label: 'Bazuar në Përmbajtje',
+      label: t('models.content.label'),
       icon: Sparkles,
-      description: 'Bazuar në karakteristikat e librave që keni lexuar',
+      description: t('models.content.description'),
       color: 'blue',
     },
     {
       value: 'collaborative' as const,
-      label: 'Bazuar në Komunitet',
+      label: t('models.collaborative.label'),
       icon: Users,
-      description: 'Bazuar në lexuesit me shije të ngjashme',
+      description: t('models.collaborative.description'),
       color: 'green',
     },
     {
       value: 'trending' as const,
-      label: 'Në Trend',
+      label: t('models.trending.label'),
       icon: TrendingUp,
-      description: 'Librat më të popullarizuar në komunitet',
+      description: t('models.trending.description'),
       color: 'orange',
     },
   ];
@@ -111,15 +112,15 @@ export function BookRecommendations({
       >
         <GlassCard className="p-8 text-center">
           <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Rekomandime të Personalizuara</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('loginPrompt.title')}</h3>
           <p className="text-gray-600 mb-6">
-            Kyçuni për të marrë rekomandime librash të personalizuara nga AI-ja jonë
+            {t('loginPrompt.description')}
           </p>
           <a
             href="/auth/login"
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-200"
           >
-            Kyçuni për Rekomandime AI
+            {t('loginPrompt.cta')}
           </a>
         </GlassCard>
       </motion.div>
@@ -133,7 +134,7 @@ export function BookRecommendations({
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-gray-900 flex items-center">
             <Brain className="h-6 w-6 mr-2 text-red-600" />
-            Rekomandime AI për Ju
+            {t('title')}
           </h2>
           
           {showModelSelector && (
@@ -164,7 +165,7 @@ export function BookRecommendations({
           <div className="bg-blue-50/50 rounded-xl p-4">
             <div className="flex items-center space-x-2 mb-2">
               <Zap className="h-4 w-4 text-blue-600" />
-              <span className="text-sm font-medium text-blue-800">Si funksionon:</span>
+              <span className="text-sm font-medium text-blue-800">{t('howItWorks')}</span>
             </div>
             <p className="text-sm text-blue-700">
               {modelOptions.find(m => m.value === selectedModel)?.description}

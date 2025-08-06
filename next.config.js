@@ -1,3 +1,7 @@
+const createNextIntlPlugin = require('next-intl/plugin');
+
+const withNextIntl = createNextIntlPlugin('./src/lib/i18n/request.ts');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // App Router is now stable in Next.js 15
@@ -71,7 +75,7 @@ const nextConfig = {
 const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = withSentryConfig(
-  nextConfig,
+  withNextIntl(nextConfig),
   {
     silent: true,
     org: process.env.SENTRY_ORG || 'brenda-librave',

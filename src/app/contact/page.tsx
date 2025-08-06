@@ -24,9 +24,15 @@ export const metadata: Metadata = {
   description: 'Na kontaktoni për çdo pyetje, sugjerim ose ndihmë që mund të keni.',
 };
 
-export default function ContactPage() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50">
+import { getTranslations } from 'next-intl/server';
+import { ContactPageClient } from '@/components/pages/ContactPageClient';
+
+export default async function ContactPage() {
+  const t = await getTranslations('contact');
+  
+  return <ContactPageClient translations={t} />;
+}
+          <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20"></div>

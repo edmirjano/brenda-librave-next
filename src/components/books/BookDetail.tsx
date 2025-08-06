@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import {
   BookOpen,
@@ -12,9 +12,11 @@ import {
   Package,
   Star,
   Tag,
+  Play,
 } from 'lucide-react';
 
 import { AddToCartButton } from '@/components/cart/AddToCartButton';
+import { EbookReader } from '@/components/books/EbookReader';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { LiquidButton } from '@/components/ui/LiquidButton';
 import { PriceDisplay } from '@/components/ui/PriceDisplay';
@@ -27,15 +29,49 @@ interface BookDetailProps {
 }
 
 export function BookDetail({ book }: BookDetailProps) {
+  const { data: session } = useSession();
   const [selectedFormat, setSelectedFormat] = useState<'physical' | 'digital'>('physical');
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [showReader, setShowReader] = useState(false);
+  const [hasDigitalAccess, setHasDigitalAccess] = useState(false);
+  const [ebookData, setEbookData] = useState<any>(null);
+  const [checkingAccess, setCheckingAccess] = useState(false);
 
   const averageRating = 4.5; // TODO: Calculate from actual reviews
   const reviewCount = 23; // TODO: Get from actual reviews
 
+  // Check if user has digital access to this book
+  useEffect(() => {
+    const checkDigitalAccess = async () => {
+      if (!session?.user || !book.hasDigital) return;
+      
+      setCheckingAccess(true);
+      try {
+        const response = await fetch(`/api/books/${book.id}/read`);
+        if (response.ok) {
+          const data = await response.json();
+          setHasDigitalAccess(data.hasAccess);
+          setEbookData(data);
+        }
+      } catch (error) {
+        console.error('Error checking digital access:', error);
+      } finally {
+        setCheckingAccess(false);
+      }
+    };
+
+    checkDigitalAccess();
+  }, [session, book.id, book.hasDigital]);
+
   const handleWishlistToggle = () => {
     setIsWishlisted(!isWishlisted);
     // TODO: Implement wishlist functionality
+  };
+
+  const handleReadNow = () => {
+    if (hasDigitalAccess && ebookData) {
+      setShowReader(true);
+    }
   };
 
   return (
@@ -174,15 +210,31 @@ export function BookDetail({ book }: BookDetailProps) {
                   <Download className="h-6 w-6 text-blue-600" />
                   <div>
                     <h4 className="font-semibold text-gray-900">Libër Dixhital</h4>
-                    <p className="text-sm text-gray-600">Shkarkoni menjëherë</p>
+                    <p className="text-sm text-gray-600">
+                      {hasDigitalAccess ? 'Lexoni tani' : 'Shkarkoni menjëherë'}
+                    </p>
                   </div>
                 </div>
-                <PriceDisplay
-                  priceALL={book.digitalPriceALL || 0}
-                  priceEUR={book.digitalPriceEUR || undefined}
-                  showBoth
-                  size="md"
-                />
+                <div className="flex items-center justify-between">
+                  <PriceDisplay
+                    priceALL={book.digitalPriceALL || 0}
+                    priceEUR={book.digitalPriceEUR || undefined}
+                    showBoth
+                    size="md"
+                  />
+                  {hasDigitalAccess && (
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <LiquidButton
+                        onClick={() => handleReadNow()}
+                        size="sm"
+                        className="ml-3"
+                      >
+                        <Play className="w-4 h-4 mr-2" />
+                        Lexo tani
+                      </LiquidButton>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -263,6 +315,17 @@ export function BookDetail({ book }: BookDetailProps) {
           </div>
         </GlassCard>
       </motion.div>
+
+      {/* Ebook Reader Modal */}
+      {showReader && ebookData && (
+        <EbookReader
+          bookId={book.id}
+          ebookUrl={ebookData.ebookUrl}
+          title={book.title}
+          author={book.author}
+          onClose={() => setShowReader(false)}
+        />
+      )}
     </div>
   );
 }

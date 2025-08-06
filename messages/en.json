@@ -1,0 +1,1163 @@
+{
+  "metadata": {
+    "siteName": "Brënda Librave",
+    "siteDescription": "The best online Albanian bookstore - discover, buy and read high-quality books",
+    "keywords": "Albanian books, online bookstore, digital books, Albanian literature"
+  },
+  "navigation": {
+    "home": "Home",
+    "books": "Books", 
+    "blog": "Blog",
+    "forum": "Forum",
+    "cart": "Cart",
+    "profile": "Profile",
+    "admin": "Admin",
+    "gift": "Gift a Book",
+    "about": "About Us",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "wishlist": "Wishlist"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success!",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "clear": "Clear",
+    "reset": "Reset",
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Submit",
+    "language": "Language",
+    "comingSoon": "Coming Soon"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "email": "Email",
+      "password": "Password",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "loginButton": "Sign In",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create an account",
+      "error": "Invalid email or password"
+    },
+    "register": {
+      "title": "Create Account",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "namePlaceholder": "Enter your name",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "registerButton": "Create Account",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "newsletter": "Subscribe to newsletter",
+      "terms": "I agree to the terms and conditions"
+    }
+  },
+  "books": {
+    "title": "Books",
+    "searchPlaceholder": "Search books...",
+    "noResults": "No books found",
+    "categories": {
+      "all": "All",
+      "fiction": "Fiction",
+      "nonfiction": "Non-fiction",
+      "children": "Children",
+      "poetry": "Poetry",
+      "drama": "Drama",
+      "history": "History",
+      "biography": "Biography"
+    },
+    "actions": {
+      "addToCart": "Add to Cart",
+      "addToWishlist": "Add to Wishlist",
+      "viewDetails": "View Details",
+      "buyNow": "Buy Now",
+      "readSample": "Read Sample",
+      "downloadSample": "Download Sample"
+    },
+    "price": {
+      "from": "From {price}",
+      "digitalVersion": "Digital version",
+      "physicalVersion": "Physical version",
+      "free": "Free",
+      "currency": {
+        "ALL": "Albanian Lek",
+        "EUR": "Euro"
+      }
+    },
+    "details": {
+      "author": "Author",
+      "isbn": "ISBN",
+      "pages": "Pages",
+      "language": "Language",
+      "publisher": "Publisher",
+      "publishedDate": "Published Date",
+      "category": "Category",
+      "tags": "Tags",
+      "description": "Description",
+      "reviews": "Reviews",
+      "rating": "Rating"
+    },
+    "metadata": {
+      "title": "{bookTitle} - Brënda Librave",
+      "description": "Discover {bookTitle} by {author}. {description}",
+      "keywords": "Albanian books, {bookTitle}, {author}, Brënda Librave"
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "item": "item",
+    "items": "items",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "shipping": "Shipping",
+    "tax": "Tax",
+    "discount": "Discount",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "updateQuantity": "Update quantity",
+    "quantity": "Quantity",
+    "continueShopping": "Continue shopping"
+  },
+  "currency": {
+    "switchTo": "Switch to {currency}",
+    "converting": "Converting...",
+    "conversionRate": "Exchange rate: 1 {from} = {rate} {to}",
+    "lastUpdated": "Last updated: {date}",
+    "symbols": {
+      "ALL": "L",
+      "EUR": "€"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Read more",
+    "readTime": "{minutes} min read",
+    "publishedOn": "Published on {date}",
+    "author": "By {author}",
+    "tags": "Tags",
+    "relatedPosts": "Related posts",
+    "comments": "Comments",
+    "sharePost": "Share post"
+  },
+  "forum": {
+    "title": "Forum",
+    "newTopic": "New Topic",
+    "reply": "Reply",
+    "topics": "Topics",
+    "posts": "Posts",
+    "lastPost": "Last Post",
+    "views": "Views",
+    "author": "Author"
+  },
+  "profile": {
+    "title": "My Profile",
+    "personalInfo": "Personal Information",
+    "orders": "Orders",
+    "wishlist": "Wishlist",
+    "settings": "Settings",
+    "logout": "Sign Out"
+  },
+  "notifications": {
+    "newBook": "New book: {title}",
+    "orderShipped": "Your order has been shipped",
+    "welcomeMessage": "Welcome to Brënda Librave!",
+    "settings": {
+      "title": "Notifications",
+      "newBooks": "New books",
+      "orderUpdates": "Order updates",
+      "newsletter": "Newsletter",
+      "marketing": "Marketing offers"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Page not found",
+      "description": "The page you're looking for doesn't exist or has been moved",
+      "backHome": "Go back home"
+    },
+    "500": {
+      "title": "Server error",
+      "description": "An internal server error occurred. Please try again later",
+      "retry": "Try again"
+    },
+    "network": "Network error. Please check your internet connection",
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email",
+      "minLength": "Must be at least {min} characters",
+      "maxLength": "Must be at most {max} characters", 
+      "passwordMatch": "Passwords do not match"
+    }
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "dashboard": "Dashboard",
+    "books": "Book Management",
+    "users": "User Management",
+    "orders": "Order Management",
+    "blog": "Blog Management",
+    "currency": "Currency Management",
+    "translations": "Translation Management",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "pwa": {
+    "name": "Brënda Librave",
+    "shortName": "Brënda Librave",
+    "description": "The best online Albanian bookstore",
+    "shortcuts": {
+      "books": "Browse Books",
+      "booksShort": "Books",
+      "booksDescription": "Discover new Albanian books",
+      "cart": "Shopping Cart",
+      "cartShort": "Cart",
+      "cartDescription": "View items in your cart"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Discover the world of Albanian books",
+      "subtitle": "From classics of Albanian literature to contemporary authors, find your next book in our extensive digital and physical collection.",
+      "cta": "Explore books"
+    },
+    "features": {
+      "title": "Why choose Brënda Librave?",
+      "subtitle": "We offer the best reading experience for the Albanian community"
+    },
+    "cta": {
+      "title": "Ready to start your literary journey?",
+      "subtitle": "Join thousands of readers who have already discovered their passion for reading through Brënda Librave.",
+      "createAccount": "Create your account",
+      "exploreBooks": "Explore books"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "About Us",
+      "subtitle": "Discover the history and mission of Brënda Librave"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "To make Albanian books accessible to everyone, promoting reading and keeping our rich culture alive. We believe that every person has the right to access high-quality books, regardless of location or financial means.",
+      "stats": {
+        "books": "Books in collection",
+        "customers": "Satisfied customers",
+        "service": "Perfect service"
+      }
+    },
+    "cta": {
+      "title": "Join us!",
+      "subtitle": "Discover the wonderful world of Albanian books and join our community",
+      "viewBooks": "View books",
+      "contactUs": "Contact us"
+    }
+  },
+  "careers": {
+    "hero": {
+      "title": "Join Our Team",
+      "subtitle": "Help us build the future of books in Albania and create a rich reading community",
+      "cta": "View Positions",
+      "contact": "Contact Us"
+    },
+    "benefits": {
+      "title": "Work Benefits",
+      "subtitle": "We offer an excellent work environment and attractive benefits",
+      "competitiveSalary": {
+        "title": "Competitive Salary",
+        "description": "We offer excellent salaries and performance bonuses"
+      },
+      "flexibleHours": {
+        "title": "Flexible Hours",
+        "description": "Work from home and variable schedule"
+      },
+      "professionalDevelopment": {
+        "title": "Professional Development",
+        "description": "Free courses and conferences in your field"
+      },
+      "healthInsurance": {
+        "title": "Health Insurance",
+        "description": "Complete insurance for you and your family"
+      },
+      "extraVacation": {
+        "title": "Extra Vacation",
+        "description": "25 vacation days plus special days"
+      },
+      "freeBooks": {
+        "title": "Free Books",
+        "description": "Unlimited access to our collection"
+      }
+    },
+    "positions": {
+      "title": "Open Positions",
+      "subtitle": "Discover job opportunities at Brënda Librave",
+      "requirements": "Requirements",
+      "skills": "Required Skills",
+      "apply": "Apply Now",
+      "urgent": "URGENT",
+      "fullstack": {
+        "title": "Full-Stack Developer",
+        "department": "Technology",
+        "type": "Full-time",
+        "location": "Tirana / Remote",
+        "description": "We are looking for a talented developer to build our future platforms.",
+        "requirements": [
+          "3+ years experience with React/Next.js",
+          "Good knowledge of Node.js",
+          "Experience with databases (PostgreSQL)",
+          "Excellent English"
+        ],
+        "skills": ["React", "Node.js", "TypeScript", "PostgreSQL", "AWS"]
+      },
+      "marketing": {
+        "title": "Digital Marketing Manager",
+        "department": "Marketing",
+        "type": "Full-time",
+        "location": "Tirana",
+        "description": "Leading our digital marketing strategy and growing our online presence.",
+        "requirements": [
+          "5+ years experience in digital marketing",
+          "Knowledge of Google Ads and Facebook Ads",
+          "Data analysis",
+          "Creativity and innovation"
+        ],
+        "skills": ["Google Analytics", "SEO/SEM", "Social Media", "Email Marketing"]
+      },
+      "customerService": {
+        "title": "Customer Service Coordinator",
+        "department": "Customer Service",
+        "type": "Full-time",
+        "location": "Tirana",
+        "description": "Ensuring excellent experience for our customers and resolving issues.",
+        "requirements": [
+          "2+ years experience in customer service",
+          "Excellent communication skills",
+          "Patience and empathy",
+          "Ability to work in a team"
+        ],
+        "skills": ["Communication", "Problem solving", "CRM", "Multitasking"]
+      }
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "subtitle": "Join our passionate team and help us create something amazing together",
+      "contact": "Contact Us",
+      "learnMore": "Learn More"
+    }
+  },
+  "newsletter": {
+    "title": "Subscribe to Newsletter",
+    "subtitle": "Get updates on new books, special offers and our events",
+    "email": "Email",
+    "name": "Name (Optional)",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "email@example.com",
+    "language": "Preferred language",
+    "languages": {
+      "sq": "Albanian",
+      "en": "English"
+    },
+    "subscribe": "Subscribe",
+    "success": "Subscription successful!",
+    "error": "Subscription error. Please try again."
+  },
+  "ai": {
+    "recommendations": {
+      "title": "AI Recommendations for You",
+      "loginPrompt": {
+        "title": "Personalized Recommendations",
+        "description": "Sign in to receive personalized book recommendations from our AI",
+        "cta": "Sign in for AI Recommendations"
+      },
+      "models": {
+        "hybrid": {
+          "label": "Hybrid AI",
+          "description": "Combines all methods for more accurate recommendations"
+        },
+        "content": {
+          "label": "Content-Based",
+          "description": "Based on characteristics of books you've read"
+        },
+        "collaborative": {
+          "label": "Community-Based",
+          "description": "Based on readers with similar tastes"
+        },
+        "trending": {
+          "label": "Trending",
+          "description": "Most popular books in the community"
+        }
+      },
+      "howItWorks": "How it works:"
+    }
+  },
+  "analytics": {
+    "loading": "Loading business analytics...",
+    "error": {
+      "title": "Loading error",
+      "retry": "Try again"
+    },
+    "noData": "No data available",
+    "metrics": {
+      "totalRevenue": "Total Revenue",
+      "activeCustomers": "Active Customers",
+      "conversionRate": "Conversion Rate",
+      "avgOrderValue": "Average Order Value"
+    },
+    "revenueByCategory": {
+      "title": "Revenue by Categories",
+      "books": "books"
+    },
+    "pagePerformance": {
+      "title": "Page Performance",
+      "conversionRate": {
+        "label": "Conversion Rate",
+        "target": "3.5%"
+      },
+      "cartAbandonment": {
+        "label": "Cart Abandonment",
+        "target": "65%"
+      },
+      "loadSpeed": {
+        "label": "Load Speed",
+        "target": "2.0s"
+      },
+      "target": "Target",
+      "ofTarget": "of target"
+    },
+    "inventory": {
+      "title": "Inventory Intelligence",
+      "bestsellers": {
+        "title": "Bestsellers"
+      },
+      "lowSales": {
+        "title": "Low Sales Books"
+      }
+    }
+  },
+  "debug": {
+    "title": "Debug Dashboard",
+    "description": "Development debugging dashboard for Brënda Librave",
+    "environment": {
+      "title": "Environment Variables"
+    },
+    "database": {
+      "title": "Database Status",
+      "status": "Status",
+      "userCount": "User Count",
+      "error": "Error"
+    },
+    "session": {
+      "title": "Session Information",
+      "email": "Email",
+      "role": "Role",
+      "id": "User ID",
+      "notAuthenticated": "Not authenticated"
+    },
+    "demoUsers": {
+      "title": "Demo Users",
+      "role": "Role",
+      "id": "ID"
+    },
+    "footer": {
+      "description": "This debug dashboard is only available in development mode",
+      "generatedAt": "Generated at",
+      "phase": "Phase 2: Authentication System"
+    }
+  },
+  "wishlist": {
+    "hero": {
+      "title": "Wishlist",
+      "subtitle": "Books you want to buy in the future"
+    },
+    "loading": "Loading wishlist...",
+    "title": "Wishlist",
+    "subtitle": "View and manage books you want to buy in the future",
+    "empty": "Your wishlist is empty",
+    "addToCart": "Add to Cart",
+    "remove": "Remove from List"
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact Us",
+      "subtitle": "Contact us for any questions or suggestions. Our team is always ready to help you."
+    },
+    "form": {
+      "title": "Contact Form",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "email@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "Message subject",
+      "message": "Message",
+      "messagePlaceholder": "Write your message here...",
+      "submit": "Send Message"
+    },
+    "contactInfo": {
+      "title": "Contact Information",
+      "address": {
+        "title": "Address",
+        "content": "Rr. Myslym Shyri, No. 23, Tirana, Albania"
+      },
+      "email": {
+        "title": "Email",
+        "content": "info@brendalibrave.al"
+      },
+      "phone": {
+        "title": "Phone",
+        "content": "+355 4 123 4567"
+      },
+      "hours": {
+        "title": "Working Hours",
+        "content": "Monday - Friday: 9:00 - 18:00\nSaturday: 9:00 - 14:00"
+      }
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "faq": {
+        "title": "FAQ",
+        "description": "Frequently asked questions"
+      },
+      "support": {
+        "title": "Support",
+        "description": "Technical help"
+      },
+      "about": {
+        "title": "About Us",
+        "description": "More about us"
+      }
+    }
+  },
+  "blog": {
+    "hero": {
+      "title": "Literary Blog",
+      "subtitle": "Discover latest articles about books, authors and Albanian culture"
+    },
+    "loading": {
+      "featured": "Loading featured posts...",
+      "search": "Loading search..."
+    },
+    "featured": {
+      "title": "Featured Posts",
+      "subtitle": "Best articles selected by us",
+      "hero": {
+        "title": "Featured Posts",
+        "subtitle": "Best articles selected by us"
+      },
+      "error": {
+        "title": "Loading error",
+        "retry": "Try again"
+      },
+      "empty": {
+        "title": "No featured posts",
+        "description": "Currently there are no posts marked as featured."
+      },
+      "cta": {
+        "viewAll": "View all featured posts"
+      }
+    }
+  },
+  "forum": {
+    "hero": {
+      "title": "Readers Forum",
+      "subtitle": "Join our community of readers, share your thoughts and discover new books"
+    },
+    "categories": {
+      "title": "Categories",
+      "posts": "posts",
+      "items": [
+        { "name": "Albanian Literature", "icon": "BookOpen", "count": "1,250", "color": "red" },
+        { "name": "Recommendations", "icon": "Star", "count": "890", "color": "yellow" },
+        { "name": "Reviews", "icon": "MessageCircle", "count": "650", "color": "blue" },
+        { "name": "Authors", "icon": "User", "count": "420", "color": "green" },
+        { "name": "Classics", "icon": "Award", "count": "380", "color": "purple" },
+        { "name": "Poetry", "icon": "Heart", "count": "290", "color": "pink" }
+      ]
+    },
+    "stats": {
+      "title": "Community Statistics",
+      "items": [
+        { "label": "Active Users", "value": "2,847", "icon": "Users", "color": "blue" },
+        { "label": "Discussions", "value": "15,234", "icon": "MessageSquare", "color": "green" },
+        { "label": "Replies", "value": "89,456", "icon": "MessageCircle", "color": "purple" },
+        { "label": "Likes", "value": "234,567", "icon": "Heart", "color": "red" }
+      ]
+    },
+    "cta": {
+      "title": "Join our community!",
+      "subtitle": "Share your thoughts, ask questions and discover new books from other readers",
+      "createTopic": "Create New Discussion"
+    }
+  },
+  "cart": {
+    "hero": {
+      "title": "Your Cart",
+      "subtitle": "View and manage books you want to buy"
+    },
+    "loading": "Loading cart..."
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your profile data and account preferences."
+  },
+  "privacy": {
+    "hero": {
+      "title": "Privacy Policy",
+      "subtitle": "We respect your privacy and are committed to protecting your personal data"
+    },
+    "lastUpdated": "Last updated: January 1, 2024",
+    "introduction": {
+      "title": "Introduction",
+      "paragraph1": "Brënda Librave (\"we\", \"us\", \"our\") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store and protect your information when you visit our website and use our services.",
+      "paragraph2": "By using our services, you agree to the practices described in this policy. If you do not agree with this policy, please do not use our services."
+    },
+    "sections": [
+      {
+        "title": "1. Information We Collect",
+        "icon": "User",
+        "content": [
+          {
+            "subtitle": "Personal Information",
+            "text": "We collect information such as name, email address, phone number, and shipping address when you create an account or place an order."
+          },
+          {
+            "subtitle": "Payment Information",
+            "text": "Credit card data and billing information are securely stored through our certified payment partners."
+          },
+          {
+            "subtitle": "Usage Information",
+            "text": "We collect information about how you use our website, including pages visited, time spent, and preferences."
+          }
+        ]
+      },
+      {
+        "title": "2. How We Use Information",
+        "icon": "Eye",
+        "content": [
+          {
+            "subtitle": "Order Fulfillment",
+            "text": "We use your information to fulfill orders, contact you about your order, and ensure delivery."
+          },
+          {
+            "subtitle": "Service Improvement",
+            "text": "We analyze data to improve your experience, personalize recommendations, and optimize our website."
+          },
+          {
+            "subtitle": "Communication",
+            "text": "We will send you emails about your orders, product updates, and special offers (if you are subscribed)."
+          }
+        ]
+      },
+      {
+        "title": "3. Information Sharing",
+        "icon": "Users",
+        "content": [
+          {
+            "subtitle": "Shipping Partners",
+            "text": "We share shipping information with shipping companies to enable delivery of your orders."
+          },
+          {
+            "subtitle": "Service Providers",
+            "text": "We work with trusted providers for payments, analytics, and technical support, all bound by confidentiality agreements."
+          },
+          {
+            "subtitle": "Legal Requests",
+            "text": "We may share information if required by law or to protect our rights and user safety."
+          }
+        ]
+      },
+      {
+        "title": "4. Data Security",
+        "icon": "Shield",
+        "content": [
+          {
+            "subtitle": "Encryption",
+            "text": "All data is transmitted through SSL/TLS encryption and stored on secure servers."
+          },
+          {
+            "subtitle": "Limited Access",
+            "text": "Only authorized personnel have access to personal data, and all sign confidentiality agreements."
+          },
+          {
+            "subtitle": "Monitoring",
+            "text": "We continuously monitor our systems to identify and prevent any suspicious activity."
+          }
+        ]
+      },
+      {
+        "title": "5. Your Rights",
+        "icon": "CheckCircle",
+        "content": [
+          {
+            "subtitle": "Access and Correction",
+            "text": "You have the right to view and correct personal information we have about you at any time."
+          },
+          {
+            "subtitle": "Data Deletion",
+            "text": "You can request deletion of your personal data, except for those necessary for legal purposes."
+          },
+          {
+            "subtitle": "Portability",
+            "text": "You can request a copy of your personal data in your preferred format."
+          }
+        ]
+      }
+    ],
+    "cookies": {
+      "title": "6. Cookies and Similar Technologies",
+      "description": "We use cookies and similar technologies to improve your experience on our website. Cookies are small text files stored on your device when you visit our website.",
+      "necessary": {
+        "title": "Necessary Cookies",
+        "description": "Required for basic website functionality, such as shopping cart storage."
+      },
+      "analytics": {
+        "title": "Analytics Cookies",
+        "description": "Used to analyze traffic and improve user experience."
+      }
+    },
+    "contact": {
+      "title": "Questions about privacy?",
+      "subtitle": "Contact us",
+      "description": "If you have questions about this policy or want to exercise your rights, please contact us."
+    }
+  },
+  "faq": {
+    "hero": {
+      "title": "Frequently Asked Questions (FAQ)",
+      "subtitle": "Find answers to the most common questions about our services"
+    },
+    "search": {
+      "placeholder": "Search FAQ..."
+    },
+    "categories": [
+      {
+        "title": "Orders and Shipping",
+        "questions": [
+          {
+            "question": "How long does book shipping take?",
+            "answer": "Shipping to Tirana is done within 24 hours, while to other cities in Albania within 48-72 hours. For orders placed on Friday after 4:00 PM or weekends, shipping starts on Monday."
+          },
+          {
+            "question": "Is there a cost for shipping?",
+            "answer": "Shipping is free for orders over 2,000 ALL. For orders below this amount, shipping cost is 300 ALL in Tirana and 500 ALL in other cities."
+          },
+          {
+            "question": "How can I track my order?",
+            "answer": "After order confirmation, you will receive an email with the tracking code. You can use this code in the \"Track Order\" section or in your profile."
+          },
+          {
+            "question": "Can I cancel my order after confirmation?",
+            "answer": "Yes, orders can be cancelled up to 2 hours after confirmation, if they haven't been prepared for shipping yet. After this time, you need to contact customer service."
+          }
+        ]
+      },
+      {
+        "title": "Payment and Pricing",
+        "questions": [
+          {
+            "question": "What payment methods do you accept?",
+            "answer": "We accept debit/credit card payments (Visa, Mastercard), PayPal, and cash on delivery (only in Tirana). We also accept bank transfers."
+          },
+          {
+            "question": "Are the prices final?",
+            "answer": "Yes, all prices displayed on our website include VAT. There are no hidden costs, except for shipping cost if you don't qualify for free shipping."
+          },
+          {
+            "question": "Do you offer discounts for multiple purchases?",
+            "answer": "Yes, we offer 5% discount for orders over 5,000 ALL, 10% for orders over 10,000 ALL, and 15% for orders over 20,000 ALL. Discounts are applied automatically."
+          }
+        ]
+      },
+      {
+        "title": "Accounts and Membership",
+        "questions": [
+          {
+            "question": "Do I need to create an account to place orders?",
+            "answer": "No, you can place orders as a visitor. However, creating an account allows you to track orders, save addresses, and receive personalized recommendations."
+          },
+          {
+            "question": "How can I change my password?",
+            "answer": "Go to \"Profile\" > \"Settings\" > \"Change Password\". You will need to enter your current password and the new one. You will receive a confirmation email."
+          },
+          {
+            "question": "How can I delete my account?",
+            "answer": "You can delete your account by contacting us at info@brendalibrave.al. Your data will be deleted within 30 days, in compliance with GDPR."
+          }
+        ]
+      },
+      {
+        "title": "Books and Products",
+        "questions": [
+          {
+            "question": "Are all books original?",
+            "answer": "Yes, all books we sell are original and new. We work directly with authorized publishers and distributors to ensure quality."
+          },
+          {
+            "question": "How can I recommend a book?",
+            "answer": "You can send us suggestions for new books in the \"Contact\" section or via email. You can also participate in our readers forum."
+          }
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Didn't find the answer you're looking for?",
+      "subtitle": "Contact us and we'll help you",
+      "methods": [
+        {
+          "title": "Email",
+          "description": "info@brendalibrave.al",
+          "icon": "Mail"
+        },
+        {
+          "title": "Phone",
+          "description": "+355 4 123 4567",
+          "icon": "Phone"
+        },
+        {
+          "title": "Chat",
+          "description": "Live chat",
+          "icon": "MessageCircle"
+        }
+      ],
+      "cta": "Contact Us"
+    }
+  },
+  "help": {
+    "hero": {
+      "title": "Help Center",
+      "subtitle": "We're here to help. Find answers to your questions or contact our team"
+    },
+    "search": {
+      "placeholder": "Search for help...",
+      "button": "Search"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "items": [
+        {
+          "title": "FAQ",
+          "description": "Frequently asked questions",
+          "icon": "HelpCircle",
+          "color": "bg-blue-500",
+          "href": "/faq"
+        },
+        {
+          "title": "Contact",
+          "description": "Talk directly with our team",
+          "icon": "MessageCircle",
+          "color": "bg-green-500",
+          "href": "/contact"
+        },
+        {
+          "title": "Order Status",
+          "description": "Track your order",
+          "icon": "Truck",
+          "color": "bg-purple-500",
+          "href": "/profile/orders"
+        }
+      ]
+    },
+    "categories": {
+      "title": "Help Categories",
+      "items": [
+        {
+          "title": "Accounts and Membership",
+          "description": "Account creation and management",
+          "icon": "User",
+          "color": "blue",
+          "href": "/faq",
+          "topics": [
+            "Account creation",
+            "Password change",
+            "Profile update",
+            "Account deletion"
+          ]
+        },
+        {
+          "title": "Orders and Shipping",
+          "description": "Information about orders and shipping",
+          "icon": "ShoppingCart",
+          "color": "green",
+          "href": "/faq",
+          "topics": [
+            "Track your order",
+            "Shipping times",
+            "Shipping costs",
+            "Order cancellation"
+          ]
+        },
+        {
+          "title": "Payment and Pricing",
+          "description": "Information about payments and pricing",
+          "icon": "CreditCard",
+          "color": "purple",
+          "href": "/faq",
+          "topics": [
+            "Payment methods",
+            "Final prices",
+            "Discounts and offers",
+            "VAT and taxes"
+          ]
+        },
+        {
+          "title": "Books and Products",
+          "description": "Information about books and products",
+          "icon": "BookOpen",
+          "color": "red",
+          "href": "/faq",
+          "topics": [
+            "Book quality",
+            "Recommendations",
+            "Product catalog",
+            "Searches"
+          ]
+        },
+        {
+          "title": "Settings and Preferences",
+          "description": "Personalizing your experience",
+          "icon": "Settings",
+          "color": "yellow",
+          "href": "/profile/settings",
+          "topics": [
+            "Language preferences",
+            "Notifications",
+            "Privacy",
+            "Security"
+          ]
+        },
+        {
+          "title": "Technical Support",
+          "description": "Help for technical issues",
+          "icon": "HelpCircle",
+          "color": "indigo",
+          "href": "/contact",
+          "topics": [
+            "Website issues",
+            "Technical errors",
+            "Updates",
+            "Compatibility"
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "title": "Didn't find the help you're looking for?",
+      "subtitle": "Contact us and we'll help you personally",
+      "methods": [
+        {
+          "title": "Email",
+          "description": "info@brendalibrave.al",
+          "icon": "Mail"
+        },
+        {
+          "title": "Phone",
+          "description": "+355 4 123 4567",
+          "icon": "Phone"
+        },
+        {
+          "title": "Chat",
+          "description": "Live chat",
+          "icon": "MessageCircle"
+        }
+      ],
+      "cta": "Contact Us"
+    }
+  },
+  "terms": {
+    "hero": {
+      "title": "Terms and Conditions",
+      "subtitle": "Read the terms and conditions for using our services"
+    },
+    "lastUpdated": "Last updated",
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "content": [
+          "By using Brënda Librave services, you agree to comply with these terms and conditions.",
+          "If you do not agree with these terms, please do not use our services.",
+          "We reserve the right to change these terms at any time without prior notice."
+        ]
+      },
+      "definitions": {
+        "title": "2. Definitions",
+        "content": [
+          "\"Company\", \"we\", \"us\", \"our\" refers to Brënda Librave.",
+          "\"User\", \"you\", \"your\" refers to the person using our services.",
+          "\"Services\" includes our website and all services offered.",
+          "\"Products\" includes all books and other items sold through our website."
+        ]
+      },
+      "usage": {
+        "title": "3. Use of Services",
+        "content": [
+          "You must be at least 18 years old or have parental consent to use the services.",
+          "You are responsible for all activities conducted under your account.",
+          "You may not use the services for illegal or harmful purposes.",
+          "We reserve the right to suspend or close your account for violation of terms."
+        ]
+      },
+      "orders": {
+        "title": "4. Orders and Payment",
+        "content": [
+          "All orders are subject to product availability.",
+          "Prices may change without prior notice.",
+          "Payments must be made at the time of order or as agreed terms.",
+          "We reserve the right to cancel orders for various reasons."
+        ]
+      },
+      "shipping": {
+        "title": "5. Shipping and Delivery",
+        "content": [
+          "Shipping times are estimates and may vary.",
+          "Risk of loss passes to you after the product is delivered.",
+          "You are responsible for ensuring the correct shipping address.",
+          "Shipping costs are in accordance with our pricing policy."
+        ]
+      },
+      "returns": {
+        "title": "6. Returns and Refunds",
+        "content": [
+          "Products can be returned within 14 days from delivery date.",
+          "Products must be in original condition to be returned.",
+          "Return shipping cost is covered by the customer, except in cases of our errors.",
+          "Refunds are made within 7-14 business days after receiving the return."
+        ]
+      },
+      "intellectualProperty": {
+        "title": "7. Intellectual Property",
+        "content": [
+          "All content on our website is protected by intellectual property laws.",
+          "You may not copy, distribute or use our content without permission.",
+          "Trademarks and logos are property of their respective owners.",
+          "You grant us the right to use content you post on our website."
+        ]
+      },
+      "liability": {
+        "title": "8. Limitation of Liability",
+        "content": [
+          "Our services are provided \"as is\" without specific warranties.",
+          "We are not responsible for indirect or consequential damages.",
+          "Our liability is limited to the value of the order you made.",
+          "Some jurisdictions do not allow liability limitations, so these limitations may not apply to you."
+        ]
+      }
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "If you have questions about our terms and conditions, please contact us",
+      "email": {
+        "title": "Legal Email"
+      },
+      "support": {
+        "title": "Support"
+      },
+      "cta": "Contact Us",
+      "privacy": "Privacy Policy"
+    }
+  },
+  "typography": {
+    "hero": {
+      "title": "Brënda Librave - Typography Demo",
+      "subtitle": "Showcase of our dual-font system with English content"
+    },
+    "literarySection": {
+      "title": "Literary Content (Crimson Pro)"
+    },
+    "book": {
+      "title": "The Albanian Language in Contemporary Literature",
+      "subtitle": "A deep study on the evolution of language",
+      "description": "This book explores the development of the Albanian language in 21st century literature, analyzing the impact of technology and globalization on literary expression. The author presents a fresh perspective on preserving cultural identity through written language.",
+      "quote": "\"Language is the greatest wealth of a nation, and literature is the temple where this wealth is preserved and renewed.\" - Naim Frashëri",
+      "features": {
+        "title": "Features",
+        "items": [
+          "Deep linguistic analysis",
+          "Examples from renowned authors",
+          "Modern perspective",
+          "350 pages of content"
+        ]
+      },
+      "details": {
+        "title": "Technical Details",
+        "firstEdition": "First edition: 2024",
+        "publisher": "Publisher: Albanian Books",
+        "isbn": "ISBN: 978-9928-000-000-0",
+        "price": "2,500 L",
+        "inStock": "In stock"
+      }
+    },
+    "interfaceSection": {
+      "title": "Interface Elements (Outfit)"
+    },
+    "interface": {
+      "navigation": {
+        "title": "Navigation",
+        "items": [
+          "Home",
+          "Books",
+          "Categories",
+          "About Us"
+        ]
+      },
+      "buttons": {
+        "title": "Buttons",
+        "items": [
+          { "text": "Buy Now", "variant": "primary" },
+          { "text": "Add to Cart", "variant": "secondary" },
+          { "text": "Wishlist", "variant": "text" }
+        ]
+      },
+      "typography": {
+        "title": "Typography Scale",
+        "h1": "Heading 1 - Large Title",
+        "h2": "Heading 2 - Medium Title",
+        "h3": "Heading 3 - Small Title",
+        "body": "Body text - Regular text for reading",
+        "caption": "Caption - Small text for explanations"
+      }
+    },
+    "usageExample": {
+      "title": "Real Usage Example",
+      "article": {
+        "title": "The History of the Albanian Language",
+        "subtitle": "A journey through time and culture",
+        "content": "The Albanian language is one of the oldest languages in Europe, with roots stretching thousands of years back. It has maintained its unique characteristics throughout the centuries, despite multiple external influences.",
+        "blockquote": "\"Our language makes us who we are, and who we are makes us have our language.\""
+      },
+      "features": {
+        "title": "Key Features",
+        "items": [
+          "7-vowel vocalic system",
+          "36-letter alphabet",
+          "Complex grammatical structure",
+          "Rich vocabulary with autochthonous roots"
+        ]
+      }
+    }
+  }
+}

@@ -1,12 +1,6 @@
-import { Suspense } from 'react';
-
 import { Metadata } from 'next';
-
-import { BlogGrid } from '@/components/blog/BlogGrid';
-import { BlogSearch } from '@/components/blog/BlogSearch';
-import { FeaturedPosts } from '@/components/blog/FeaturedPosts';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { getTranslations } from 'next-intl/server';
+import { BlogPageClient } from '@/components/pages/BlogPageClient';
 
 export const metadata: Metadata = {
   title: 'Blog | Brënda Librave',
@@ -30,9 +24,11 @@ interface BlogPageProps {
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const params = await searchParams;
+  const t = await getTranslations('blog');
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-50">
+  return <BlogPageClient translations={t} searchParams={params} />;
+}
+          <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20"></div>

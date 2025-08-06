@@ -22,6 +22,17 @@ import {
   ShoppingCart,
   Tag,
   Users,
+  DollarSign,
+  Headphones,
+  Truck,
+  Calendar,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  XCircle,
+  Play,
+  Pause,
+  Stop,
 } from 'lucide-react';
 
 import { GlassCard } from '@/components/ui/GlassCard';
@@ -54,8 +65,35 @@ const navigationItems = [
   },
   {
     name: 'Porositë',
-    href: '/admin/orders',
     icon: ShoppingCart,
+    children: [
+      { name: 'Të gjitha porositë', href: '/admin/orders' },
+      { name: 'Porositë e reja', href: '/admin/orders/pending' },
+      { name: 'Porositë në proces', href: '/admin/orders/processing' },
+      { name: 'Porositë e dërguara', href: '/admin/orders/shipped' },
+      { name: 'Porositë e përfunduara', href: '/admin/orders/delivered' },
+      { name: 'Porositë e anuluara', href: '/admin/orders/cancelled' },
+    ],
+  },
+  {
+    name: 'Abonimet',
+    icon: Calendar,
+    children: [
+      { name: 'Të gjitha abonimet', href: '/admin/subscriptions' },
+      { name: 'Planet e abonimit', href: '/admin/subscriptions/plans' },
+      { name: 'Përdoruesit e abonuar', href: '/admin/subscriptions/users' },
+      { name: 'Statistikat e abonimit', href: '/admin/subscriptions/analytics' },
+    ],
+  },
+  {
+    name: 'Librat Audio',
+    icon: Headphones,
+    children: [
+      { name: 'Të gjitha librat audio', href: '/admin/audio-books' },
+      { name: 'Shto libër audio', href: '/admin/audio-books/new' },
+      { name: 'Rentimet audio', href: '/admin/audio-books/rentals' },
+      { name: 'Statistikat audio', href: '/admin/audio-books/analytics' },
+    ],
   },
   {
     name: 'Përdoruesit',
@@ -73,9 +111,54 @@ const navigationItems = [
     icon: BarChart3,
   },
   {
+    name: 'Monedhët',
+    href: '/admin/currency',
+    icon: DollarSign,
+  },
+  {
     name: 'Cilësimet',
     href: '/admin/settings',
     icon: Settings,
+  },
+];
+
+// Transporter-specific navigation items
+const transporterNavigationItems = [
+  {
+    name: 'Dashboard',
+    href: '/admin',
+    icon: Home,
+  },
+  {
+    name: 'Porositë e Mia',
+    icon: ShoppingCart,
+    children: [
+      { name: 'Porositë e sotme', href: '/admin/orders/today' },
+      { name: 'Porositë e javës', href: '/admin/orders/week' },
+      { name: 'Porositë në proces', href: '/admin/orders/processing' },
+      { name: 'Porositë e dërguara', href: '/admin/orders/shipped' },
+      { name: 'Historia e porosive', href: '/admin/orders/history' },
+    ],
+  },
+  {
+    name: 'Statusi i Porosive',
+    icon: CheckCircle,
+    children: [
+      { name: 'Marr në dorë', href: '/admin/orders/pickup' },
+      { name: 'Në dërgim', href: '/admin/orders/in-transit' },
+      { name: 'E dërguar', href: '/admin/orders/delivered' },
+      { name: 'E anuluar', href: '/admin/orders/cancelled' },
+    ],
+  },
+  {
+    name: 'Kalendari',
+    href: '/admin/calendar',
+    icon: Calendar,
+  },
+  {
+    name: 'Raportet',
+    href: '/admin/reports',
+    icon: BarChart3,
   },
 ];
 
@@ -83,6 +166,10 @@ export function AdminSidebar() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const [expandedItems, setExpandedItems] = useState<string[]>(['Libra']);
+
+  // Determine which navigation items to show based on user role
+  const isTransporter = session?.user?.role === 'TRANSPORTER';
+  const navigationItemsToShow = isTransporter ? transporterNavigationItems : navigationItems;
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems(prev =>
@@ -103,6 +190,30 @@ export function AdminSidebar() {
     return children.some(child => pathname.startsWith(child.href));
   };
 
+  const getUserRoleDisplay = () => {
+    switch (session?.user?.role) {
+      case 'TRANSPORTER':
+        return 'Transportues';
+      case 'ADMIN':
+        return 'Administrator';
+      default:
+        return 'Përdorues';
+    }
+  };
+
+  const getRoleIcon = () => {
+    switch (session?.user?.role) {
+      case 'TRANSPORTER':
+        return Truck;
+      case 'ADMIN':
+        return Settings;
+      default:
+        return Users;
+    }
+  };
+
+  const RoleIcon = getRoleIcon();
+
   return (
     <motion.div
       className="fixed left-0 top-0 h-full w-64 z-40"
@@ -119,7 +230,7 @@ export function AdminSidebar() {
             </div>
             <div>
               <h1 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">
-                Admin Panel
+                {isTransporter ? 'Transport Panel' : 'Admin Panel'}
               </h1>
               <p className="text-sm text-gray-600">Brënda Librave</p>
             </div>
@@ -137,7 +248,10 @@ export function AdminSidebar() {
                 <p className="text-sm font-medium text-gray-900 truncate">
                   {session?.user?.name || 'Admin'}
                 </p>
-                <p className="text-xs text-gray-600">Administrator</p>
+                <div className="flex items-center space-x-1">
+                  <RoleIcon className="w-3 h-3 text-gray-500" />
+                  <p className="text-xs text-gray-600">{getUserRoleDisplay()}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -145,7 +259,7 @@ export function AdminSidebar() {
 
         {/* Navigation */}
         <nav className="space-y-2">
-          {navigationItems.map((item) => (
+          {navigationItemsToShow.map((item) => (
             <div key={item.name}>
               {item.children ? (
                 <div>
