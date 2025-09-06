@@ -20,7 +20,7 @@ export default function Icon() {
           fontSize: 18,
           background: 'linear-gradient(135deg, #dc2626 0%, #dc2626 50%, #b91c1c 100%)',
           width: '100%',
-          height: '100%',
+          height: '100px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
